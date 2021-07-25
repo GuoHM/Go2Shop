@@ -1,7 +1,7 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8071/eureka/
+      defaultZone: http://localhost:8761/eureka/
       
 server:
   port: 8770
@@ -27,15 +27,15 @@ spring:
         service-id: config
     gateway:
       routes:
-      - id: user-service
-        uri: lb://user-service
+      - id: cart-service
+        uri: lb://cart-service
         predicates:
-        - Path=/user-api/**
+        - Path=/cart-api/**
         filters:
-        - RewritePath=/user-api/(?<segment>.*), /$\{segment}
-      - id: event-service
-        uri: lb://event-service
+        - RewritePath=/cart-api/(?<segment>.*), /$\{segment}
+      - id: catalogue-service
+        uri: lb://catalogue-service
         predicates:
-        - Path=/event-api/**
+        - Path=/catalogue-api/**
         filters:
-        - RewritePath=/event-api/(?<segment>.*), /$\{segment}
+        - RewritePath=/catalogue-api/(?<segment>.*), /$\{segment}
