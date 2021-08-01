@@ -8,28 +8,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.go2shop.cart.service.DemoCatalogueService;
+import com.go2shop.cart.service.DemoCartService;
 import com.go2shop.common.controller.BaseController;
-import com.go2shop.common.exception.BussinessException;
+import com.go2shop.common.exception.BusinessException;
 
 @RestController
 @RequestMapping(value = "/cart/demo")
 @RefreshScope
-public class DemoCartController {
+public class DemoCartController extends BaseController {
 	
 	@Autowired
-	DemoCatalogueService demoCatalogueService;
+	DemoCartService cartService;
 	
 	@Value("${server.port}")
 	private int serverPort;
 
 	@GetMapping("/cartId/{cartId}")
-	public String getCart(@PathVariable("cartId") String cartId) {
-		return "This is form cart service with cartId: " + cartId + ", deployed port: " + serverPort;
+	public String getCart(@PathVariable("cartId") String cartId) throws BusinessException {
+		return cartService.getCartById(cartId);
 	}
 
 	@GetMapping("/cartId/{cartId}/catalogueId/{catalogueId}")
-	public String getCartWithCatalogue(@PathVariable("cartId") String cartId, @PathVariable("catalogueId") String catalogueId) throws BussinessException {
-		return "Get from cart service with cart id " + cartId + ", \n" + demoCatalogueService.getCatalogue(catalogueId);
+	public String getCartWithCatalogue(@PathVariable("cartId") String cartId, @PathVariable("catalogueId") String catalogueId) throws BusinessException {
+		return cartService.getCartWithCatalogue(cartId, catalogueId);
 	}
 }
