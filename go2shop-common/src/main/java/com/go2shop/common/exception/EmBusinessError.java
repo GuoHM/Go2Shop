@@ -1,6 +1,6 @@
 package com.go2shop.common.exception;
 
-public enum EmBusinessError implements ICommonError{
+public enum EmBusinessError implements ICommonError {
 
 	//common error start with 10000
     PARAMETER_VALIDATION_ERROR(10001, "Invalid parameter"),
