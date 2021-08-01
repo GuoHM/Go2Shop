@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.go2shop.cart.service.DemoCatalogueService;
+import com.go2shop.common.controller.BaseController;
+import com.go2shop.common.exception.BussinessException;
 
 @RestController
 @RequestMapping(value = "/cart/demo")
@@ -27,7 +29,7 @@ public class DemoCartController {
 	}
 
 	@GetMapping("/cartId/{cartId}/catalogueId/{catalogueId}")
-	public String getCartWithCatalogue(@PathVariable("cartId") String cartId, @PathVariable("catalogueId") String catalogueId) {
+	public String getCartWithCatalogue(@PathVariable("cartId") String cartId, @PathVariable("catalogueId") String catalogueId) throws BussinessException {
 		return "Get from cart service with cart id " + cartId + ", \n" + demoCatalogueService.getCatalogue(catalogueId);
 	}
 }
