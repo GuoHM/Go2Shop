@@ -6,9 +6,26 @@ eureka:
 server:
   port: 8770
   
+cors: 
+  allowed-origins: "*"
+  allowed-methods: GET,POST,DELETE,PUT,OPTIONS
+  allowed-headers: Origin,X-Requested-With,Content-Type,Accept,Accept-Encoding,Accept-Language,Host,Referer,Connection,User-Agent,Authorization
+
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 9000
+  issuer: ITRunner
+  authentication-path: /auth
+  
 spring:
   application:
     name: gateway-springcloudgateway
+  security:
+      oauth2:
+        resourceserver:
+          jwt:
+            jwk-set-uri: 'http://localhost:8780/rsa/publicKey'
 #  rabbitmq:
 #    host: ${spring.rabbitmq.host}
 #    username: ${spring.rabbitmq.username}
@@ -27,15 +44,42 @@ spring:
         service-id: config
     gateway:
       routes:
+      - id: auth-service
+        uri: lb://auth-service
+        predicates:
+        - Path=/authenticationService/**
+        filters:
+        - RewritePath=/authenticationService/(?<segment>.*), /$\{segment}
       - id: cart-service
         uri: lb://cart-service
         predicates:
-        - Path=/cart-api/**
+        - Path=/cartService/**
         filters:
-        - RewritePath=/cart-api/(?<segment>.*), /$\{segment}
+        - RewritePath=/cartService/(?<segment>.*), /$\{segment}
       - id: catalogue-service
         uri: lb://catalogue-service
         predicates:
-        - Path=/catalogue-api/**
+        - Path=/catalogueService/**
         filters:
-        - RewritePath=/catalogue-api/(?<segment>.*), /$\{segment}
+        - RewritePath=/catalogueService/(?<segment>.*), /$\{segment} 
+        
+        
+secure:
+  ignore:
+    urls:
+      - "/actuator/**"
+      - "/authenticationService/oauth/token"
+      
+  authroities:
+    - 
+      urls:
+        - "/cartService/cart/demo/**"
+      roles:
+        - BUYER
+        - SELLER
+        
+    - 
+      urls:
+        - "/catalogueService/catalogue/demo/**"
+      roles:
+        - SELLER

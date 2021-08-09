@@ -1,0 +1,45 @@
+server:
+  port: 8780
+
+spring:
+  application:
+    name: auth-service
+#  rabbitmq:
+#    host: ${spring.rabbitmq.host}
+#    username: ${spring.rabbitmq.username}
+#    password: ${spring.rabbitmq.password}
+#    virtual-host: ${spring.rabbitmq.virtual-host}
+  cloud:
+    bus:
+      enabled: true
+      trace:
+        enabled: true
+    config:
+      label: master
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: config
+        
+cors: 
+  allowed-origins: "*"
+  allowed-methods: GET,POST,DELETE,PUT,OPTIONS
+  allowed-headers: Origin,X-Requested-With,Content-Type,Accept,Accept-Encoding,Accept-Language,Host,Referer,Connection,User-Agent,Authorization
+
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 9000
+  issuer: ITRunner
+  authentication-path: /auth
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/ 
