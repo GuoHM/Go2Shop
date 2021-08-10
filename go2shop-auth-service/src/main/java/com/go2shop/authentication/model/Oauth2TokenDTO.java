@@ -2,13 +2,15 @@ package com.go2shop.authentication.model;
 
 public class Oauth2TokenDTO {
 
-    private String token;
+	private String token;
 
-    private String refreshToken;
+	private String refreshToken;
 
-    private String tokenHead;
+	private String tokenHead;
 
-    public String getToken() {
+	private int expiresIn;
+
+	public String getToken() {
 		return token;
 	}
 
@@ -40,5 +42,4 @@ public class Oauth2TokenDTO {
 		this.expiresIn = expiresIn;
 	}
 
-	private int expiresIn;
 }

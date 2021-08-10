@@ -1,30 +1,32 @@
 package com.go2shop.common.exception;
 
+import org.springframework.http.HttpStatus;
+
 public enum EmBusinessError implements ICommonError {
 
-	//common error start with 10000
-    PARAMETER_VALIDATION_ERROR(10001, "Invalid parameter"),
-    UNKNOW_ERROR(10002, "Unknow error"),
-    TOKEN_EXPIRE(10003, "Token expire"),
-	
-	//auth error start with 20000
-    USER_NOT_EXIST(20001, "User do not exist"),
-    USER_LOGIN_FAIL(20002, "Username password didn't match"),
-    USER_NOT_LOGIN(20003, "User do not login"),
-    USER_USERNAME_EXIST(20004, "Username already exist"),
-    USER_ALREADY_CHECKED(20005, "User already vertified Email address"), 
-    USER_USERNAME_EMIAL_NOT_MATCH(20006, "Username and email didn't match");
-    
-	private int errCode;
-	private String errMsg;
+	// common error start with A101
+	PARAMETER_VALIDATION_ERROR("A101", "Invalid parameter", HttpStatus.BAD_REQUEST),
+	UNKNOW_ERROR("A102", "Unknow error", HttpStatus.BAD_REQUEST),
+	TOKEN_EXPIRE("A103", "Token expire", HttpStatus.UNAUTHORIZED),
 
-	private EmBusinessError(int errCode,String errMsg){
-        this.errCode = errCode;
-        this.errMsg = errMsg;
-    }
+	// auth error start with B101
+	USER_NOT_EXIST("B101", "User do not exist", HttpStatus.UNAUTHORIZED),
+	USER_LOGIN_FAIL("B102", "User credentials not valid", HttpStatus.UNAUTHORIZED),
+	USER_NOT_LOGIN("B103", "User do not login", HttpStatus.UNAUTHORIZED),
+	USER_USERNAME_EXIST("B104", "Username already exist", HttpStatus.UNAUTHORIZED);
+
+	private String errCode;
+	private String errMsg;
+	private HttpStatus statusCode;
+
+	private EmBusinessError(String errCode, String errMsg, HttpStatus statusCode) {
+		this.errCode = errCode;
+		this.errMsg = errMsg;
+		this.statusCode = statusCode;
+	}
 
 	@Override
-	public int getErrCode() {
+	public String getErrCode() {
 		return this.errCode;
 	}
 
@@ -37,5 +39,10 @@ public enum EmBusinessError implements ICommonError {
 	public ICommonError setErrMsg(String errMsg) {
 		this.errMsg = errMsg;
 		return this;
+	}
+
+	@Override
+	public HttpStatus getStatusCode() {
+		return this.statusCode;
 	}
 }

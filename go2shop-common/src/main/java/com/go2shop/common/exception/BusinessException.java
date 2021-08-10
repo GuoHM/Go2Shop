@@ -1,5 +1,7 @@
 package com.go2shop.common.exception;
 
+import org.springframework.http.HttpStatus;
+
 public class BusinessException extends Exception implements ICommonError {
 
 	private static final long serialVersionUID = 5455416838935383604L;
@@ -20,7 +22,7 @@ public class BusinessException extends Exception implements ICommonError {
 	}
 
 	@Override
-	public int getErrCode() {
+	public String getErrCode() {
 		return this.commonError.getErrCode();
 	}
 
@@ -33,6 +35,11 @@ public class BusinessException extends Exception implements ICommonError {
 	public ICommonError setErrMsg(String str) {
 		this.commonError.setErrMsg(str);
 		return this;
+	}
+
+	@Override
+	public HttpStatus getStatusCode() {
+		return this.commonError.getStatusCode();
 	}
 
 }
