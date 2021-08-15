@@ -1,6 +1,6 @@
 # Go2Shop
 
-<h1>1. Module</h1>
+<h1>1. Modules</h1>
 
 <table border="1" cellpadding="1" cellspacing="1" style="width: 600px;">
 	<thead>
