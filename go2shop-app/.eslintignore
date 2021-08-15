@@ -1,0 +1,6 @@
+node_modules/
+src/test/
+src/test.ts
+src/assets/
+target/
+dist/
