@@ -8,19 +8,23 @@ import { OrderComponent } from './common/order/order.component';
 import { CatalogueComponent } from './common/catalogue/catalogue.component';
 import { PaymentComponent } from './common/payment/payment.component';
 import { UserComponent } from './common/user/user.component';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-  CartComponent,
-  OrderComponent,
-  CatalogueComponent,
-  PaymentComponent,
-  UserComponent
+		CartComponent,
+		OrderComponent,
+		CatalogueComponent,
+		PaymentComponent,
+		UserComponent
 	],
 	imports: [
 		BrowserModule,
-		AppRoutingModule
+		AppRoutingModule,
+		CardModule,
+		ButtonModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]
