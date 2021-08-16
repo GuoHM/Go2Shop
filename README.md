@@ -56,7 +56,7 @@
 			<td>NA</td>
 			<td>Common dependency module</td>
 		</tr>
-	  	<td><a class="js-navigation-open Link--primary" data-pjax="#repo-content-pjax-container" href="https://github.com/go2shop/Go2Shop/tree/main/go2shop-app" style="box-sizing: border-box; text-decoration-line: none; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;; font-size: 14px; white-space: nowrap; color: var(--color-text-primary)  !important;" title="go2shop-registry">go2shop-common</a></td>
+	  	<td><a class="js-navigation-open Link--primary" data-pjax="#repo-content-pjax-container" href="https://github.com/go2shop/Go2Shop/tree/main/go2shop-app" style="box-sizing: border-box; text-decoration-line: none; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;; font-size: 14px; white-space: nowrap; color: var(--color-text-primary)  !important;" title="go2shop-registry">go2shop-app</a></td>
 			<td>4200</td>
 			<td>Frontend app</td>
 		</tr>
