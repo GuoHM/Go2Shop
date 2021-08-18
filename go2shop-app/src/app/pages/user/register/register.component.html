@@ -1,1 +1,32 @@
-<p>register works!</p>
+<div class="row">
+    <div class="col-10 col-sm-10 col-md-8 col-lg-3 mx-auto">
+        <div class="card card-signin my-5">
+            <div class="card-body">
+                <h5 class="card-title text-center">Register</h5>
+                <form>
+                    <div class="form-group">
+                        <label for="username">User Name</label>
+                        <input type="text" pInputText class="form-control" id="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <p-password id="password" class="password-input" [(ngModel)]="password" [toggleMask]="true"></p-password>
+                    </div>
+                    <div class="form-group">
+                        <label for="password-repeat">Repeat Password</label>
+                        <p-password id="password-repeat" class="password-input" [toggleMask]="true" [feedback]="false"></p-password>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="REGISTER"
+                            type="button"></button>
+                    </div>
+                    <div class="form-group">
+                        <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="CANCEL"
+                            type="button"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
