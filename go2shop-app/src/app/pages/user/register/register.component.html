@@ -3,18 +3,18 @@
         <div class="card card-signin my-5">
             <div class="card-body">
                 <h5 class="card-title text-center">Register</h5>
-                <form>
+                <form [formGroup]="registerForm">
                     <div class="form-group">
                         <label for="username">User Name</label>
-                        <input type="text" pInputText class="form-control" id="username">
+                        <input type="text" pInputText class="form-control" id="username" >
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <p-password id="password" class="password-input" [(ngModel)]="password" [toggleMask]="true"></p-password>
+                        <p-password id="password" class="password-input" [(ngModel)]="password" [toggleMask]="true" formControlName="password"></p-password>
                     </div>
                     <div class="form-group">
                         <label for="password-repeat">Repeat Password</label>
-                        <p-password id="password-repeat" class="password-input" [toggleMask]="true" [feedback]="false"></p-password>
+                        <p-password id="password-repeat" class="password-input" [toggleMask]="true" [feedback]="false" formControlName="password-repeat"></p-password>
                     </div>
                     <hr>
                     <div class="form-group">
