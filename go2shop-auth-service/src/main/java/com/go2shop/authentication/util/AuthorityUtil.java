@@ -4,7 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.go2shop.authentication.model.Authority;
+import com.go2shop.authentication.model.entity.Authority;
 
 import java.util.List;
 import java.util.stream.Collectors;
