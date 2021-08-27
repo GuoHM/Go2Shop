@@ -6,7 +6,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { MessageService } from 'primeng/api';
-
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   imports: [
@@ -21,7 +21,8 @@ import { MessageService } from 'primeng/api';
     MenubarModule,
     ButtonModule,
     InputTextModule,
-    PasswordModule
+    PasswordModule,
+    ToastModule
   ],
   declarations: [],
   providers: [MessageService],

@@ -12,11 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.go2shop.common.model.ActiveStatus;
 
 @Entity
+@Table(name = "TB_SECURITY_USER")
 public class SecurityUser {
 	@Id
 	@Column(name = "ID", updatable = false)
@@ -30,12 +32,16 @@ public class SecurityUser {
 	@NotNull
 	private String password;
 
+	@Column(name = "USER_ID")
+	@NotNull
+	private Long userId;
+
 	@Column(name = "ENABLED", length = 1)
 	@NotNull
 	private ActiveStatus enabled;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE })
-	@JoinTable(name = "USER_AUTHORITY", joinColumns = {
+	@JoinTable(name = "TB_USER_AUTHORITY", joinColumns = {
 			@JoinColumn(name = "USER_ID", referencedColumnName = "ID", updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID", updatable = false) })
 	private List<Authority> authorities;
@@ -62,6 +68,14 @@ public class SecurityUser {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public ActiveStatus getEnabled() {

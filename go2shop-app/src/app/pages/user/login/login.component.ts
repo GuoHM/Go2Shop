@@ -38,7 +38,13 @@ export class LoginComponent implements OnInit {
     this.userService.login(userlogin).subscribe(
       (res) => {
         this.authenticationService.handleLoginSuccess(res.body);
-        this.messageService.add({severity:'success', summary:'Login Success!'});
+        this.messageService.add({key: 'tc', severity:'success', summary:'Success', detail: 'You have successful login!'});
+      },
+      (err) => {
+        console.log(err);
+        if (err.error.errCode === 'B102') {
+          this.messageService.add({key: 'tc', severity:'error', summary:'Fail', detail: err.error.errMsg});
+        }
       }
     );
   }
