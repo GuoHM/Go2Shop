@@ -18,7 +18,7 @@ export class UserService {
       .append('client_secret', '123456')
       .append('username', userlogin.username)
       .append('password', userlogin.password);
-    return this.http.post<IUserToken>('/authenticationService/oauth/token',  httpParams, { headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), observe: 'response' });
+    return this.http.post<IUserToken>('/api/authenticationService/oauth/token',  httpParams, { headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), observe: 'response' });
   }
 
   //   register(taskSearch: IUserRegister): Observable<HttpResponse<IUserRegister>> {

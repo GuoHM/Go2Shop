@@ -35,39 +35,39 @@ spring:
       - id: auth-service
         uri: lb://auth-service
         predicates:
-        - Path=/authenticationService/**
+        - Path=/api/authenticationService/**
         filters:
-        - RewritePath=/authenticationService/(?<segment>.*), /$\{segment}
+        - RewritePath=/api/authenticationService/(?<segment>.*), /$\{segment}
       - id: cart-service
         uri: lb://cart-service
         predicates:
-        - Path=/cartService/**
+        - Path=/api/cartService/**
         filters:
-        - RewritePath=/cartService/(?<segment>.*), /$\{segment}
+        - RewritePath=/api/cartService/(?<segment>.*), /$\{segment}
       - id: catalogue-service
         uri: lb://catalogue-service
         predicates:
-        - Path=/catalogueService/**
+        - Path=/api/catalogueService/**
         filters:
-        - RewritePath=/catalogueService/(?<segment>.*), /$\{segment} 
+        - RewritePath=/api/catalogueService/(?<segment>.*), /$\{segment} 
         
         
 secure:
   ignore:
     urls:
       - "/actuator/**"
-      - "/authenticationService/oauth/token"
+      - "/api/authenticationService/oauth/token"
       
   authroities:
     - 
       urls:
-        - "/cartService/cart/demo/**"
+        - "/api/cartService/cart/demo/**"
       roles:
         - BUYER
         - SELLER
         
     - 
       urls:
-        - "/catalogueService/catalogue/demo/**"
+        - "/api/catalogueService/catalogue/demo/**"
       roles:
         - SELLER

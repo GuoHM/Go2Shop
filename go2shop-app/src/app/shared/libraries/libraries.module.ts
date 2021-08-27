@@ -5,6 +5,7 @@ import { CardModule } from 'primeng/card';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -23,6 +24,6 @@ import { PasswordModule } from 'primeng/password';
     PasswordModule
   ],
   declarations: [],
-  providers: [],
+  providers: [MessageService],
 })
 export class LibrariesModule { }

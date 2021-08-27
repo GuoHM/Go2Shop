@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AuthenticationService } from 'app/auth/authentication.service';
+import { MessageService } from 'primeng/api';
 import { UserLogin } from '../user.model';
 import { UserService } from '../user.service';
 
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class LoginComponent implements OnInit {
     this.userService.login(userlogin).subscribe(
       (res) => {
         this.authenticationService.handleLoginSuccess(res.body);
+        this.messageService.add({severity:'success', summary:'Login Success!'});
       }
     );
   }
