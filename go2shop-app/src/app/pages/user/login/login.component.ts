@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { IUserLogin, UserLogin } from '../user.model';
+import { AuthenticationService } from 'app/auth/authentication.service';
+import { UserLogin } from '../user.model';
 import { UserService } from '../user.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
@@ -25,17 +27,17 @@ export class LoginComponent implements OnInit {
   private newForm(): void {
     this.loginForm = this.formBuilder.group({
       username: new FormControl(''),
-      passowrd: new FormControl('')
+      password: new FormControl('')
     });
   }
 
   login(): void {
     const userlogin: UserLogin = new UserLogin(this.loginForm.get('username').value, this.loginForm.get('password').value);
-    this.userService.login(userlogin).subscribe({
-      complete: () => { console.log('success'); }, 
-      error: () => { console.log('error'); }, 
-      next: () => { console.log('error'); }, 
-    });
+    this.userService.login(userlogin).subscribe(
+      (res) => {
+        this.authenticationService.handleLoginSuccess(res.body);
+      }
+    );
   }
   
 

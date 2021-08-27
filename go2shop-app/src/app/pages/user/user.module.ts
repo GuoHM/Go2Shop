@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserRoutingModule } from './user-routing.module';
 import { LibrariesModule } from 'app/shared/libraries/libraries.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +16,9 @@ import { LibrariesModule } from 'app/shared/libraries/libraries.module';
   imports: [
     CommonModule,
     LibrariesModule,
-    UserRoutingModule
+    UserRoutingModule,
+    FormsModule, 
+    ReactiveFormsModule
   ]
 })
 export class UserModule { }

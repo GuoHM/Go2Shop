@@ -1,6 +1,6 @@
 package com.go2shop.authentication.model;
 
-public class Oauth2TokenDTO {
+public class UserTokenDTO {
 
 	private String token;
 

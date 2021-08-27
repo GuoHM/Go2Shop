@@ -6,18 +6,6 @@ eureka:
 server:
   port: 8770
   
-cors: 
-  allowed-origins: "*"
-  allowed-methods: GET,POST,DELETE,PUT,OPTIONS
-  allowed-headers: Origin,X-Requested-With,Content-Type,Accept,Accept-Encoding,Accept-Language,Host,Referer,Connection,User-Agent,Authorization
-
-jwt:
-  header: Authorization
-  secret: mySecret
-  expiration: 9000
-  issuer: ITRunner
-  authentication-path: /auth
-  
 spring:
   application:
     name: gateway-springcloudgateway

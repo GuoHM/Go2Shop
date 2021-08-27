@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.go2shop.authentication.model.Oauth2TokenDTO;
+import com.go2shop.authentication.model.UserTokenDTO;
+import com.go2shop.authentication.service.UserAuthService;
 import com.go2shop.common.controller.BaseController;
 import com.go2shop.common.exception.BusinessException;
 import com.go2shop.common.exception.EmBusinessError;
@@ -22,12 +23,15 @@ import com.go2shop.common.exception.EmBusinessError;
 @RestController
 @RequestMapping("/oauth")
 public class UserAuthController extends BaseController {
+	
+	@Autowired
+	private UserAuthService userAuthService;
 
 	@Autowired
 	private TokenEndpoint tokenEndpoint;
 
 	@PostMapping(value = "/token")
-	public ResponseEntity<Oauth2TokenDTO> postAccessToken(Principal principal,
+	public ResponseEntity<UserTokenDTO> postAccessToken(Principal principal,
 			@RequestParam Map<String, String> parameters) throws BusinessException, HttpRequestMethodNotSupportedException {
 		OAuth2AccessToken oAuth2AccessToken = null;
 		try {
@@ -35,11 +39,6 @@ public class UserAuthController extends BaseController {
 		} catch (InvalidGrantException ex) {
 			throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
 		}
-		Oauth2TokenDTO oauth2TokenDTO = new Oauth2TokenDTO();
-		oauth2TokenDTO.setToken(oAuth2AccessToken.getValue());
-		oauth2TokenDTO.setRefreshToken(oAuth2AccessToken.getRefreshToken().getValue());
-		oauth2TokenDTO.setTokenHead("Bearer ");
-		oauth2TokenDTO.setExpiresIn(oAuth2AccessToken.getExpiresIn());
-		return ResponseEntity.ok().body(oauth2TokenDTO);
+		return ResponseEntity.ok().body(userAuthService.handleLoginSuccess(oAuth2AccessToken));
 	}
 }
