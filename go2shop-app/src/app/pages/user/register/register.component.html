@@ -6,23 +6,56 @@
                 <form [formGroup]="registerForm">
                     <div class="form-group">
                         <label for="username">User Name</label>
-                        <input type="text" pInputText formControlName="username" class="form-control" id="username" >
+                        <input type="text" pInputText formControlName="username" class="form-control" id="username" [ngClass]="{ 'is-valid' : isValid(form.username), 'is-invalid' : isInvalid(form.username) }">
+                        <small *ngIf="form.username.errors && isInvalid(form.username)" class="p-error">Username is not available.</small>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <p-password id="password" class="password-input" [(ngModel)]="password" [toggleMask]="true" formControlName="password"></p-password>
+                        <p-password id="password" class="password-input" [(ngModel)]="password" [toggleMask]="true" formControlName="password"
+                        [ngClass]="{ 'is-valid' : isValid(form.password), 'is-invalid' : isInvalid(form.password) }"></p-password>
+                        <small *ngIf="form.password.errors && isInvalid(form.password)" class="p-error">Password is not valid.</small>
                     </div>
                     <div class="form-group">
                         <label for="password-repeat">Repeat Password</label>
-                        <p-password id="password-repeat" class="password-input" [toggleMask]="true" [feedback]="false" formControlName="password-repeat"></p-password>
+                        <p-password id="password-repeat" class="password-input" [toggleMask]="true" [feedback]="false" formControlName="passwordRepeat"
+                        [ngClass]="{ 'is-valid' : isValid(form.passwordRepeat), 'is-invalid' : isInvalid(form.passwordRepeat) }"></p-password>
+                        <small *ngIf="form.passwordRepeat.errors && isInvalid(form.passwordRepeat)" class="p-error">Repeat password must be same as password.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" pInputText formControlName="name" class="form-control" id="name" [ngClass]="{ 'is-valid' : isValid(form.name), 'is-invalid' : isInvalid(form.name) }">
+                        <small *ngIf="form.name.errors && isInvalid(form.name)" class="p-error">Name is not valid.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea formControlName="address" class="form-control" id="address" [ngClass]="{ 'is-valid' : isValid(form.address), 'is-invalid' : isInvalid(form.address) }" rows="3" autoResize="autoResize"></textarea>
+                        <small *ngIf="form.address.errors && isInvalid(form.address)" class="p-error">Address is not valid.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactNumber">Contact Number</label>
+                        <input type="text" pInputText formControlName="contactNumber" class="form-control" id="contactNumber" [ngClass]="{ 'is-valid' : isValid(form.contactNumber), 'is-invalid' : isInvalid(form.contactNumber) }">
+                        <small *ngIf="form.contactNumber.errors && isInvalid(form.contactNumber)" class="p-error">Contact number is not valid.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" pInputText formControlName="cardNumber" class="form-control" id="cardNumber" [ngClass]="{ 'is-valid' : isValid(form.cardNumber), 'is-invalid' : isInvalid(form.cardNumber) }">
+                        <small *ngIf="form.cardNumber.errors && isInvalid(form.cardNumber)" class="p-error">Card number is not valid.</small>
                     </div>
                     <hr>
                     <div class="form-group">
                         <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="REGISTER"
-                            type="button"></button>
+                            type="button" (click)="register()"></button>
                     </div>
                     <div class="form-group">
                         <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="CANCEL"
+                            type="button"></button>
+                    </div>
+                    <div class="form-group" *hasAnyRole="['BUYER']">
+                        <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="Buyer"
+                            type="button"></button>
+                    </div>
+                    <div class="form-group" *hasAnyRole="['SELLER']">
+                        <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="Seller"
                             type="button"></button>
                     </div>
                 </form>

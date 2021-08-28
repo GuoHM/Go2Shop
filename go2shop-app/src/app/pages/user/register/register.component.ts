@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { isControlValid, isControlInvalid } from 'app/shared/utils/form.utils';
 
 @Component({
   selector: 'go2shop-register',
@@ -7,6 +8,9 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+
+  isValid = isControlValid;
+  isInvalid = isControlInvalid;
 
   registerForm: FormGroup;
 
@@ -22,12 +26,24 @@ export class RegisterComponent implements OnInit {
 
   private newForm(): void {
     this.registerForm = this.formBuilder.group({
-      username: new FormControl(''),
-      passowrd: new FormControl(''),
-      passwordRepeat: new FormControl('')
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      passwordRepeat: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required]),
+      address: new FormControl('', [Validators.required]),
+      contactNumber: new FormControl('', [Validators.required]),
+      cardNumber: new FormControl('', [Validators.required]),
+      type: new FormControl('', [Validators.required])
     });
   }
 
+  /**
+  * Returns an accessible control of the codeset form controls
+  */
+  get form(): any { return this.registerForm.controls; }
 
+  register(): void {
+    this.registerForm.markAllAsTouched();
+  }
 
 }
