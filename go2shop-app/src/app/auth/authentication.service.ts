@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { LoginUser, UserToken } from './auth.model';
+import { LoginUser, UserToken } from './authentication.model';
 import jwt_decode from 'jwt-decode';
 
 @Injectable({providedIn: 'root'})
@@ -7,12 +7,13 @@ export class AuthenticationService {
 
   handleLoginSuccess(usertoken: UserToken): void {
     const user: any = jwt_decode(usertoken.token);
-    const loginUSer: LoginUser = new LoginUser();
-    loginUSer.username = user.user_name;
-    loginUSer.authorities = user.authorities;
-    loginUSer.token = usertoken.token;
-    loginUSer.expiresIn = usertoken.expiresIn;
-    localStorage.setItem('currentUser', JSON.stringify(loginUSer));  
+    const loginUser: LoginUser = new LoginUser();
+    loginUser.username = user.user_name;
+    loginUser.authorities = user.authorities;
+    loginUser.token = usertoken.token;
+    loginUser.expiresIn = usertoken.expiresIn;
+    loginUser.tokenHead = usertoken.tokenHead;
+    localStorage.setItem('currentUser', JSON.stringify(loginUser));  
   }
   
   getCurrentUser(): LoginUser {
@@ -45,7 +46,7 @@ export class AuthenticationService {
       return false;
     }
     const authorities: string[] = currentUser.authorities;
-    const result =  authorities.indexOf('ROLE_' + role) != -1;
+    const result =  authorities.indexOf(role) != -1;
     return result;
   }
 }

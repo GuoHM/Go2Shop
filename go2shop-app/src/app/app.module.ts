@@ -9,7 +9,8 @@ import { LibrariesModule } from './shared/libraries/libraries.module';
 import { HeaderModule } from './shared/header/header.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthenticationInterceptor } from './auth/authentication.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,9 +24,11 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderModule,
     ButtonModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
