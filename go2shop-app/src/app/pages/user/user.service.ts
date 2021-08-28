@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IUserLogin } from './user.model';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { IUserToken } from 'app/auth/auth.model';
+import { IUserToken } from 'app/auth/authentication.model';
 
 @Injectable({
   providedIn: 'root'

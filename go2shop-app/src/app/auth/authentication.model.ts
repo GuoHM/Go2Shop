@@ -1,7 +1,8 @@
 export interface ILoginUser {
-  username?: string,
-  authorities?: string[],
-  expiresIn?: string,
+  username?: string;
+  authorities?: string[];
+  expiresIn?: string;
+  tokenHead?: string;
   token?: string;
 }
 
@@ -10,6 +11,7 @@ export class LoginUser implements ILoginUser {
     public username?: string,
     public authorities?: string[],
     public token?: string,
+    public tokenHead?: string,
     public expiresIn?: string,
   ) { }
 }
@@ -18,8 +20,8 @@ export class LoginUser implements ILoginUser {
 export interface IUserToken {
   token?: string;
   refreshToken?: string;
-  tokenHead?: string,
-  expiresIn?: string
+  tokenHead?: string;
+  expiresIn?: string;
 }
 
 export class UserToken implements IUserToken {
