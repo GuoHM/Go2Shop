@@ -7,6 +7,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { AvatarModule } from 'primeng/avatar';
+import { MenuModule } from 'primeng/menu';
 
 @NgModule({
   imports: [
@@ -14,7 +17,10 @@ import { ToastModule } from 'primeng/toast';
     MenubarModule,
     ButtonModule,
     InputTextModule,
-    PasswordModule
+    PasswordModule,
+    RadioButtonModule,
+    AvatarModule,
+    MenuModule
   ],
   exports: [
     CardModule,
@@ -22,7 +28,10 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule,
     InputTextModule,
     PasswordModule,
-    ToastModule
+    ToastModule,
+    RadioButtonModule,
+    AvatarModule,
+    MenuModule
   ],
   declarations: [],
   providers: [MessageService],

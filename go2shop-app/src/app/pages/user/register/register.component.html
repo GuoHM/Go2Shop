@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-10 col-sm-10 col-md-8 col-lg-3 mx-auto">
+    <div class="col-10 col-sm-10 col-md-8 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
             <div class="card-body">
                 <h5 class="card-title text-center">Register</h5>
@@ -20,6 +20,14 @@
                         <p-password id="password-repeat" class="password-input" [toggleMask]="true" [feedback]="false" formControlName="passwordRepeat"
                         [ngClass]="{ 'is-valid' : isValid(form.passwordRepeat), 'is-invalid' : isInvalid(form.passwordRepeat) }"></p-password>
                         <small *ngIf="form.passwordRepeat.errors && isInvalid(form.passwordRepeat)" class="p-error">Repeat password must be same as password.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="buyer" class="type-radio-button">Register As</label>
+                        <p-radioButton name="type" value="buyer" inputId="buyer" formControlName="type"></p-radioButton>
+                        <label for="buyer" class="type-radio-button">Buyer</label>
+                        <p-radioButton name="type" value="seller" inputId="seller" formControlName="type"></p-radioButton>
+                        <label for="seller">Seller</label>
+                        <small *ngIf="form.cardNumber.errors && isInvalid(form.cardNumber)" class="p-error">Card number is not valid.</small>
                     </div>
                     <div class="form-group">
                         <label for="name">Name</label>

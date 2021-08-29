@@ -1,9 +1,13 @@
 import {Injectable} from '@angular/core';
 import { LoginUser, UserToken } from './authentication.model';
 import jwt_decode from 'jwt-decode';
+import { Subject } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
+
+  private loginChangedSubject = new Subject<boolean>();
+  loginChangedObserver = this.loginChangedSubject.asObservable();
 
   handleLoginSuccess(usertoken: UserToken): void {
     const user: any = jwt_decode(usertoken.token);
@@ -14,11 +18,12 @@ export class AuthenticationService {
     loginUser.expiresIn = usertoken.expiresIn;
     loginUser.tokenHead = usertoken.tokenHead;
     localStorage.setItem('currentUser', JSON.stringify(loginUser));  
+    this.loginChanged(true);
   }
   
   getCurrentUser(): LoginUser {
     const userStr = localStorage.getItem('currentUser');
-    return userStr ? JSON.parse(userStr) : '';
+    return userStr ? JSON.parse(userStr) : null;
   }
   
   getToken(): string {
@@ -33,6 +38,7 @@ export class AuthenticationService {
   
   logout(): void {
     localStorage.removeItem('currentUser');
+    this.loginChanged(false);
   }
   
   isLoggedIn(): boolean {
@@ -48,6 +54,10 @@ export class AuthenticationService {
     const authorities: string[] = currentUser.authorities;
     const result =  authorities.indexOf(role) != -1;
     return result;
+  }
+
+  loginChanged(isLogin: boolean): void {
+    this.loginChangedSubject.next(isLogin);
   }
 }
 

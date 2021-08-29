@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'app/auth/authentication.service';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'go2shop-header',
@@ -7,11 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  isLogin = false;
+  avatarLabel;
+  userMenu: MenuItem[] = [
+    {label: 'User Profile', icon: 'pi pi-fw pi-users'},
+    {label: 'Logout', icon: 'pi pi-fw pi-sign-out', command: () => {
+      this.authenticationService.logout();
+    }}
+  ];
   
-  constructor() { }
+  constructor( private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-   
+    this.isLogin = this.authenticationService.getCurrentUser() !== null;
+    if (this.isLogin) {
+      this.avatarLabel = this.authenticationService.getCurrentUser().username.toUpperCase()[0];
+    }
+    this.authenticationService.loginChangedObserver.subscribe(
+      (isLogin) => {
+        this.isLogin = isLogin;
+        debugger
+        this.avatarLabel = this.authenticationService.getCurrentUser().username.toUpperCase()[0];
+      }
+    );
   }
 
 

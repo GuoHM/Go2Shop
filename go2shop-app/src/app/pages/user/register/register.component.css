@@ -55,3 +55,7 @@ label {
 ::ng-deep .p-password, ::ng-deep .p-password-input  {
     width: 100%;
 }
+
+.type-radio-button {
+    padding-right: 15px;
+}

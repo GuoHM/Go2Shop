@@ -1,5 +1,9 @@
 <p-menubar>
     <ng-template pTemplate="end">
-        <button pButton pRipple type="button" icon="pi pi-user" class="p-button-rounded p-button-info p-button-outlined" [routerLink]="['/user/login']" routerLinkActive="router-link-active" ></button>
+        <div *ngIf="isLogin">
+            <p-avatar [label]="avatarLabel" styleClass="p-mr-2" size="large" shape="circle" (click)="menu.toggle($event)"></p-avatar>
+            <p-menu #menu [popup]="true" [model]="userMenu"></p-menu>
+        </div>
+        <button *ngIf="!isLogin" pButton pRipple type="button" icon="pi pi-user" class="p-button-rounded p-button-info p-button-outlined" [routerLink]="['/user/login']" routerLinkActive="router-link-active" ></button>
     </ng-template>
 </p-menubar>
