@@ -16,6 +16,7 @@
 		<module>go2shop-cart-service</module>
 		<module>go2shop-payment-service</module>
 		<module>go2shop-common</module>
+		<module>go2shop-model</module>
 		<module>go2shop-auth-service</module>
 	</modules>
 
@@ -34,7 +35,11 @@
 		<org.mapstruct.version>1.3.0.Final</org.mapstruct.version>
 	</properties>
 
-	<dependencies>
+	<dependencies>	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>

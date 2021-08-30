@@ -4,6 +4,13 @@ server:
 spring:
   application:
     name: order-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/orderdb?serverTimezone=UTC
+    username: root
+    password: password
+    hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+    hikari:
+        register-mbeans: true
 #  rabbitmq:
 #    host: ${spring.rabbitmq.host}
 #    username: ${spring.rabbitmq.username}
