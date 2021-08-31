@@ -7,8 +7,8 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver 
     url: jdbc:mysql://localhost:3306/orderdb?serverTimezone=GMT
-    username: root
-    password: password
+    username: go2shop
+    password: go2shop
   jpa:
     show-sql: true
 #  rabbitmq:
