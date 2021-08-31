@@ -5,12 +5,12 @@ spring:
   application:
     name: catalogue-service
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/productdb?serverTimezone=UTC
+    driverClassName: com.mysql.cj.jdbc.Driver 
+    url: jdbc:mysql://localhost:3306/productdb?serverTimezone=GMT
     username: root
     password: password
-    hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
-    hikari:
-        register-mbeans: true
+  jpa:
+    show-sql: true
 #  rabbitmq:
 #    host: ${spring.rabbitmq.host}
 #    username: ${spring.rabbitmq.username}

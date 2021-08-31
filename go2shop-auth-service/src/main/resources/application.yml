@@ -5,10 +5,10 @@ spring:
   application:
     name: auth-service
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver 
     url: jdbc:mysql://localhost:3306/authdb
-    username: go2shop
-    password: go2shop
+    username: root
+    password: password
   jpa:
     show-sql: true
 #  rabbitmq:
