@@ -45,10 +45,6 @@ public class User {
 	@NotBlank
 	@Column(name = "CONTACT_DETAIL")
 	private String contactDetail;
-	
-	@NotNull
-	@Column(name = "TB_USER_TYPE_ID")
-	private int userType;
 
 	public int getId() {
 		return id;
@@ -96,14 +92,6 @@ public class User {
 
 	public void setContactDetail(String contactDetail) {
 		this.contactDetail = contactDetail;
-	}
-
-	public int getUserType() {
-		return userType;
-	}
-
-	public void setUserType(int userType) {
-		this.userType = userType;
 	}
 	
 }
