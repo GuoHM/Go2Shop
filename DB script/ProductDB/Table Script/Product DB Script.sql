@@ -16,7 +16,7 @@ USE `productdb` ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `productdb`.`tb_product` ;
 CREATE TABLE IF NOT EXISTS `productdb`.`tb_product` (
-  `ID` INT NOT NULL,
+  `ID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(100) NOT NULL,
   `Description` VARCHAR(255) NULL DEFAULT NULL,
   `Price` DECIMAL(6,0) NOT NULL,

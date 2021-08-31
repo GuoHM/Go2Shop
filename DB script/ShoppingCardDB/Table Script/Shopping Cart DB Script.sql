@@ -16,7 +16,7 @@ USE `shoppingcartdb` ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `shoppingcartdb`.`tb_shopping_cart` ;
 CREATE TABLE IF NOT EXISTS `shoppingcartdb`.`tb_shopping_cart` (
-  `ID` INT NOT NULL,
+  `ID` INT NOT NULL AUTO_INCREMENT,
   `PRICE` DECIMAL(6,0) NULL DEFAULT NULL,
   `DISCOUNT` DECIMAL(3,0) NULL DEFAULT NULL,
   `TB_USER_ID` INT NOT NULL,
@@ -30,7 +30,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `shoppingcartdb`.`tb_shopping_cart_has_tb_product` ;
 CREATE TABLE IF NOT EXISTS `shoppingcartdb`.`tb_shopping_cart_has_tb_product` (
-  `ID` INT NOT NULL,
+  `ID` INT NOT NULL AUTO_INCREMENT,
   `TB_SHOPPING_CART_ID` INT NOT NULL,
   `TB_PRODUCT_ID` INT NOT NULL,
   `Quantity` INT NOT NULL,
