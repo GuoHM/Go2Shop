@@ -39,7 +39,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 DROP TABLE IF EXISTS `authdb`.`tb_security_user` ;
 
 CREATE TABLE IF NOT EXISTS `authdb`.`tb_security_user` (
-  `ID` BIGINT NOT NULL,
+  `ID` BIGINT NOT NULL  AUTO_INCREMENT,
   `USERNAME` VARCHAR(45) NOT NULL,
   `PASSWORD` VARCHAR(100) NOT NULL,
   `USER_ID` BIGINT NOT NULL,
@@ -56,7 +56,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 DROP TABLE IF EXISTS `authdb`.`tb_user_authority` ;
 
 CREATE TABLE IF NOT EXISTS `authdb`.`tb_user_authority` (
-  `ID` BIGINT NOT NULL,
+  `ID` BIGINT NOT NULL  AUTO_INCREMENT,
   `USER_ID` BIGINT NOT NULL,
   `AUTHORITY_ID` BIGINT NOT NULL,
   PRIMARY KEY (`ID`))
@@ -82,6 +82,9 @@ ADD CONSTRAINT `user_authority_to_security_user`
   
 ALTER TABLE `authdb`.`tb_security_user` 
 ADD INDEX `username` (`USERNAME` ASC) VISIBLE;
+;
+ALTER TABLE `authdb`.`tb_security_user` 
+ADD UNIQUE INDEX `USERNAME_UNIQUE` (`USERNAME` ASC) VISIBLE;
 ;
 
 
