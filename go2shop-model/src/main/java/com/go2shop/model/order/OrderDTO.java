@@ -6,34 +6,33 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/** 
+/**
  * 
- * <Write a short description on the purpose of the class> 
+ * <Write a short description on the purpose of the class>
  * 
- * @author P1326154 
- * Created Date Aug 10, 2021 3:06:24 PM 
+ * @author P1326154 Created Date Aug 10, 2021 3:06:24 PM
  * 
-*/
+ */
 public class OrderDTO {
-	
+
 	@NotNull
-	private int id;
-	
+	private Long id;
+
 	@NotBlank
 	@Size(max = 25)
 	private String status;
-	
+
 	@NotNull
 	private LocalDateTime orderDate;
-	
-	@NotNull
-	private int userID;
 
-	public int getId() {
+	@NotNull
+	private Long userID;
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -53,12 +52,12 @@ public class OrderDTO {
 		this.orderDate = orderDate;
 	}
 
-	public int getUserID() {
+	public Long getUserID() {
 		return userID;
 	}
 
-	public void setUserID(int userID) {
+	public void setUserID(Long userID) {
 		this.userID = userID;
 	}
-	
+
 }

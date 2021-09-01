@@ -8,56 +8,55 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/** 
+/**
  * 
- * <Write a short description on the purpose of the class> 
+ * <Write a short description on the purpose of the class>
  * 
- * @author P1326154 
- * Created Date Aug 10, 2021 3:00:27 PM 
+ * @author P1326154 Created Date Aug 10, 2021 3:00:27 PM
  * 
-*/
+ */
 @Entity
 @Table(name = "TB_SHOPPING_CART_has_TB_PRODUCT")
 public class ShoppingCartProduct {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
-	
+	private Long id;
+
 	@NotNull
 	@Column(name = "TB_SHOPPING_CART_ID")
-	private int shoppingCart;
-	
+	private Long shoppingCart;
+
 	@NotNull
 	@Column(name = "TB_PRODUCT_ID")
-	private int productID;
-	
+	private Long productID;
+
 	@NotNull
 	@Column(name = "Quantity")
 	private int quantity;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public int getShoppingCart() {
+	public Long getShoppingCart() {
 		return shoppingCart;
 	}
 
-	public void setShoppingCart(int shoppingCart) {
+	public void setShoppingCart(Long shoppingCart) {
 		this.shoppingCart = shoppingCart;
 	}
 
-	public int getProductID() {
+	public Long getProductID() {
 		return productID;
 	}
 
-	public void setProductID(int productID) {
+	public void setProductID(Long productID) {
 		this.productID = productID;
 	}
 
@@ -68,5 +67,5 @@ public class ShoppingCartProduct {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
 }

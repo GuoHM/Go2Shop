@@ -2,33 +2,32 @@ package com.go2shop.model.cart;
 
 import javax.validation.constraints.NotNull;
 
-/** 
+/**
  * 
- * <Write a short description on the purpose of the class> 
+ * <Write a short description on the purpose of the class>
  * 
- * @author P1326154 
- * Created Date Aug 10, 2021 2:41:13 PM 
+ * @author P1326154 Created Date Aug 10, 2021 2:41:13 PM
  * 
-*/
+ */
 public class ShoppingCartProductDTO {
 
 	@NotNull
-	private int id;
-	
+	private Long id;
+
 	@NotNull
 	private int shoppingCart;
-	
+
 	@NotNull
-	private int productID;
-	
+	private Long productID;
+
 	@NotNull
 	private int quantity;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -40,11 +39,11 @@ public class ShoppingCartProductDTO {
 		this.shoppingCart = shoppingCart;
 	}
 
-	public int getProductID() {
+	public Long getProductID() {
 		return productID;
 	}
 
-	public void setProductID(int productID) {
+	public void setProductID(Long productID) {
 		this.productID = productID;
 	}
 
@@ -55,4 +54,5 @@ public class ShoppingCartProductDTO {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
 }

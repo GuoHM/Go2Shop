@@ -6,39 +6,38 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/** 
+/**
  * 
- * <Write a short description on the purpose of the class> 
+ * <Write a short description on the purpose of the class>
  * 
- * @author P1326154 
- * Created Date Aug 10, 2021 3:06:33 PM 
+ * @author P1326154 Created Date Aug 10, 2021 3:06:33 PM
  * 
-*/
+ */
 public class OrderDetailDTO {
 
 	@NotNull
-	private int id;
-	
+	private Long id;
+
 	@NotBlank
 	private LocalDateTime orderDate;
-	
-	private LocalDateTime orderReceived;
-	
-	private LocalDateTime paymentDate;
-	
-	private BigDecimal payment;
-	
-	@NotNull
-	private int orderID;
-	
-	@NotNull
-	private int productID;
 
-	public int getId() {
+	private LocalDateTime orderReceived;
+
+	private LocalDateTime paymentDate;
+
+	private BigDecimal payment;
+
+	@NotNull
+	private Long orderID;
+
+	@NotNull
+	private Long productID;
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -74,20 +73,20 @@ public class OrderDetailDTO {
 		this.payment = payment;
 	}
 
-	public int getOrderID() {
+	public Long getOrderID() {
 		return orderID;
 	}
 
-	public void setOrderID(int orderID) {
+	public void setOrderID(Long orderID) {
 		this.orderID = orderID;
 	}
 
-	public int getProductID() {
+	public Long getProductID() {
 		return productID;
 	}
 
-	public void setProductID(int productID) {
+	public void setProductID(Long productID) {
 		this.productID = productID;
 	}
-	
+
 }

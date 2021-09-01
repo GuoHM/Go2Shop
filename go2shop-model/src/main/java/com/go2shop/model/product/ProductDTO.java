@@ -7,42 +7,41 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/** 
+/**
  * 
- * <Write a short description on the purpose of the class> 
+ * <Write a short description on the purpose of the class>
  * 
- * @author P1326154 
- * Created Date Aug 10, 2021 3:19:55 PM 
+ * @author P1326154 Created Date Aug 10, 2021 3:19:55 PM
  * 
-*/
+ */
 public class ProductDTO {
-	
+
 	@NotNull
-	private int id;
-	
+	private Long id;
+
 	@NotBlank
 	@Size(max = 100)
 	private String name;
-	
+
 	@NotBlank
 	@Size(max = 255)
 	private String description;
-	
+
 	@NotNull
-    @Digits(integer=4, fraction = 2)
+	@Digits(integer = 4, fraction = 2)
 	private BigDecimal price;
-	
+
 	@NotNull
 	private int stock;
-	
-	@NotNull
-	private int userID;
 
-	public int getId() {
+	@NotNull
+	private Long userID;
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -78,12 +77,12 @@ public class ProductDTO {
 		this.stock = stock;
 	}
 
-	public int getUserID() {
+	public Long getUserID() {
 		return userID;
 	}
 
-	public void setUserID(int userID) {
+	public void setUserID(Long userID) {
 		this.userID = userID;
 	}
-	
+
 }

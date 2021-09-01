@@ -13,8 +13,7 @@ import javax.validation.constraints.Size;
  */
 public class UserDTO {
 
-	@NotNull
-	private int id;
+	private Long id;
 
 	@NotBlank
 	@Size(max = 16)
@@ -36,11 +35,11 @@ public class UserDTO {
 	@Size(max = 8)
 	private String contactDetail;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

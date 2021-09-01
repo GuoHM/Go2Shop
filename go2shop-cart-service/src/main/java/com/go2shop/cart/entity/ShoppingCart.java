@@ -10,38 +10,37 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/** 
+/**
  * 
- * <Write a short description on the purpose of the class> 
+ * <Write a short description on the purpose of the class>
  * 
- * @author P1326154 
- * Created Date Aug 10, 2021 3:00:18 PM 
+ * @author P1326154 Created Date Aug 10, 2021 3:00:18 PM
  * 
-*/
+ */
 @Entity
 @Table(name = "TB_SHOPPING_CART")
 public class ShoppingCart {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
-	
+	private Long id;
+
 	@Column(name = "PRICE")
 	private BigDecimal price;
-	
+
 	@Column(name = "DISCOUNT")
 	private BigDecimal discount;
-	
+
 	@NotNull
 	@Column(name = "TB_USER_ID")
-	private int userID;
+	private Long userID;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -61,11 +60,11 @@ public class ShoppingCart {
 		this.discount = discount;
 	}
 
-	public int getUserID() {
+	public Long getUserID() {
 		return userID;
 	}
 
-	public void setUserID(int userID) {
+	public void setUserID(Long userID) {
 		this.userID = userID;
 	}
 

@@ -7,50 +7,48 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
-/** 
+/**
  * 
- * <Write a short description on the purpose of the class> 
+ * <Write a short description on the purpose of the class>
  * 
- * @author P1326154 
- * Created Date Aug 10, 2021 10:09:39 AM 
+ * @author P1326154 Created Date Aug 10, 2021 10:09:39 AM
  * 
-*/
+ */
 @Entity
 @Table(name = "TB_USER")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
-	
+	private Long id;
+
 	@NotBlank
 	@Column(name = "CARD_NUMBER")
 	private String cardNumber;
-	
+
 	@NotBlank
 	@Column(name = "NAME")
 	private String name;
-	
+
 	@NotBlank
 	@Column(name = "EXPIRY")
 	private String expiry;
-	
+
 	@NotBlank
 	@Column(name = "ADDRESS")
 	private String address;
-	
+
 	@NotBlank
 	@Column(name = "CONTACT_DETAIL")
 	private String contactDetail;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -93,5 +91,5 @@ public class User {
 	public void setContactDetail(String contactDetail) {
 		this.contactDetail = contactDetail;
 	}
-	
+
 }

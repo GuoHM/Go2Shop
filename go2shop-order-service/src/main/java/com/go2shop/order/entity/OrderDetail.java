@@ -12,49 +12,48 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/** 
+/**
  * 
- * <Write a short description on the purpose of the class> 
+ * <Write a short description on the purpose of the class>
  * 
- * @author P1326154 
- * Created Date Aug 10, 2021 3:06:50 PM 
+ * @author P1326154 Created Date Aug 10, 2021 3:06:50 PM
  * 
-*/
+ */
 @Entity
 @Table(name = "TB_ORDER_DETAIL")
 public class OrderDetail {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	private int id;
-	
+	private Long id;
+
 	@NotBlank
 	@Column(name = "ORDER_DATE")
 	private LocalDateTime orderDate;
-	
+
 	@Column(name = "ORDER_RECEIVED")
 	private LocalDateTime orderReceived;
-	
+
 	@Column(name = "PAYMENT_DATE")
 	private LocalDateTime paymentDate;
-	
+
 	@Column(name = "PAYMENT")
 	private BigDecimal payment;
-	
+
 	@NotNull
 	@Column(name = "TB_ORDER_ID")
-	private int orderID;
-	
+	private Long orderID;
+
 	@NotNull
 	@Column(name = "TB_PRODUCT_ID")
-	private int productID;
+	private Long productID;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -90,20 +89,20 @@ public class OrderDetail {
 		this.payment = payment;
 	}
 
-	public int getOrderID() {
+	public Long getOrderID() {
 		return orderID;
 	}
 
-	public void setOrderID(int orderID) {
+	public void setOrderID(Long orderID) {
 		this.orderID = orderID;
 	}
 
-	public int getProductID() {
+	public Long getProductID() {
 		return productID;
 	}
 
-	public void setProductID(int productID) {
+	public void setProductID(Long productID) {
 		this.productID = productID;
 	}
-	
+
 }

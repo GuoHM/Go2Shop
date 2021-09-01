@@ -4,31 +4,30 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
-/** 
+/**
  * 
- * <Write a short description on the purpose of the class> 
+ * <Write a short description on the purpose of the class>
  * 
- * @author P1326154 
- * Created Date Aug 10, 2021 2:41:01 PM 
+ * @author P1326154 Created Date Aug 10, 2021 2:41:01 PM
  * 
-*/
+ */
 public class ShoppingCartDTO {
-	
-	@NotNull
-	private int id;
-	
-	private BigDecimal price;
-	
-	private BigDecimal discount;
-	
-	@NotNull
-	private int userID;
 
-	public int getId() {
+	@NotNull
+	private Long id;
+
+	private BigDecimal price;
+
+	private BigDecimal discount;
+
+	@NotNull
+	private Long userID;
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -48,11 +47,11 @@ public class ShoppingCartDTO {
 		this.discount = discount;
 	}
 
-	public int getUserID() {
+	public Long getUserID() {
 		return userID;
 	}
 
-	public void setUserID(int userID) {
+	public void setUserID(Long userID) {
 		this.userID = userID;
 	}
 
