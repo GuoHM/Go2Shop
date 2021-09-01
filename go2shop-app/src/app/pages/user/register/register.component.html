@@ -40,9 +40,9 @@
                         <small *ngIf="form.address.errors && isInvalid(form.address)" class="p-error">Address is not valid.</small>
                     </div>
                     <div class="form-group">
-                        <label for="contactNumber">Contact Number</label>
-                        <input type="text" pInputText formControlName="contactNumber" class="form-control" id="contactNumber" [ngClass]="{ 'is-valid' : isValid(form.contactNumber), 'is-invalid' : isInvalid(form.contactNumber) }">
-                        <small *ngIf="form.contactNumber.errors && isInvalid(form.contactNumber)" class="p-error">Contact number is not valid.</small>
+                        <label for="contactDetail">Contact Number</label>
+                        <input type="text" pInputText formControlName="contactDetail" class="form-control" id="contactDetail" [ngClass]="{ 'is-valid' : isValid(form.contactDetail), 'is-invalid' : isInvalid(form.contactDetail) }">
+                        <small *ngIf="form.contactDetail.errors && isInvalid(form.contactDetail)" class="p-error">Contact number is not valid.</small>
                     </div>
                     <div class="form-group">
                         <label for="cardNumber">Card Number</label>
@@ -58,16 +58,9 @@
                         <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="CANCEL"
                             type="button"></button>
                     </div>
-                    <div class="form-group" *hasAnyRole="['BUYER']">
-                        <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="Buyer"
-                            type="button"></button>
-                    </div>
-                    <div class="form-group" *hasAnyRole="['SELLER']">
-                        <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="Seller"
-                            type="button"></button>
-                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<p-toast position="top-center" key="tc"></p-toast>

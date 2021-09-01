@@ -7,14 +7,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.go2shop.authentication.model.entity.SecurityUser;
-import com.go2shop.authentication.repository.UserAuthRepository;
+import com.go2shop.authentication.repository.SecurityUserRepository;
 import com.go2shop.authentication.util.AuthorityUtil;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
-	UserAuthRepository userAuthRepository;
+	SecurityUserRepository userAuthRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) {

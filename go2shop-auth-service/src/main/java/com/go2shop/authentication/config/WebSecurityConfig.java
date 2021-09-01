@@ -17,7 +17,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
-				.antMatchers("/rsa/publicKey").permitAll().anyRequest().authenticated();
+				.antMatchers("/rsa/publicKey", "/securityUser/register").permitAll().anyRequest().authenticated().and().csrf().disable();
 	}
 
 	@Bean

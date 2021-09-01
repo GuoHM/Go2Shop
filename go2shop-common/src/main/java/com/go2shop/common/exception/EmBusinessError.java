@@ -8,6 +8,7 @@ public enum EmBusinessError implements ICommonError {
 	PARAMETER_VALIDATION_ERROR("A101", "Invalid parameter", HttpStatus.BAD_REQUEST),
 	UNKNOW_ERROR("A102", "Unknow error", HttpStatus.BAD_REQUEST),
 	TOKEN_EXPIRE("A103", "Token expire", HttpStatus.UNAUTHORIZED),
+	SERVICE_NOT_AVAILABLE("A104", "Service not available for now, please try later", HttpStatus.SERVICE_UNAVAILABLE),
 
 	// auth error start with B101
 	USER_NOT_EXIST("B101", "User do not exist", HttpStatus.UNAUTHORIZED),

@@ -22,7 +22,7 @@ import com.go2shop.common.exception.EmBusinessError;
 
 @RestController
 @RequestMapping("/oauth")
-public class UserAuthController extends BaseController {
+public class OauthController extends BaseController {
 	
 	@Autowired
 	private UserAuthService userAuthService;
@@ -41,4 +41,5 @@ public class UserAuthController extends BaseController {
 		}
 		return ResponseEntity.ok().body(userAuthService.handleLoginSuccess(oAuth2AccessToken));
 	}
+	
 }

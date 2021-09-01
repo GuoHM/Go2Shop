@@ -50,6 +50,12 @@ spring:
         - Path=/api/catalogueService/**
         filters:
         - RewritePath=/api/catalogueService/(?<segment>.*), /$\{segment} 
+      - id: user-service
+        uri: lb://user-service
+        predicates:
+        - Path=/api/userService/**
+        filters:
+        - RewritePath=/api/userService/(?<segment>.*), /$\{segment} 
         
         
 secure:
@@ -57,6 +63,7 @@ secure:
     urls:
       - "/actuator/**"
       - "/api/authenticationService/oauth/token"
+      - "/api/authenticationService/securityUser/register"
       
   authroities:
     - 

@@ -38,3 +38,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/ 
+      
+secure:
+  ignore:
+    urls:
+      - "/rsa/publicKey"
+      - "/actuator/**"
+      - "/api/authenticationService/oauth/token"
+      - "/api/authenticationService/securityUser/register"
