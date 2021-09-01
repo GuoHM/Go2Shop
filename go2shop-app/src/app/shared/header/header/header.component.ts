@@ -21,14 +21,13 @@ export class HeaderComponent implements OnInit {
   constructor( private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.isLogin = this.authenticationService.getCurrentUser() !== null;
+    this.isLogin = this.authenticationService.isLoggedIn();
     if (this.isLogin) {
       this.avatarLabel = this.authenticationService.getCurrentUser().username.toUpperCase()[0];
     }
     this.authenticationService.loginChangedObserver.subscribe(
       (isLogin) => {
         this.isLogin = isLogin;
-        debugger
         this.avatarLabel = this.authenticationService.getCurrentUser().username.toUpperCase()[0];
       }
     );
