@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { isControlValid, isControlInvalid } from 'app/shared/utils/form.utils';
 import { MessageService } from 'primeng/api';
 import { UserRegister } from '../user.model';
@@ -39,7 +39,20 @@ export class RegisterComponent implements OnInit {
       contactDetail: new FormControl('', [Validators.required]),
       cardNumber: new FormControl('', [Validators.required]),
       type: new FormControl('', [Validators.required])
-    });
+    }, { validator: this.checkIfMatchingPasswords('password', 'passwordRepeat') });
+  }
+
+  checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
+    return (group: FormGroup) => {
+      const passwordInput = group.controls[passwordKey];
+      const passwordConfirmationInput = group.controls[passwordConfirmationKey];
+      if (passwordInput.value !== passwordConfirmationInput.value) {
+        return passwordConfirmationInput.setErrors({ notEquivalent: true });
+      }
+      else {
+        return passwordConfirmationInput.setErrors(null);
+      }
+    };
   }
 
   /**
@@ -59,12 +72,12 @@ export class RegisterComponent implements OnInit {
     user.type = this.registerForm.get('type').value;
     this.userService.register(user).subscribe(
       () => {
-        this.messageService.add({key: 'tc', severity:'success', summary:'Success', detail: 'You have successful login!'});
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'You have successful login!' });
       },
       (err) => {
         console.log(err);
         if (err.error.errCode === 'B104') {
-          this.messageService.add({key: 'tc', severity:'error', summary:'Fail', detail: err.error.errMsg});
+          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Fail', detail: err.error.errMsg });
         }
       }
     );
