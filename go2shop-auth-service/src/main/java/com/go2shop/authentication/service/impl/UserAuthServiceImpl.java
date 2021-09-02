@@ -1,5 +1,6 @@
 package com.go2shop.authentication.service.impl;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,21 +28,21 @@ import com.go2shop.model.user.UserDTO;
 
 @Service
 public class UserAuthServiceImpl implements UserAuthService {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private UserRegisterMapper userRegisterMapper;
-	
+
 	@Autowired
 	private SecurityUserRepository securityUserRepository;
-	
+
 	@Autowired
 	private AuthorityRepository authorityRepository;
-	
+
 	@Autowired
-    private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserTokenDTO handleLoginSuccess(OAuth2AccessToken userToken) {
@@ -61,15 +62,22 @@ public class UserAuthServiceImpl implements UserAuthService {
 		if (response.getStatusCode() == HttpStatus.BAD_REQUEST) {
 			throw new BusinessException(EmBusinessError.SERVICE_NOT_AVAILABLE);
 		}
-		SecurityUser securityUser = userRegisterMapper.toSecurityUser(userRegister);
-		securityUser.setAuthorities(findAuthorityByAuthorityName(userRegister.getType()));
-		securityUser.setUserId(response.getBody().getId());
-		securityUser.setEnabled(ActiveStatus.ACTIVE);
-		securityUser.setPassword(passwordEncoder.encode(securityUser.getPassword()));
-		securityUserRepository.saveAndFlush(securityUser);
+		try {
+			SecurityUser securityUser = userRegisterMapper.toSecurityUser(userRegister);
+			securityUser.setAuthorities(findAuthorityByAuthorityName(userRegister.getType()));
+			securityUser.setUserId(response.getBody().getId());
+			securityUser.setEnabled(ActiveStatus.ACTIVE);
+			securityUser.setPassword(passwordEncoder.encode(securityUser.getPassword()));
+			securityUserRepository.saveAndFlush(securityUser);
+		} catch (Exception e) {
+			if (e.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {
+				throw new BusinessException(EmBusinessError.USER_USERNAME_EXIST);
+			}
+		}
+
 		return response.getBody();
 	}
-	
+
 	private List<Authority> findAuthorityByAuthorityName(String type) {
 		AuthorityName authorityName = AuthorityName.getByString(type);
 		return Arrays.asList(authorityRepository.findByName(authorityName));

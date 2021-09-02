@@ -63,7 +63,7 @@ export class RegisterComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        if (err.error.errCode === 'B102') {
+        if (err.error.errCode === 'B104') {
           this.messageService.add({key: 'tc', severity:'error', summary:'Fail', detail: err.error.errMsg});
         }
       }

@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.go2shop.authentication.model.UserRegisterDTO;
 import com.go2shop.authentication.service.UserAuthService;
+import com.go2shop.common.controller.BaseController;
 import com.go2shop.common.exception.BusinessException;
 import com.go2shop.model.user.UserDTO;
 
 @RestController
 @RequestMapping("/securityUser")
-public class SecurityUserController {
+public class SecurityUserController extends BaseController {
 
 	@Autowired
 	private UserAuthService userAuthService;
