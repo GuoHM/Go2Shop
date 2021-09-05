@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./user-detail/user-detail.module').then(m => m.UserDetailModule)
   }
 ];
 

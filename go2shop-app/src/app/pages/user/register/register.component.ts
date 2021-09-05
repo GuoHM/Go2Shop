@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { isControlValid, isControlInvalid } from 'app/shared/utils/form.utils';
 import { MessageService } from 'primeng/api';
 import { UserRegister } from '../user.model';

@@ -1,6 +1,7 @@
 <p-menubar>
     <ng-template pTemplate="end">
         <div *ngIf="isLogin">
+            <button *hasAnyRole="['BUYER']" pButton pRipple type="button" icon="pi pi-shopping-cart" class="p-button-rounded p-button-outlined icon-margin"></button>
             <p-avatar [label]="avatarLabel" styleClass="p-mr-2" size="large" shape="circle" (click)="menu.toggle($event)"></p-avatar>
             <p-menu #menu [popup]="true" [model]="userMenu"></p-menu>
         </div>
