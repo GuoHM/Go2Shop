@@ -68,6 +68,12 @@ secure:
   authroities:
     - 
       urls:
+        - "/api/userService/user/detail/**"
+      roles:
+        - BUYER
+        - SELLER
+    - 
+      urls:
         - "/api/cartService/cart/demo/**"
       roles:
         - BUYER

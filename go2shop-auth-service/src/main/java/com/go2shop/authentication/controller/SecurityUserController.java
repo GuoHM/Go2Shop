@@ -26,9 +26,4 @@ public class SecurityUserController extends BaseController {
 			throws BusinessException {
 		return ResponseEntity.ok().body(userAuthService.registerUser(userRegister));
 	}
-	
-	@GetMapping(value = "/register/test")
-	public ResponseEntity<String> register() {
-		return ResponseEntity.ok().body("success");
-	}
 }
