@@ -39,7 +39,7 @@ public class OauthController extends BaseController {
 		} catch (InvalidGrantException ex) {
 			throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
 		}
-		return ResponseEntity.ok().body(userAuthService.handleLoginSuccess(oAuth2AccessToken));
+		return ResponseEntity.ok().body(userAuthService.handleLoginSuccess(oAuth2AccessToken, parameters.get("username")));
 	}
 	
 }

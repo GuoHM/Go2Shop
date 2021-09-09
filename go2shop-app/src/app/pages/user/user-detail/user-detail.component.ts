@@ -13,32 +13,15 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = [{
-      label: 'Options',
-      items: [{
-        label: 'Update',
-        icon: 'pi pi-refresh',
-           
-      },
-      {
-        label: 'Delete',
-        icon: 'pi pi-times',
-           
-      }
-      ]},
-    {
-      label: 'Navigate',
-      items: [{
-        label: 'Angular',
-        icon: 'pi pi-external-link',
-        routerLink: ['purchase/history']
-      },
-      {
-        label: 'Router',
-        icon: 'pi pi-upload',
-        routerLink: ['profile']
-      }
-      ]}
-    ];
+      label: 'Profile',
+      icon: 'pi pi-users',
+      routerLink: ['profile']
+    }, {
+      label: 'Purchase history',
+      icon: 'pi pi-wallet',
+      routerLink: ['purchase/history']
+    }];
   }
+
 
 }

@@ -45,12 +45,17 @@ public class UserAuthServiceImpl implements UserAuthService {
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public UserTokenDTO handleLoginSuccess(OAuth2AccessToken userToken) {
+	public UserTokenDTO handleLoginSuccess(OAuth2AccessToken userToken, String username) throws BusinessException {
 		UserTokenDTO oauth2TokenDTO = new UserTokenDTO();
 		oauth2TokenDTO.setToken(userToken.getValue());
 		oauth2TokenDTO.setRefreshToken(userToken.getRefreshToken().getValue());
 		oauth2TokenDTO.setTokenHead("Bearer ");
 		oauth2TokenDTO.setExpiresIn(userToken.getExpiresIn());
+		SecurityUser securityUser = securityUserRepository.findByUsername(username);
+		if (securityUser == null) {
+			throw new BusinessException(EmBusinessError.USER_NOT_EXIST); 
+		}
+		oauth2TokenDTO.setUserId(securityUser.getUserId());
 		return oauth2TokenDTO;
 	}
 

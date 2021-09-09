@@ -10,6 +10,8 @@ public class UserTokenDTO {
 
 	private int expiresIn;
 
+	private Long userId;
+
 	public String getToken() {
 		return token;
 	}
@@ -40,6 +42,14 @@ public class UserTokenDTO {
 
 	public void setExpiresIn(int expiresIn) {
 		this.expiresIn = expiresIn;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 }

@@ -26,4 +26,8 @@ export class UserService {
       { observe: 'response' });
   }
 
+  getUserByUserId(userId: number): Observable<HttpResponse<IUser>> {
+    return this.http.get<IUser>('/api/userService/user/detail/' + userId, { observe: 'response' });
+  }
+
 }
