@@ -1,0 +1,19 @@
+.display-items-container {
+    display: flex; 
+    flex-wrap:wrap; 
+    align-content: flex-start; 
+    padding-top: 0.3125rem; 
+    min-height: 500px;
+    padding-top:2.5rem;
+}
+
+.displayed-product-container {
+    padding: 0.3125rem; 
+    width: 16.6667%; 
+    height:300px
+}
+
+.displayed-product-padding {
+    padding-bottom: 0.625rem;
+}
+

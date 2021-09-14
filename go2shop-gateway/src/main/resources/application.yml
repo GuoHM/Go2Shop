@@ -64,6 +64,8 @@ secure:
       - "/actuator/**"
       - "/api/authenticationService/oauth/token"
       - "/api/authenticationService/securityUser/register"
+      - "/api/catalogueService/catalogue/catalogue"
+      - "/api/catalogueService/catalogue/product/**"
       
   authroities:
     - 

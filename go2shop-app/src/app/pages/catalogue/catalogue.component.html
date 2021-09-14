@@ -1,0 +1,15 @@
+<div class="catalogue-wrapper">
+    <div class="go2shop-search-bar-wrapper">
+        <div class="go2shop-search-bar-container">
+            <div class="go2shop-search-bar">
+                <div style="display:flex;flex:1;position: relative">
+                    <form [formGroup]="searchForm" class="search-bar-form-container">
+                        <input type="text" [formControlName]="'search'" class="search-bar-form-container search-bar-input-field">
+                    </form>
+                </div>
+                <button class="btn search-bar-button"><em class="fas fa-search"></em></button>
+            </div>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>
