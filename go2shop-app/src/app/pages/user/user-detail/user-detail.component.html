@@ -1,2 +1,14 @@
-<p-menu [model]="items"></p-menu>
-<router-outlet></router-outlet>
+<div style="padding: 30px;">
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <div class="d-flex flex-row">
+                <div>
+                    <p-menu [model]="items"></p-menu>
+                </div>
+                <div style="padding-left: 30px;">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

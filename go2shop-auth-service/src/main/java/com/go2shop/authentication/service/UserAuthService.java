@@ -9,7 +9,7 @@ import com.go2shop.model.user.UserDTO;
 
 public interface UserAuthService {
 	
-	UserTokenDTO handleLoginSuccess(OAuth2AccessToken userToken);
+	UserTokenDTO handleLoginSuccess(OAuth2AccessToken userToken, String username) throws BusinessException;
 	
 	UserDTO registerUser(UserRegisterDTO userRegister) throws BusinessException;
 

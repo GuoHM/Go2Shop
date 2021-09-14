@@ -1,8 +1,6 @@
 package com.go2shop.cart.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.stereotype.Repository;
 
 import com.go2shop.cart.entity.ShoppingCart;
 
@@ -15,7 +13,6 @@ import com.go2shop.cart.entity.ShoppingCart;
  * Created Date Aug 10, 2021 2:26:35 PM 
  * 
 */
-@Repository
-public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Integer>, JpaSpecificationExecutor<ShoppingCart> {
+public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long> {
 
 }

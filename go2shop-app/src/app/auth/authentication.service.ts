@@ -17,6 +17,7 @@ export class AuthenticationService {
     loginUser.token = usertoken.token;
     loginUser.expiresIn = usertoken.expiresIn;
     loginUser.tokenHead = usertoken.tokenHead;
+    loginUser.userId = usertoken.userId;
     localStorage.setItem('currentUser', JSON.stringify(loginUser));  
     this.loginChanged(true);
   }
