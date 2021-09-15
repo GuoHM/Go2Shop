@@ -1,6 +1,7 @@
 package com.go2shop.model.product;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -37,6 +38,8 @@ public class ProductDTO {
 	@NotNull
 	private Long userID;
 
+	List<ProductImageDTO> productImages;
+	
 	public Long getId() {
 		return id;
 	}
@@ -83,6 +86,14 @@ public class ProductDTO {
 
 	public void setUserID(Long userID) {
 		this.userID = userID;
+	}
+
+	public List<ProductImageDTO> getProductImages() {
+		return productImages;
+	}
+
+	public void setProductImages(List<ProductImageDTO> productImages) {
+		this.productImages = productImages;
 	}
 
 }

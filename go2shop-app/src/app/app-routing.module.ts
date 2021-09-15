@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '', redirectTo: '/catalogue', pathMatch: 'full'
+  },
+  {
     path: 'catalogue', loadChildren: () => import('app/pages/catalogue/catalogue.module').then(m => m.CatalogueModule)
   },
   {
@@ -17,7 +20,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

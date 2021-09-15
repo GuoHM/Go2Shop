@@ -1,0 +1,52 @@
+.go2shop-search-bar-wrapper {
+    display: flex; 
+    justify-content:center; 
+    padding-top:10px;
+}
+
+.go2shop-search-bar-container {
+    position: relative; 
+    width: 840px; 
+    justify-content:flex-start;
+    flex-direction: column;
+    border-radius: 5px;
+    border: 2px solid #000000;
+}
+
+.go2shop-search-bar {
+    border-radius: 5px;
+    display:flex;
+    align-items: stretch; 
+    justify-content: space-between;
+    width: 100%;
+    box-sizing:border-box;
+    padding:0.1875rem;
+    line-height:2rem;
+    background:white;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 9%)
+}
+
+.search-bar-form-container {
+    display: flex;
+    flex:1;
+}
+
+.search-bar-form-container.search-bar-input-field {
+    outline:none;
+    align-items: center;
+    border-radius:4px;
+    border-color: transparent
+}
+
+.btn.search-bar-button {
+    background-color: #7ec4ff;
+}
+
+.btn.search-bar-button:focus, .btn.search-bar-button:active {
+    box-shadow: none;
+}
+
+.catalogue-wrapper {
+    padding-left:10%;
+    padding-right:10%;
+}

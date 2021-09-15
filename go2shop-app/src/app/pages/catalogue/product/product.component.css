@@ -1,0 +1,85 @@
+.go2shop-product-container {
+    width: 100%;
+    box-sizing: border-box; 
+    box-shadow:0 0.0625rem 0.125rem 0 rgb(0 0 0 / 10%); 
+    cursor:pointer;
+    background-color: white
+}
+
+.go2shop-product-container:hover {
+    margin-top: -5px;
+    outline: 2px solid #f90000;
+    transition: margin 0.2s ease-in-out;
+}
+
+.product-image {
+    width: 100%;
+}
+
+.product-information-container {
+    padding:0.625rem;
+}
+
+.product-description-container {
+    display: flex; 
+    flex:1 0 auto; 
+    flex-direction: column;
+    padding-bottom:20px
+}
+
+.product-description{
+    flex-grow: 1; 
+    min-height: 1.75rem;
+}
+
+.product-description-text {
+    word-wrap:break-word;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:2;
+    font-size: 12px;
+}
+
+.product-information-text {
+    display:flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-price-container {
+    display:flex;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.product-price-container > .currency-sign {
+    display:flex;
+    align-items:center;
+    font-size:0.75rem;
+}
+
+.product-price-container > .price-tag {
+    font-size: 1rem;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.product-stock-container {
+    display:flex;
+}
+
+.product-stock-container > .stock-information {
+    color: rgba(0,0,0,0.54); 
+    flex-shrink: 0;
+    font-size:0.75rem;
+}
+
+a {
+    text-decoration: none;
+    background-color: transparent;
+    color: inherit;
+}

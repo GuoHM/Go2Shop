@@ -18,8 +18,6 @@ import { AuthenticationModule } from 'app/auth/authentication.module';
     CommonModule,
     LibrariesModule,
     UserRoutingModule,
-    FormsModule, 
-    ReactiveFormsModule,
     AuthenticationModule
   ]
 })

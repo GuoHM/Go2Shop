@@ -1,12 +1,14 @@
 package com.go2shop.catalogue.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -47,6 +49,9 @@ public class Product {
 	@Column(name = "TB_USER_ID")
 	private Long userID;
 
+	@OneToMany(mappedBy="product")
+	private List<ProductImage> productImages;
+	
 	public Long getId() {
 		return id;
 	}
@@ -93,6 +98,14 @@ public class Product {
 
 	public void setUserID(Long userID) {
 		this.userID = userID;
+	}
+
+	public List<ProductImage> getProductImages() {
+		return productImages;
+	}
+
+	public void setProductImages(List<ProductImage> productImages) {
+		this.productImages = productImages;
 	}
 
 }

@@ -1,0 +1,28 @@
+<div class="go2shop-product-container">
+    <a [routerLink]="['/catalogue/product/'+ product.id]">
+        <div>
+            <div>
+                <img [src]="(product.productImages && product.productImages.length > 0) ? product.productImages[0].url : '/assets/images/no_image_available.jpg'" 
+                    onerror="this.src='/assets/images/no_image_available.jpg'" alt="" class="product-image">
+            </div>
+            <div class="product-information-container">
+                <div class="product-description-container">
+                    <div class="product-description">
+                        <div class="product-description-text">
+                            {{ product.description }}
+                        </div>
+                    </div>
+                </div>
+                <div class="product-information-text">
+                    <div class="product-price-container">
+                        <span class="currency-sign">$</span>
+                        <span class="price-tag">{{ product.price }}</span>
+                    </div>
+                    <div class="product-stock-container">
+                        <span class="stock-information">{{ product.stock }} left</span>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </a>
+</div>
