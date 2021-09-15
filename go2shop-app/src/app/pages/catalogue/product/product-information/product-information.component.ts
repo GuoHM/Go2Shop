@@ -4,8 +4,7 @@ import { IProduct } from '../../product.model';
 
 @Component({
     selector: 'go2shop-product-information',
-    templateUrl: './product-information.component.html',
-    styles: ['./product-information.component.scss']
+    templateUrl: './product-information.component.html'
 })
 export class ProductInformationComponent implements OnInit {
 

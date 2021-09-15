@@ -1,12 +1,12 @@
-<div style="padding-top:50px;">
-    <div style="display:flex; width:450px;">
-        <p-carousel *ngIf="product" [value]="product.productImages" [showNavigators]="product.productImages && product.productImages.length > 1" 
+<div style="margin-top:20px;background-color:white;">
+    <div style="display:flex; width:450px;padding:20px;">
+        <p-carousel [style]="{ 'width':'450px' }" *ngIf="product" [value]="product.productImages" [showNavigators]="false" [autoplayInterval]="3000"
             [numVisible]="1" [numScroll]="1" [circular]="false">
             <ng-template let-image pTemplate="item">
                 <div class="product-item">
                     <div class="product-item-content">
-                        <div class="p-mb-3">
-                            <img [src]="image.url" onerror="this.src='/assets/images/no_image_available.jpg'" class="product-image" />
+                        <div>
+                            <img style="width:100%" [src]="image.url" onerror="this.src='/assets/images/no_image_available.jpg'" class="product-image" />
                         </div>
                     </div>
                 </div>
