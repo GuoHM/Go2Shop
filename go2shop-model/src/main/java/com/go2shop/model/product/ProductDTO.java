@@ -8,13 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- * 
- * <Write a short description on the purpose of the class>
- * 
- * @author P1326154 Created Date Aug 10, 2021 3:19:55 PM
- * 
- */
 public class ProductDTO {
 
 	@NotNull

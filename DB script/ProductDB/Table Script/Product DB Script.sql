@@ -16,12 +16,12 @@ USE `productdb` ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `productdb`.`tb_product` ;
 CREATE TABLE IF NOT EXISTS `productdb`.`tb_product` (
-  `ID` INT NOT NULL AUTO_INCREMENT,
+  `ID` BIGINT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(100) NOT NULL,
   `Description` VARCHAR(255) NULL DEFAULT NULL,
   `Price` DECIMAL(6,0) NOT NULL,
   `Stock` INT NOT NULL,
-  `TB_USER_ID` INT NOT NULL,
+  `TB_USER_ID` BIGINT NOT NULL,
   PRIMARY KEY (`ID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4

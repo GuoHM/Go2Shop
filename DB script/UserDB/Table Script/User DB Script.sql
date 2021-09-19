@@ -17,7 +17,7 @@ USE `userdb` ;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `userdb`.`tb_user` ;
 CREATE TABLE IF NOT EXISTS `userdb`.`tb_user` (
-  `ID` INT NOT NULL AUTO_INCREMENT,
+  `ID` BIGINT NOT NULL AUTO_INCREMENT,
   `CARD_NUMBER` VARCHAR(16) NOT NULL,
   `NAME` VARCHAR(50) NOT NULL,
   `EXPIRY` VARCHAR(5) NOT NULL,

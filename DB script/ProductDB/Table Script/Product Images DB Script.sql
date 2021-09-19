@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `productdb`.`tb_product_images` ;
 
 CREATE TABLE IF NOT EXISTS `productdb`.`tb_product_images` (
   `ID` BIGINT NOT NULL,
-  `Product_ID` INT NOT NULL,
+  `Product_ID` BIGINT NOT NULL,
   `Url` VARCHAR(1024) NOT NULL,
   PRIMARY KEY (`ID`),
   CONSTRAINT `product_images_to_product`

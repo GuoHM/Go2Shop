@@ -34,7 +34,7 @@ public class ShoppingCart {
 
 	@NotNull
 	@Column(name = "TB_USER_ID")
-	private Long userID;
+	private Long userId;
 
 	public Long getId() {
 		return id;
@@ -60,12 +60,17 @@ public class ShoppingCart {
 		this.discount = discount;
 	}
 
-	public Long getUserID() {
-		return userID;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	@Override
+	public String toString() {
+		return "ShoppingCart [id=" + id + ", price=" + price + ", discount=" + discount + ", userId=" + userId + "]";
 	}
 
 }

@@ -6,13 +6,6 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/**
- * 
- * <Write a short description on the purpose of the class>
- * 
- * @author P1326154 Created Date Aug 10, 2021 3:06:33 PM
- * 
- */
 public class OrderDetailDTO {
 
 	@NotNull

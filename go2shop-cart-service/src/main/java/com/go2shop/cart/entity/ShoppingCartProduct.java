@@ -26,11 +26,11 @@ public class ShoppingCartProduct {
 
 	@NotNull
 	@Column(name = "TB_SHOPPING_CART_ID")
-	private Long shoppingCart;
+	private Long shoppingCartId;
 
 	@NotNull
 	@Column(name = "TB_PRODUCT_ID")
-	private Long productID;
+	private Long productId;
 
 	@NotNull
 	@Column(name = "Quantity")
@@ -44,20 +44,20 @@ public class ShoppingCartProduct {
 		this.id = id;
 	}
 
-	public Long getShoppingCart() {
-		return shoppingCart;
+	public Long getShoppingCartId() {
+		return shoppingCartId;
 	}
 
-	public void setShoppingCart(Long shoppingCart) {
-		this.shoppingCart = shoppingCart;
+	public void setShoppingCartId(Long shoppingCartId) {
+		this.shoppingCartId = shoppingCartId;
 	}
 
-	public Long getProductID() {
-		return productID;
+	public Long getProductId() {
+		return productId;
 	}
 
-	public void setProductID(Long productID) {
-		this.productID = productID;
+	public void setProductId(Long productId) {
+		this.productId = productId;
 	}
 
 	public int getQuantity() {
