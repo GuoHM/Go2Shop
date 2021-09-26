@@ -1,8 +1,9 @@
 package com.go2shop.cart.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.go2shop.cart.entity.ShoppingCart;
@@ -18,16 +19,12 @@ import com.go2shop.model.cart.ShoppingCartProductDTO;
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 	
-	@Autowired
 	private ShoppingCartRepository shoppingCartRepository;
 	
-	@Autowired
 	private ShoppingCartProductRepository shoppingCartProductRepository;
 	
-	@Autowired
 	private ShoppingCartMapper shoppingCartMapper;
 	
-	@Autowired
 	private ShoppingCartProductMapper shoppingCartProductMapper;
 	
 	public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository,
@@ -44,7 +41,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		if (shoppingCartDTO != null && shoppingCartDTO.getUserId() != null) {
 			Optional<ShoppingCart> existingShoppingCart = shoppingCartRepository.findByUserId(shoppingCartDTO.getUserId());
 			if (!existingShoppingCart.isPresent()) {
-				ShoppingCart shoppingCart = shoppingCartRepository.saveAndFlush(shoppingCartMapper.toEntity(shoppingCartDTO));
+				ShoppingCart shoppingCart = shoppingCartRepository.save(shoppingCartMapper.toEntity(shoppingCartDTO));
 				return shoppingCartMapper.toDto(shoppingCart);
 			} else {
 				return null;
@@ -62,7 +59,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 				return updateQuantity(shoppingCartProductDTO.getProductId(), shoppingCartProductDTO.getQuantity());
 			} else {
 				ShoppingCartProduct shoppingCartProduct = shoppingCartProductRepository
-						.save(shoppingCartProductMapper.toEntity(shoppingCartProductDTO));
+						.saveAndFlush(shoppingCartProductMapper.toEntity(shoppingCartProductDTO));
 				return shoppingCartProductMapper.toDto(shoppingCartProduct);
 			}
 		}
@@ -94,29 +91,38 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		}
 		return null;
 	}
-
+	
 	@Override
-	public ShoppingCartDTO getShoppingCart(Long shoppingCartID) {
-		if (shoppingCartID != null) {
-			Optional<ShoppingCart> result = shoppingCartRepository.findById(shoppingCartID);
+	public Optional<ShoppingCartDTO> getShoppingCartByUserId(Long userID) {
+		if (userID != null) {
+			Optional<ShoppingCart> result = shoppingCartRepository.findByUserId(userID);
 			if (result.isPresent()) {
-				return shoppingCartMapper.toDto(result.get());
+				return Optional.of(shoppingCartMapper.toDto(result.get())); 
 			}
-			return null;
+			return Optional.empty();
 		}
-		return null;
+		return Optional.empty();
 	}
 
 	@Override
-	public ShoppingCartProductDTO getShoppingCartProduct(Long shoppingCartProductID) {
+	public Optional<ShoppingCartProductDTO> getShoppingCartProduct(Long shoppingCartProductID) {
 		if (shoppingCartProductID != null) {
 			Optional<ShoppingCartProduct> result =  shoppingCartProductRepository.findById(shoppingCartProductID);
 			if (result.isPresent()) {
-				return shoppingCartProductMapper.toDto(result.get());
+				return Optional.of(shoppingCartProductMapper.toDto(result.get()));
 			}
-			return null;
+			return Optional.empty();
 		}
-		return null;
+		return Optional.empty();
+	}
+	
+	@Override
+	public List<ShoppingCartProductDTO> getAllShoppingCartProduct(Long shoppingCartID) {
+		if (shoppingCartID != null) {
+			List<ShoppingCartProduct> result = shoppingCartProductRepository.findByShoppingCartId(shoppingCartID);
+			return shoppingCartProductMapper.toDto(result);
+		}
+		return new ArrayList<>();
 	}
 
 }

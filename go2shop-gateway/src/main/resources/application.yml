@@ -76,6 +76,13 @@ secure:
         - SELLER
     - 
       urls:
+        - "api/shoppingCartService/shoppingCart/**"
+      roles:
+        - BUYER
+        - SELLER
+        
+    - 
+      urls:
         - "/api/cartService/cart/demo/**"
       roles:
         - BUYER
@@ -86,3 +93,4 @@ secure:
         - "/api/catalogueService/catalogue/demo/**"
       roles:
         - SELLER
+        

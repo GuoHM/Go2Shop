@@ -1,10 +1,12 @@
 package com.go2shop.cart.service;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,41 +70,32 @@ class ShoppingCartServiceTest {
 	}
 	
 	@Test
-	void createShoppingCartTest4() {
-		ShoppingCartDTO shoppingCartDTO = createShoppingCartDTO();
-		ShoppingCart shoppingCart = shoppingCartMapper.toEntity(shoppingCartDTO);
-		Mockito.when(shoppingCartRepository.findByUserId(shoppingCart.getUserId())).thenReturn(Optional.of(shoppingCart));
-		Mockito.when(shoppingCartRepository.save(shoppingCart)).thenReturn(shoppingCart);
-		assertNotNull(shoppingCartService.createShoppingCart(shoppingCartDTO));
-	}
-	
-	@Test
 	void getShoppingCartTest1() {
-		assertNull(shoppingCartService.getShoppingCart(null));
+		assertFalse(shoppingCartService.getShoppingCartByUserId(null).isPresent());
 	}
 	
 	@Test
 	void getShoppingCartTest2() {
-		Mockito.when(shoppingCartRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
-		assertNull(shoppingCartService.getShoppingCart(null));
+		Mockito.when(shoppingCartRepository.findByUserId(Mockito.anyLong())).thenReturn(Optional.empty());
+		assertFalse(shoppingCartService.getShoppingCartByUserId(null).isPresent());
 	}
 	
 	@Test
 	void getShoppingCartTest3() {
 		ShoppingCart shoppingCart = createShoppingCart();
-		Mockito.when(shoppingCartRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(shoppingCart));
-		assertNotNull(shoppingCartService.getShoppingCart(null));
+		Mockito.when(shoppingCartRepository.findByUserId(Mockito.anyLong())).thenReturn(Optional.of(shoppingCart));
+		assertNotNull(shoppingCartService.getShoppingCartByUserId(null));
 	}
 	
 	@Test
 	void getShoppingCartProductTest1() {
-		assertNull(shoppingCartService.getShoppingCartProduct(null));
+		assertFalse(shoppingCartService.getShoppingCartProduct(null).isPresent());
 	}
 	
 	@Test
 	void getShoppingCartProductTest2() {
 		Mockito.when(shoppingCartProductRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
-		assertNull(shoppingCartService.getShoppingCartProduct(123l));
+		assertFalse(shoppingCartService.getShoppingCartProduct(123l).isPresent());
 	}
 	
 	@Test
@@ -114,8 +107,8 @@ class ShoppingCartServiceTest {
 	
 	ShoppingCartDTO createShoppingCartDTO() {
 		ShoppingCartDTO shoppingCartDTO = new ShoppingCartDTO();
-		shoppingCartDTO.setId(1l);
-		shoppingCartDTO.setUserId(1l);
+		shoppingCartDTO.setId(3l);
+		shoppingCartDTO.setUserId(3l);
 		shoppingCartDTO.setDiscount(new BigDecimal(1));
 		shoppingCartDTO.setPrice(new BigDecimal(1));
 		return shoppingCartDTO;
@@ -123,8 +116,8 @@ class ShoppingCartServiceTest {
 	
 	ShoppingCartProduct createShoppingCartProduct() {
 		ShoppingCartProduct shoppingCartProduct = new ShoppingCartProduct();
-		shoppingCartProduct.setId(1l);
-		shoppingCartProduct.setProductId(1l);
+		shoppingCartProduct.setId(3l);
+		shoppingCartProduct.setProductId(3l);
 		shoppingCartProduct.setQuantity(1);
 		shoppingCartProduct.setShoppingCartId(1l);
 		return shoppingCartProduct;

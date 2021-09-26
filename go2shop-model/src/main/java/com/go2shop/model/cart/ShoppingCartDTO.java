@@ -48,4 +48,9 @@ public class ShoppingCartDTO {
 		this.userId = userId;
 	}
 
+	@Override
+	public String toString() {
+		return "ShoppingCartDTO [id=" + id + ", price=" + price + ", discount=" + discount + ", userId=" + userId + "]";
+	}
+
 }

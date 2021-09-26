@@ -1,5 +1,8 @@
 package com.go2shop.cart.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.go2shop.model.cart.ShoppingCartDTO;
 import com.go2shop.model.cart.ShoppingCartProductDTO;
 
@@ -9,9 +12,11 @@ public interface ShoppingCartService {
 	
 	ShoppingCartProductDTO createShoppingCartProduct(ShoppingCartProductDTO shoppingCartProductDTO);
 	
-	ShoppingCartDTO getShoppingCart(Long shoppingCartID);
+	Optional<ShoppingCartDTO> getShoppingCartByUserId(Long userID);
 	
-	ShoppingCartProductDTO getShoppingCartProduct(Long shoppingCartProductID);
+	Optional<ShoppingCartProductDTO> getShoppingCartProduct(Long shoppingCartProductID);
+	
+	List<ShoppingCartProductDTO> getAllShoppingCartProduct(Long shoppingCartID);
 	
 	void deleteAllProduct(Long shoppingCartID);
 	

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { LibrariesModule } from 'app/shared/libraries/libraries.module';
 import { CartRoutingModule } from './cart-routing.module';
+import { AuthenticationModule } from 'app/auth/authentication.module';
 
 
 
@@ -13,7 +14,8 @@ import { CartRoutingModule } from './cart-routing.module';
   imports: [
     CommonModule,
     LibrariesModule,
-    CartRoutingModule
+    CartRoutingModule,
+    AuthenticationModule
   ]
 })
 export class CartModule { }
