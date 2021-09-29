@@ -5,12 +5,14 @@ import { PurchaseHistoryComponent } from './purchase-history/purchase-history.co
 import { UserDetailRoutingModule } from './user-detail-routing.module';
 import { UserDetailComponent } from './user-detail.component';
 import { LibrariesModule } from 'app/shared/libraries/libraries.module';
+import { CatalogueCreateComponent } from './catalogue-create/catalogue-create.component';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     PurchaseHistoryComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    CatalogueCreateComponent
   ],
   imports: [
     CommonModule,

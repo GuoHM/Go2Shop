@@ -52,8 +52,8 @@ export class AuthenticationService {
     if (!currentUser) {
       return false;
     }
-    const authorities: string[] = currentUser.authorities;
-    const result =  authorities.indexOf(role) != -1;
+    const authorities: string[] = currentUser.authorities.map(c => c.toUpperCase());
+    const result =  authorities.indexOf(role.toUpperCase()) != -1;
     return result;
   }
 

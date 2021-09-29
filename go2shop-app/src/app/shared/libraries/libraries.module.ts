@@ -11,6 +11,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { AvatarModule } from 'primeng/avatar';
 import { MenuModule } from 'primeng/menu';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {FileUploadModule} from 'primeng/fileupload';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MenuModule,
     FormsModule,
     ReactiveFormsModule,
-    CarouselModule
+    CarouselModule,
+    FileUploadModule
   ],
   exports: [
     CardModule,
@@ -38,7 +40,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MenuModule,
     FormsModule,
     ReactiveFormsModule,
-    CarouselModule
+    CarouselModule,
+    FileUploadModule
   ],
   declarations: [],
   providers: [MessageService],
