@@ -2,14 +2,25 @@
 <div class="col-10 col-sm-10 col-md-8 col-lg-8 mx-auto">
     <div class="card .card-cart my-12">
         <div class="card-body"> 
-            <input type="checkbox" name="optiona" id="opta" checked> 
+            <input type="checkbox" name="optiona" id="selectAll" [(ngModel)]="masterSelected" (change)="checkUncheckAll()"> 
             <span class="checkboxtext">
-                Select All {{ userID }}
+                Select All
             </span>
-            <div *ngFor="let item of shoppingCartProductDTO" class="card-body">
+            <div *ngFor="let item of checkProduct" class="card-body">
                 <div class="card-body">
                     <hr class="solid">
-                    <p>{{ item.productId }}</p>
+                    <div class="col-2">
+                        <input type="checkbox" name="optiona" id="opta" [(ngModel)]="item.isSelected" (change)="isAllSelected()"> 
+                        <span class="checkboxtext2">
+                            {{ item.id }} |
+                            {{ item.shoppingCartId }} |
+                            {{ item.productId }} |
+                            {{ item.quantity }} |
+                            {{ item.isSelected }} |
+                            {{ userID }} |
+                            {{ productCount }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { LibrariesModule } from 'app/shared/libraries/libraries.module';
 import { CartRoutingModule } from './cart-routing.module';
 import { AuthenticationModule } from 'app/auth/authentication.module';
+import { CatalogueModule } from '../catalogue/catalogue.module';
 
 
 
@@ -15,7 +16,8 @@ import { AuthenticationModule } from 'app/auth/authentication.module';
     CommonModule,
     LibrariesModule,
     CartRoutingModule,
-    AuthenticationModule
+    AuthenticationModule,
+    CatalogueModule
   ]
 })
 export class CartModule { }

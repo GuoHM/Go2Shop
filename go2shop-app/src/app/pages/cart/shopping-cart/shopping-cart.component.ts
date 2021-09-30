@@ -6,6 +6,8 @@ import { IShoppingCartProduct } from '../shopping-cart-product.model';
 import { IShoppingCart } from '../shopping-cart.model';
 import { ShoppingCartService } from '../shopping-cart.service';
 import { AuthenticationService } from 'app/auth/authentication.service';
+import { CatalogueService } from '../../catalogue/catalogue.service';
+import { IProduct } from '../../catalogue/product.model';
 
 @Component({
     selector: 'go2shop-shopping-cart',
@@ -14,34 +16,86 @@ import { AuthenticationService } from 'app/auth/authentication.service';
   })
   export class ShoppingCartComponent implements OnInit {
 
-    user: User;
-
     constructor(
       private shoppingCartService: ShoppingCartService,
-      private authenticationService: AuthenticationService
+      private authenticationService: AuthenticationService,
+      private catalogueService: CatalogueService
     ) { }
 
     public shoppingCartDTO: IShoppingCart;
-    public shoppingCartProductDTO: IShoppingCartProduct[];
+    public shoppingCartProductDTO: IShoppingCartProduct[] = [];
+    public checkProduct: any[] = [];
+    public productInformation: IProduct[] = [];
+
     public userID: any;
+    public productCount: any;
+    public masterSelected: boolean = false;
   
     ngOnInit(): void {
       this.userID = this.authenticationService.getCurrentUser().userId;
-      this.shoppingCartProductDTO  = [
-        {id : 1, shoppingCartId :1, productId : 123, quantity : 101 },
-        {id : 2, shoppingCartId :1, productId : 321, quantity : 102 },
-        {id : 3, shoppingCartId :1, productId : 213, quantity : 103 }];
-      
+
+      /* Get Shopping Cart By User ID */
       this.shoppingCartService.getShoppingCart(this.userID).subscribe(
         (res: HttpResponse<IShoppingCart>) => {
             this.shoppingCartDTO = res.body;
         }
       );
-      this.shoppingCartService.getAllShoppingCartProduct(this.shoppingCartDTO.id).subscribe(
-        (res: HttpResponse<IShoppingCartProduct[]>) => {
-          this.shoppingCartProductDTO = this.shoppingCartProductDTO.concat(res.body)
+
+      /* Get All Shopping Cart Products By Shopping Cart ID */
+      // this.shoppingCartService.getAllShoppingCartProduct(this.shoppingCartDTO.id).subscribe(
+      //   (res: HttpResponse<IShoppingCartProduct[]>) => {
+      //     this.shoppingCartProductDTO = this.shoppingCartProductDTO.concat(res.body)
+      //   }
+      // );
+
+      this.shoppingCartProductDTO  = [
+        {id : 1, shoppingCartId :1, productId : 123, quantity : 101 },
+        {id : 2, shoppingCartId :1, productId : 321, quantity : 102 },
+        {id : 3, shoppingCartId :1, productId : 213, quantity : 103 }];
+      
+      /* Get All Products Information In Shopping Cart */
+      // for (var i = 0; i < this.shoppingCartProductDTO.length; i++)
+      // {
+      //   this.catalogueService.getProduct(this.shoppingCartProductDTO[i].productId).subscribe(
+      //     (res: HttpResponse<IProduct>) => {
+      //       this.productInformation = this.productInformation.concat(res.body)
+      //     }
+      //   );
+      // }
+
+        this.catalogueService.getCatalogue().subscribe(
+          (res: HttpResponse<IProduct[]>) => {
+            this.productInformation = this.productInformation.concat(res.body)
+          }
+        );
+
+        this.productCount = this.productInformation.length;
+
+      for (var i = 0; i < this.shoppingCartProductDTO.length; i++)
+      {
+        this.checkProduct[i] = 
+        {
+          id: this.shoppingCartProductDTO[i].id, 
+          shoppingCartId: this.shoppingCartProductDTO[i].shoppingCartId, 
+          productId: this.shoppingCartProductDTO[i].productId, 
+          quantity: this.shoppingCartProductDTO[i].quantity, 
+          isSelected: false
         }
-      );
+      }
     }
+
+  /* The master checkbox will check/ uncheck all items */
+  checkUncheckAll() {
+    for (var i = 0; i < this.checkProduct.length; i++) {
+      this.checkProduct[i].isSelected = this.masterSelected;
+    }
+  }
+
+  /* Check All Checkbox Checked */
+  isAllSelected() {
+    this.masterSelected = this.checkProduct.every(function(item:any) {
+        return item.isSelected == true;
+      })
+  }
   
   }

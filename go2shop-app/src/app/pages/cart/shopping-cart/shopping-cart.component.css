@@ -18,6 +18,14 @@ input[type=checkbox]
   font-weight: bold;
 }
 
+.checkboxtext2
+{
+  /* Checkbox text */
+  font-size: 100%;
+  display: inline;
+  font-family: monospace;
+}
+
 /* Solid border */
 hr.solid {
   border-top: 3px solid #bbb;
