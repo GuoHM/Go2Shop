@@ -3,6 +3,7 @@ package com.go2shop.catalogue.entity;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,7 +50,7 @@ public class Product {
 	@Column(name = "TB_USER_ID")
 	private Long userID;
 
-	@OneToMany(mappedBy="product")
+	@OneToMany(mappedBy="product", cascade = CascadeType.PERSIST)
 	private List<ProductImage> productImages;
 	
 	public Long getId() {

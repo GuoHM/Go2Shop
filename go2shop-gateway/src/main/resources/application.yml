@@ -78,6 +78,11 @@ secure:
         
     - 
       urls:
+        - "/api/catalogueService/catalogue/image"
+      roles:
+        - SELLER
+    - 
+      urls:
         - "/api/cartService/cart/demo/**"
       roles:
         - BUYER

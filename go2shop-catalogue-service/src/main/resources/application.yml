@@ -32,3 +32,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/  
+
+img:
+  upload-path: D:\ISS\project\go2shop\go2shop-app\src\assets\images\products\
