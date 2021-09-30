@@ -48,11 +48,11 @@ public class Product {
 
 	@NotNull
 	@Column(name = "TB_USER_ID")
-	private Long userID;
+	private Long userId;
 
-	@OneToMany(mappedBy="product", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
 	private List<ProductImage> productImages;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -93,12 +93,12 @@ public class Product {
 		this.stock = stock;
 	}
 
-	public Long getUserID() {
-		return userID;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public List<ProductImage> getProductImages() {

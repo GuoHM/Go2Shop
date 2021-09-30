@@ -14,12 +14,12 @@ export class CatalogueCreateService {
   uploadImage(fileToUpload: any): Observable<HttpResponse<any>> {
     const formData: FormData = new FormData();
     formData.append('image', fileToUpload);
-    return this.http.post('/api/catalogueService/catalogue/image', formData,
+    return this.http.post<any>('/api/catalogueService/catalogue/image', formData,
       { observe: 'response' });
   }
 
   createCatalogue(catalogueCreate: CatalogueCreate): Observable<HttpResponse<CatalogueCreate>> {
-    return this.http.post<CatalogueCreate>('/api/catalogueService/catalogue/image', catalogueCreate,
+    return this.http.post<CatalogueCreate>('/api/catalogueService/catalogue/catalogue', catalogueCreate,
       { observe: 'response' });
   }
 

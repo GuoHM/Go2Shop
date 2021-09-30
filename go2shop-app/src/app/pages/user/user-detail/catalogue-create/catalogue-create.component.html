@@ -1,12 +1,12 @@
 <p-card header="Create Catalogue" [style]="{'width': '50rem', 'margin-bottom': '2em'}">
-    <form [formGroup]="catalogueCreateForm">
-        <div class="form-group">
+    <form [formGroup]="catalogueCreateForm" class="row g-3">
+        <div class="col-12">
             <label for="name">Name</label>
             <input type="text" pInputText formControlName="name" class="form-control" id="name"
                 [ngClass]="{ 'is-valid' : isValid(form.name), 'is-invalid' : isInvalid(form.name) }">
             <small *ngIf="form.name.errors && isInvalid(form.name)" class="p-error">Name is not valid.</small>
         </div>
-        <div class="form-group">
+        <div class="col-12">
             <label for="description">Description</label>
             <textarea rows="5" cols="30" pInputTextarea formControlName="description" class="form-control"
                 id="description"
@@ -14,25 +14,23 @@
             <small *ngIf="form.description.errors && isInvalid(form.description)" class="p-error">Description is not
                 valid.</small>
         </div>
-        <div class="row">
-            <div class="col-6">
-                <label for="price">Price</label>
-                <input type="number" pInputText formControlName="price" class="form-control" id="price"
-                    [ngClass]="{ 'is-valid' : isValid(form.price), 'is-invalid' : isInvalid(form.price) }">
+        <div class="col-6">
+            <label for="price">Price</label>
+            <input type="number" pInputText formControlName="price" class="form-control" id="price"
+                [ngClass]="{ 'is-valid' : isValid(form.price), 'is-invalid' : isInvalid(form.price) }">
 
-                <small *ngIf="form.price.errors && isInvalid(form.price)" class="p-error">Price is not
-                    valid.</small>
-            </div>
-            <div class="col-6">
-                <label for="stock">Stock</label>
-                <input type="number" pInputText formControlName="stock" class="form-control" id="stock"
-                    [ngClass]="{ 'is-valid' : isValid(form.stock), 'is-invalid' : isInvalid(form.stock) }">
-                <small *ngIf="form.stock.errors && isInvalid(form.stock)" class="p-error">Stock is not
-                    valid.</small>
-            </div>
+            <small *ngIf="form.price.errors && isInvalid(form.price)" class="p-error">Price is not
+                valid.</small>
+        </div>
+        <div class="col-6">
+            <label for="stock">Stock</label>
+            <input type="number" pInputText formControlName="stock" class="form-control" id="stock"
+                [ngClass]="{ 'is-valid' : isValid(form.stock), 'is-invalid' : isInvalid(form.stock) }">
+            <small *ngIf="form.stock.errors && isInvalid(form.stock)" class="p-error">Stock is not
+                valid.</small>
         </div>
 
-        <div class="from-row">
+        <div class="col-12">
             <label>Upload product image</label>
             <p-fileUpload #file name="image" type="file" accept='image/*' customUpload="true"
                 (uploadHandler)="uploadImage()" (change)="preview(file.files)">
@@ -40,13 +38,15 @@
                     <img [src]="imgURL" height="200" *ngIf="imgURL">
                 </ng-template>
             </p-fileUpload>
-            <div class="form-group">
-                <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="Create Product"
-                    type="button" (click)="createCatalogue"></button>
-            </div>
+
+        </div>
+        <div class="col-4">
+            <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="Create Product" type="button"
+                (click)="createCatalogue()"></button>
         </div>
 
     </form>
 
 
 </p-card>
+<p-toast position="top-center" key="tc"></p-toast>

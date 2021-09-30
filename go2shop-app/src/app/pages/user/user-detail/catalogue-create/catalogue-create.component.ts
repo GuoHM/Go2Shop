@@ -70,15 +70,15 @@ export class CatalogueCreateComponent implements OnInit {
   uploadImage(): void {
     this.catalogueCreateService.uploadImage(this.files[0]).subscribe(
       (res) => {
-        this.productImage.push(new ProductImage(res.body));
-        this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
+        this.productImage.push(new ProductImage(res.body.imageName));
+        this.messageService.add({key: 'tc', severity: 'success', summary: 'Image Uploaded', detail: ''});
       }
     );
   }
 
   createCatalogue(): void {
-    if (this.productImage.length) {
-      this.messageService.add({severity: 'error', summary: 'Create Fail', detail: 'Please upload image'});
+    if (this.productImage.length === 0) {
+      this.messageService.add({key: 'tc', severity: 'error', summary: 'Create Fail', detail: 'Please upload image'});
       return;
     }
     const catalogueCreate: CatalogueCreate = new CatalogueCreate();
@@ -90,7 +90,7 @@ export class CatalogueCreateComponent implements OnInit {
     catalogueCreate.userId = this.authService.getCurrentUser().userId;
     this.catalogueCreateService.createCatalogue(catalogueCreate).subscribe(
       () => {
-        this.messageService.add({severity: 'success', summary: 'Catalogue has been created', detail: ''});
+        this.messageService.add({key: 'tc', severity: 'success', summary: 'Catalogue has been created', detail: ''});
       }
     );
   }

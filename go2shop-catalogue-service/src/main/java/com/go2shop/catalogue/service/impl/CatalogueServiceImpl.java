@@ -70,6 +70,7 @@ public class CatalogueServiceImpl implements CatalogueService {
 
 	@Override
 	public ProductDTO createCatalogue(ProductDTO product) {
+		Product dto = productMapper.toEntity(product);
 		Product savedProduct = catalogueRepository.save(productMapper.toEntity(product));
 		return productMapper.toDto(savedProduct);
 	}

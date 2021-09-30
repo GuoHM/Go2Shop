@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 
 public class ProductDTO {
 
-	@NotNull
 	private Long id;
 
 	@NotBlank
@@ -29,10 +28,10 @@ public class ProductDTO {
 	private int stock;
 
 	@NotNull
-	private Long userID;
+	private Long userId;
 
 	List<ProductImageDTO> productImages;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -73,12 +72,12 @@ public class ProductDTO {
 		this.stock = stock;
 	}
 
-	public Long getUserID() {
-		return userID;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public List<ProductImageDTO> getProductImages() {
