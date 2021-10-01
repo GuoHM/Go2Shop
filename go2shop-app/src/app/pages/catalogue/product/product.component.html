@@ -2,7 +2,7 @@
     <a [routerLink]="['/catalogue/product/'+ product.id]">
         <div>
             <div>
-                <img [src]="(product.productImages && product.productImages.length > 0) ? product.productImages[0].url : '/assets/images/no_image_available.jpg'" 
+                <img [src]="image" 
                     onerror="this.src='/assets/images/no_image_available.jpg'" alt="" class="product-image">
             </div>
             <div class="product-information-container">

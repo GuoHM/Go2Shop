@@ -55,7 +55,8 @@ public class CatalogueServiceImpl implements CatalogueService {
 		if (Files.notExists(path)) {
 			Files.createFile(Files.createDirectories(path));
 		}
-		String filePath = uploadPath + UUID.randomUUID() + file.getOriginalFilename();
+		String fileName = UUID.randomUUID() + file.getOriginalFilename();
+		String filePath = uploadPath + fileName;
 		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(filePath));
 		try {
 			outputStream.write(file.getBytes());
@@ -65,13 +66,13 @@ public class CatalogueServiceImpl implements CatalogueService {
 		} finally {
 			outputStream.close();
 		}
-		return filePath;
+		return fileName;
 	}
 
 	@Override
 	public ProductDTO createCatalogue(ProductDTO product) {
-		Product dto = productMapper.toEntity(product);
-		Product savedProduct = catalogueRepository.save(productMapper.toEntity(product));
-		return productMapper.toDto(savedProduct);
+		Product productToSave = productMapper.toEntity(product);
+		productToSave.getProductImages().stream().forEach(productImage -> productImage.setProduct(productToSave));
+		return productMapper.toDto(catalogueRepository.save(productToSave));
 	}
 }
