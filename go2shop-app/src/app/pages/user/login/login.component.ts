@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AuthenticationService } from 'app/auth/authentication.service';
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private authenticationService: AuthenticationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -38,16 +40,20 @@ export class LoginComponent implements OnInit {
     this.userService.login(userlogin).subscribe(
       (res) => {
         this.authenticationService.handleLoginSuccess(res.body);
-        this.messageService.add({key: 'tc', severity:'success', summary:'Success', detail: 'You have successful login!'});
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'You have successful login!' });
+        setTimeout(() => {
+          this.location.back();
+        }, 2000);
+
       },
       (err) => {
         console.log(err);
         if (err.error.errCode === 'B102') {
-          this.messageService.add({key: 'tc', severity:'error', summary:'Fail', detail: err.error.errMsg});
+          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Fail', detail: err.error.errMsg });
         }
       }
     );
   }
-  
+
 
 }

@@ -2,9 +2,14 @@ import {Injectable} from '@angular/core';
 import { LoginUser, UserToken } from './authentication.model';
 import jwt_decode from 'jwt-decode';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
+
+  constructor(
+    private router: Router
+  ) {}
 
   private loginChangedSubject = new Subject<boolean>();
   loginChangedObserver = this.loginChangedSubject.asObservable();
@@ -40,6 +45,7 @@ export class AuthenticationService {
   logout(): void {
     localStorage.removeItem('currentUser');
     this.loginChanged(false);
+    this.router.navigateByUrl('/user/login');
   }
   
   isLoggedIn(): boolean {

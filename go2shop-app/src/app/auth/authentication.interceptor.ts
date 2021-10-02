@@ -1,12 +1,17 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
 import { AuthenticationService } from './authentication.service';
+import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const idToken = this.getToken();
@@ -15,10 +20,18 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       const cloned = req.clone({
         headers: req.headers.set('Authorization', header + idToken)
       });
-      return next.handle(cloned);
+      return next.handle(cloned).pipe(catchError(x=> this.handleError(x)));
     } else {
-      return next.handle(req);
+      return next.handle(req).pipe(catchError(x=> this.handleError(x)));
     }
+  }
+
+  private handleError(err: HttpErrorResponse): Observable<any> {
+    if (err.status === 401 || err.status === 403) {
+      this.router.navigateByUrl('/user/login');
+      return of(err.message); 
+    }
+    return throwError(err);
   }
 
   private getToken(): string {
