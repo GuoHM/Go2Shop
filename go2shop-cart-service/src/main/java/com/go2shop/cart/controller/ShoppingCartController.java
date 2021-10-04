@@ -1,13 +1,16 @@
 package com.go2shop.cart.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,27 +31,29 @@ public class ShoppingCartController extends BaseController {
 	@PostMapping(value = "/shoppingCart/create")
 	public ResponseEntity<ShoppingCartDTO> createShoppingCart
 		(@RequestBody(required = true) ShoppingCartDTO shoppingCartDTO)	{
-		return ResponseEntity.ok().body(shoppingCartService.createShoppingCart(shoppingCartDTO));
+		ShoppingCartDTO result = shoppingCartService.createShoppingCart(shoppingCartDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(result);
 	}
 	
 	@PostMapping(value = "/shoppingCartProduct/create")
 	public ResponseEntity<ShoppingCartProductDTO> createShoppingCartProduct
 		(@RequestBody(required = true) ShoppingCartProductDTO shoppingCartProductDTO) {
-		return ResponseEntity.ok().body(shoppingCartService.createShoppingCartProduct(shoppingCartProductDTO));
+		ShoppingCartProductDTO result = shoppingCartService.createShoppingCartProduct(shoppingCartProductDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(result);
 	}
 	
 	@GetMapping("/shoppingCart/{userID}")
 	public ResponseEntity<ShoppingCartDTO> getShoppingCartByUserId(Long userID) {
-		return this.shoppingCartService.getShoppingCartByUserId(userID)
-				.map(shoppingCart -> ResponseEntity.ok().body(shoppingCart))
-				.orElse(ResponseEntity.notFound().build());
+		Optional<ShoppingCartDTO> result = this.shoppingCartService.getShoppingCartByUserId(userID);
+		return result.map(response -> ResponseEntity.ok().body(response))
+				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 	
 	@GetMapping("/shoppingCartProduct/product/{shoppingCartProductID}")
 	public ResponseEntity<ShoppingCartProductDTO> getShoppingCartProduct(@PathVariable Long shoppingCartProductID) {
-		return this.shoppingCartService.getShoppingCartProduct(shoppingCartProductID)
-				.map(shoppingCartProduct -> ResponseEntity.ok().body(shoppingCartProduct))
-				.orElse(ResponseEntity.notFound().build());
+		Optional<ShoppingCartProductDTO> result = this.shoppingCartService.getShoppingCartProduct(shoppingCartProductID);
+		return result.map(shoppingCartProduct -> ResponseEntity.ok().body(shoppingCartProduct))
+				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 	
 	@GetMapping("/shoppingCartProduct/shoppingCart/{shoppingCartID}")
@@ -58,16 +63,17 @@ public class ShoppingCartController extends BaseController {
 	
 	@PostMapping(value = "/shoppingCartProduct/delete")
 	public void deleteAllProduct(Long shoppingCartID) {
-		shoppingCartService.deleteAllProduct(shoppingCartID);
+		this.shoppingCartService.deleteAllProduct(shoppingCartID);
 	}
 	
 	@PostMapping(value = "/shoppingCartProduct/delete/{shoppingCartProductID}")
 	public void deleteShoppingCartProduct(Long shoppingCartProductID) {
-		shoppingCartService.deleteShoppingCartProduct(shoppingCartProductID);
+		this.shoppingCartService.deleteShoppingCartProduct(shoppingCartProductID);
 	}
 	
-	@PostMapping(value = "/shoppingCartProduct/update/{productID}")
-	public ResponseEntity<ShoppingCartProductDTO> updateQuantity(Long productID, int productQuantity) {
-		return ResponseEntity.ok().body(shoppingCartService.updateQuantity(productID, productQuantity));
+	@PutMapping(value = "/shoppingCartProduct/update/{productID}/{shoppingCartID}/{productQuantity}")
+	public ResponseEntity<ShoppingCartProductDTO> updateQuantity(Long productID, int productQuantity, Long shoppingCartID) {
+		ShoppingCartProductDTO result = this.shoppingCartService.updateQuantity(productID, productQuantity, shoppingCartID);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 }

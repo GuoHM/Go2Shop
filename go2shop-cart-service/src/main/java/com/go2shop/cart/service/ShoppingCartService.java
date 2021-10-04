@@ -22,5 +22,5 @@ public interface ShoppingCartService {
 	
 	void deleteShoppingCartProduct(Long shoppingCartProductID);
 	
-	ShoppingCartProductDTO updateQuantity(Long productID, int productQuantity);
+	ShoppingCartProductDTO updateQuantity(Long productID, int productQuantity, Long shoppingCartID);
 }

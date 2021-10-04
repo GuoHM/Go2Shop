@@ -49,9 +49,9 @@ import { IProduct } from '../../catalogue/product.model';
       // );
 
       this.shoppingCartProductDTO  = [
-        {id : 1, shoppingCartId :1, productId : 123, quantity : 101 },
-        {id : 2, shoppingCartId :1, productId : 321, quantity : 102 },
-        {id : 3, shoppingCartId :1, productId : 213, quantity : 103 }];
+        {id : 1, shoppingCartId :1, productId : 1, quantity : 101 },
+        {id : 2, shoppingCartId :1, productId : 2, quantity : 102 },
+        {id : 3, shoppingCartId :1, productId : 3, quantity : 103 }];
       
       /* Get All Products Information In Shopping Cart */
       // for (var i = 0; i < this.shoppingCartProductDTO.length; i++)
@@ -96,6 +96,23 @@ import { IProduct } from '../../catalogue/product.model';
     this.masterSelected = this.checkProduct.every(function(item:any) {
         return item.isSelected == true;
       })
+  }
+
+  updateQuantity(index: number, action: string) {
+    if (action == "add") {
+      this.shoppingCartProductDTO[index].quantity = this.shoppingCartProductDTO[index].quantity + 1;
+    } else {
+      this.shoppingCartProductDTO[index].quantity = this.shoppingCartProductDTO[index].quantity - 1;
+    }
+    console.log("This is the quantity: " + this.shoppingCartProductDTO[index].quantity);
+    this.shoppingCartService.updateQuantity(
+      this.shoppingCartProductDTO[index].productId, 
+      this.shoppingCartProductDTO[index].quantity,
+      this.shoppingCartProductDTO[index].shoppingCartId).subscribe(
+        (res: HttpResponse<IShoppingCartProduct>) => {
+          this.shoppingCartProductDTO[index].quantity = res.body.quantity;
+      }
+    );
   }
   
   }

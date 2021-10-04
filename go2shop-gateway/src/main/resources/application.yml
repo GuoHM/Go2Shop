@@ -67,6 +67,8 @@ secure:
       - "/api/catalogueService/catalogue/catalogue"
       - "/api/catalogueService/catalogue/product/**"
       - "/api/shoppingCartService/shoppingCart/shoppingCart/**"
+      - "/api/shoppingCart/shoppingCartProduct/shoppingCart/**"
+      - "/api/shoppingCartService/shoppingCart/shoppingCartProduct/update/**"
       
   authroities:
     - 

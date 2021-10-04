@@ -6,20 +6,36 @@
             <span class="checkboxtext">
                 Select All
             </span>
-            <div *ngFor="let item of checkProduct" class="card-body">
+            <div *ngFor="let item of checkProduct; let i = index" class="card-body">
                 <div class="card-body">
                     <hr class="solid">
                     <div class="col-2">
                         <input type="checkbox" name="optiona" id="opta" [(ngModel)]="item.isSelected" (change)="isAllSelected()"> 
+                    </div>
+                    <div>
+                        <a [routerLink]="['/catalogue/product/'+ item.productId]"><img [src]="image" 
+                            onerror="this.src='/assets/images/no_image_available.jpg'" alt="" class="product-image">
+                        </a>
+                    </div>
+                    <div>
                         <span class="checkboxtext2">
-                            {{ item.id }} |
-                            {{ item.shoppingCartId }} |
-                            {{ item.productId }} |
-                            {{ item.quantity }} |
-                            {{ item.isSelected }} |
-                            {{ userID }} |
-                            {{ productCount }}
+                            Item ID: {{ item.id }} |
+                            Shopping Cart ID: {{ item.shoppingCartId }} |
+                            Product ID: {{ item.productId }} |
+                            Quantity: {{ item.quantity }} |
+                            isSelected: {{ item.isSelected }} |
+                            User ID: {{ userID }} |
+                            Product Count: {{ productCount }}
                         </span>
+                    </div>
+                    <div>
+                        <button class="_2sBbZC" (click)="updateQuantity(i, 'minus')">
+                            <h4>-</h4>
+                        </button>
+                        <input class="_2sBbZC" type="text" role="spinbutton" aria-valuenow="1" value="{{ this.shoppingCartProductDTO[i].quantity }}" disabled>
+                        <button class="_2sBbZC" (click)="updateQuantity(i, 'add')">
+                            <h4>+</h4>
+                        </button>
                     </div>
                 </div>
             </div>

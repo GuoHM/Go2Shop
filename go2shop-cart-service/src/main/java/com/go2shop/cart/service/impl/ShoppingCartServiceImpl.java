@@ -54,9 +54,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	public ShoppingCartProductDTO createShoppingCartProduct(ShoppingCartProductDTO shoppingCartProductDTO) {
 		if (shoppingCartProductDTO != null && shoppingCartProductDTO.getProductId() != null) {
 			Optional<ShoppingCartProduct> existingShoppingCartProduct = 
-					shoppingCartProductRepository.findByProductId(shoppingCartProductDTO.getProductId());
+					shoppingCartProductRepository.findByProductIdAndShoppingCartId(
+							shoppingCartProductDTO.getProductId(), shoppingCartProductDTO.getShoppingCartId());
 			if (existingShoppingCartProduct.isPresent()) {
-				return updateQuantity(shoppingCartProductDTO.getProductId(), shoppingCartProductDTO.getQuantity());
+				return updateQuantity(shoppingCartProductDTO.getProductId(), 
+						shoppingCartProductDTO.getQuantity(), shoppingCartProductDTO.getShoppingCartId());
 			} else {
 				ShoppingCartProduct shoppingCartProduct = shoppingCartProductRepository
 						.saveAndFlush(shoppingCartProductMapper.toEntity(shoppingCartProductDTO));
@@ -77,8 +79,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 	
 	@Override
-	public ShoppingCartProductDTO updateQuantity(Long productID, int productQuantity) {
-		Optional<ShoppingCartProduct> retrievedCartProduct = shoppingCartProductRepository.findByProductId(productID);
+	public ShoppingCartProductDTO updateQuantity(Long productID, int productQuantity, Long shoppingCartID) {
+		Optional<ShoppingCartProduct> retrievedCartProduct = shoppingCartProductRepository.findByProductIdAndShoppingCartId
+				(productID, shoppingCartID);
 		if (retrievedCartProduct.isPresent()) {
 			if (productQuantity == 0) {
 				deleteShoppingCartProduct(productID);

@@ -46,8 +46,10 @@ export class ShoppingCartService {
         { observe: 'response' });
     }
 
-    updateQuantity(productID: number, productQuantity: number): Observable<HttpResponse<IShoppingCartProduct>> {
-        return this.http.post<IShoppingCartProduct>(`${this.api}/shoppingCartProduct/update/${productID}`, productQuantity,
-        { observe: 'response' });
+    updateQuantity(productID: number, productQuantity: number, shoppingCartID: number): Observable<HttpResponse<IShoppingCartProduct>> {
+        return this.http.put<IShoppingCartProduct>
+            (`${this.api}/shoppingCartProduct/update/${productID}/${shoppingCartID}/${productQuantity}`, 
+                {productID, productQuantity, shoppingCartID}, 
+                {observe: 'response'});
     }
 }
