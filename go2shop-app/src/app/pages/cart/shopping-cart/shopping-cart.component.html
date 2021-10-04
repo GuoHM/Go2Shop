@@ -22,7 +22,7 @@
                             Item ID: {{ item.id }} |
                             Shopping Cart ID: {{ item.shoppingCartId }} |
                             Product ID: {{ item.productId }} |
-                            Quantity: {{ item.quantity }} |
+                            Quantity: {{ this.shoppingCartProductDTO[i].quantity }} |
                             isSelected: {{ item.isSelected }} |
                             User ID: {{ userID }} |
                             Product Count: {{ productCount }}
@@ -32,7 +32,8 @@
                         <button class="_2sBbZC" (click)="updateQuantity(i, 'minus')">
                             <h4>-</h4>
                         </button>
-                        <input class="_2sBbZC" type="text" role="spinbutton" aria-valuenow="1" value="{{ this.shoppingCartProductDTO[i].quantity }}" disabled>
+                        <input class="_2sBbZC" type="text" role="spinbutton" aria-valuenow="1" 
+                            value="{{ this.shoppingCartProductDTO[i].quantity }}" disabled>
                         <button class="_2sBbZC" (click)="updateQuantity(i, 'add')">
                             <h4>+</h4>
                         </button>
