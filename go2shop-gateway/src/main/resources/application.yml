@@ -66,6 +66,7 @@ secure:
       - "/api/authenticationService/securityUser/register"
       - "/api/catalogueService/catalogue/catalogue"
       - "/api/catalogueService/catalogue/product/**"
+      - "/api/catalogueService/catalogue/catalogue/search"
       
   authroities:
     - 

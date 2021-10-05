@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-
+  
   private loginChangedSubject = new Subject<boolean>();
   loginChangedObserver = this.loginChangedSubject.asObservable();
 

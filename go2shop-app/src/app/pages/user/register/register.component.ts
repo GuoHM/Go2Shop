@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { isControlValid, isControlInvalid } from 'app/shared/utils/form.utils';
 import { MessageService } from 'primeng/api';
 import { UserRegister } from '../user.model';
@@ -22,7 +23,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -73,6 +75,7 @@ export class RegisterComponent implements OnInit {
     this.userService.register(user).subscribe(
       () => {
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'You have successful login!' });
+        this.router.navigate(['/user', 'login']);
       },
       (err) => {
         console.log(err);

@@ -6,30 +6,60 @@ export interface IProduct {
     stock?: number;
     userID?: number;
     productImages?: IProductImage[];
+    productReviews?: IProductReview[];
 }
 
 export class Product implements IProduct {
-    constructor(
+  constructor(
         public id?: number,
         public name?: string,
         public description?: string,
         public price?: number,
         public stock?: number,
         public userID?: number,
-        public productImages?: ProductImage[]
-    ) {}
+        public productImages?: ProductImage[],
+        public productReviews?: ProductReview[]
+  ) {}
+}
+
+export interface IProductReview {
+    id?: number;
+    userId?: number;
+    review?: string;
+    rating?: number;
+    product?: IProduct;
+}
+
+export class ProductReview implements IProductReview {
+  constructor(
+        public id?: number,
+        public userId?: number,
+        public review?: string,
+        public rating?: number,
+        public product?: Product
+  ) {}
 }
 
 export interface IProductImage {
-    id?: number;
-    productId?: number;
-    url?: string;
+  id?: number;
+  productId?: number;
+  url?: string;
 }
 
 export class ProductImage implements IProductImage {
-    constructor(
+  constructor(
         public id?: number,
         public productId?: number,
         public urls?: string
-    ) {}
+  ) {}
+}
+
+export interface IProductSearch {
+  searchTerm?: string;
+}
+
+export class ProductSearch implements IProductSearch {
+  constructor(
+    public searchTerm?: string
+  ) {}
 }

@@ -4,7 +4,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserRoutingModule } from './user-routing.module';
 import { LibrariesModule } from 'app/shared/libraries/libraries.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule } from 'app/auth/authentication.module';
 
 

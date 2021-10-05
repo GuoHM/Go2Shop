@@ -1,7 +1,8 @@
 <p-menubar>
     <ng-template pTemplate="end">
         <div *ngIf="isLogin">
-            <button *hasAnyRole="['BUYER']" pButton pRipple type="button" icon="pi pi-shopping-cart" class="p-button-rounded p-button-outlined icon-margin" [routerLink]="['/cart/shopping-cart']" routerLinkActive="router-link-active"></button>
+            <button *hasAnyRole="['BUYER']" pButton pRipple type="button" icon="pi pi-shopping-cart" class="p-button-rounded p-button-outlined icon-margin" 
+                [routerLink]="['/cart/shopping-cart']" routerLinkActive="router-link-active"></button><span *ngIf="cartSize && cartSize > 0" class=" counter counter-lg">{{ cartSize }}</span>
             <p-avatar [label]="avatarLabel" styleClass="p-mr-2" size="large" shape="circle" (click)="menu.toggle($event)"></p-avatar>
             <p-menu #menu [popup]="true" [model]="userMenu"></p-menu>
         </div>
