@@ -12,6 +12,8 @@ public class UserTokenDTO {
 
 	private Long userId;
 
+	private Long cartId;
+	
 	public String getToken() {
 		return token;
 	}
@@ -50,6 +52,14 @@ public class UserTokenDTO {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public Long getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(Long cartId) {
+		this.cartId = cartId;
 	}
 
 }

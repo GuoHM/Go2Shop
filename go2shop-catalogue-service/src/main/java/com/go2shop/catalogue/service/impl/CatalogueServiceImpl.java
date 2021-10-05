@@ -1,8 +1,15 @@
 package com.go2shop.catalogue.service.impl;
 
 import java.util.ArrayList;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,7 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.go2shop.catalogue.entity.Product;
 import com.go2shop.catalogue.entity.ProductReview;
@@ -25,14 +34,19 @@ import com.go2shop.catalogue.repository.ProductReviewRepository;
 import com.go2shop.catalogue.service.CatalogueService;
 import com.go2shop.catalogue.service.mapper.ProductMapper;
 import com.go2shop.catalogue.service.mapper.ProductReviewMapper;
+import com.go2shop.common.exception.BusinessException;
+import com.go2shop.common.exception.EmBusinessError;
 import com.go2shop.model.product.ProductDTO;
 
 @Service
 public class CatalogueServiceImpl implements CatalogueService {
-	
+
+	@Value("${img.upload-path}")
+	private String uploadPath;
+
 	@Autowired
 	private ProductMapper productMapper;
-	
+
 	@Autowired
 	private ProductReviewMapper productReviewMapper;
 	
@@ -41,12 +55,12 @@ public class CatalogueServiceImpl implements CatalogueService {
 	
 	@Autowired
 	private ProductReviewRepository productReviewRepository;
-	
+
 	@Override
 	public List<ProductDTO> getCatalogue() {
 		return this.catalogueRepository.findAll().stream().map(productMapper::toDto).collect(Collectors.toList());
 	}
-	
+
 	@Override
 	public Optional<ProductDTO> getProductById(Long id) {
 		Optional<ProductDTO> productOpt = this.catalogueRepository.findById(id).map(productMapper::toDto);
@@ -84,5 +98,35 @@ public class CatalogueServiceImpl implements CatalogueService {
 			Predicate[] p = new Predicate[predicates.size()];
 			return cb.and(predicates.toArray(p));
 		};
+	}
+
+	@Override
+	public String uploadImage(MultipartFile file) throws BusinessException, IOException {
+		if (file == null) {
+			throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+		}
+		Path path = Paths.get(uploadPath);
+		if (Files.notExists(path)) {
+			Files.createFile(Files.createDirectories(path));
+		}
+		String fileName = UUID.randomUUID() + file.getOriginalFilename();
+		String filePath = uploadPath + fileName;
+		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(filePath));
+		try {
+			outputStream.write(file.getBytes());
+			outputStream.flush();
+		} catch (IOException e) {
+			throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+		} finally {
+			outputStream.close();
+		}
+		return fileName;
+	}
+
+	@Override
+	public ProductDTO createCatalogue(ProductDTO product) {
+		Product productToSave = productMapper.toEntity(product);
+		productToSave.getProductImages().stream().forEach(productImage -> productImage.setProduct(productToSave));
+		return productMapper.toDto(catalogueRepository.save(productToSave));
 	}
 }

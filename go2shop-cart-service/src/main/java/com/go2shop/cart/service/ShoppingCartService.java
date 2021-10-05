@@ -1,32 +1,30 @@
 package com.go2shop.cart.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.go2shop.model.cart.ShoppingCartDTO;
 import com.go2shop.model.cart.ShoppingCartProductDTO;
-import com.go2shop.model.cart.UserToProductDTO;
 
 public interface ShoppingCartService {
 	
 	ShoppingCartDTO createShoppingCart(ShoppingCartDTO shoppingCartDTO);
 	
-//	ShoppingCartProductDTO createShoppingCartProduct(ShoppingCartProductDTO shoppingCartProductDTO);
+	Optional<ShoppingCartProductDTO> getShoppingCartProduct(Long shoppingCartProductID);
 	
-	ShoppingCartDTO getShoppingCart(Long shoppingCartID);
-	
-	ShoppingCartProductDTO getShoppingCartProduct(Long shoppingCartProductID);
+	List<ShoppingCartProductDTO> getAllShoppingCartProduct(Long shoppingCartID);
 	
 	void deleteAllProduct(Long shoppingCartID);
-//	
-//	void deleteShoppingCartProduct(Long shoppingCartProductID);
 	
-//	ShoppingCartProductDTO updateQuantity(Long productID, int productQuantity);
+	void deleteShoppingCartProductByProductId(Long productId);
+	
+	void deleteShoppingCartProductByCartIdAndProductId(Long cartId, Long productId);
 	
 	ShoppingCartDTO getShoppingCartByUserId(Long userID);
 	
-	ShoppingCartProductDTO createOrUpdateShoppingCartProduct(UserToProductDTO userToProductDTO);
+	ShoppingCartProductDTO createShoppingCartProduct(ShoppingCartProductDTO shoppingCartProductDTO);
 	
 	ShoppingCartProductDTO updateQuantity(Long cartId, Long productID, int productQuantity);
-	
-	void deleteShoppingCartProduct(Long cartId, Long shoppingCartProductID);
 	
 	Long countCartSizeByDistinctProductIds(Long userId);
 }

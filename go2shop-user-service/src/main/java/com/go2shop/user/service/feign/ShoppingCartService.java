@@ -11,7 +11,7 @@ import com.go2shop.user.service.feign.fallback.ShoppingCartServiceFallback;
 @FeignClient(value = "cart-service", fallback = ShoppingCartServiceFallback.class)
 public interface ShoppingCartService {
 	
-	@PostMapping("/cart/demo/cart/create")
+	@PostMapping("/shoppingCart/cart/create")
 	ResponseEntity<ShoppingCartDTO> createCartForUser(@RequestBody(required = true) ShoppingCartDTO cart);
 
 }

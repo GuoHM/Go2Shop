@@ -12,6 +12,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { MenuModule } from 'primeng/menu';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     CarouselModule,
-    NgbModule
+    NgbModule,
+    FileUploadModule
   ],
   exports: [
     CardModule,
@@ -41,7 +43,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     CarouselModule,
-    NgbModule
+    NgbModule,
+    FileUploadModule
   ],
   declarations: [],
   providers: [MessageService],

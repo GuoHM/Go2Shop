@@ -1,7 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'app/auth/authentication.service';
-import { CartService } from 'app/pages/cart/cart.service';
+import { ShoppingCartService } from 'app/pages/cart/shopping-cart.service';
 import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private messageService: MessageService,
-    private cartService: CartService
+    private cartService: ShoppingCartService
   ) { }
 
   ngOnInit(): void {

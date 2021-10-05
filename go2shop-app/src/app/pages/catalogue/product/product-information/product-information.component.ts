@@ -4,9 +4,9 @@ import { AbstractControl, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginUser } from 'app/auth/authentication.model';
 import { AuthenticationService } from 'app/auth/authentication.service';
-import { IShoppingCartProduct, IUserToProduct, UserToProduct } from 'app/pages/cart/cart.model';
-import { CartService } from 'app/pages/cart/cart.service';
-import { IProduct, IProductReview } from '../../product.model';
+import { IShoppingCartProduct, ShoppingCartProduct } from 'app/pages/cart/cart.model';
+import { ShoppingCartService } from 'app/pages/cart/shopping-cart.service';
+import { IProduct, IProductImage, IProductReview } from '../../product.model';
 
 @Component({
   selector: 'go2shop-product-information',
@@ -19,7 +19,7 @@ export class ProductInformationComponent implements OnInit {
         private route: ActivatedRoute,
         private authService: AuthenticationService,
         private router: Router,
-        private cartService: CartService
+        private cartService: ShoppingCartService
   ) {}
 
     public product: IProduct;
@@ -31,6 +31,10 @@ export class ProductInformationComponent implements OnInit {
       this.route.data.subscribe(
         data => {
           this.product = data.product;
+          if(this.product && this.product.productImages) {
+            this.product.productImages.forEach((img: IProductImage) => img.url = 'assets/images/products/' + img.url);
+          }
+          console.log(this.product);
           this.calculateRatings();
         }
       );
@@ -51,7 +55,7 @@ export class ProductInformationComponent implements OnInit {
 
     addToCart(): void {
       if(this.verifyLogin()) {
-        this.cartService.addProductToCart(this.buildUserToProduct()).subscribe(
+        this.cartService.createShoppingCartProduct(this.buildShoppingCartProduct()).subscribe(
           (res: HttpResponse<IShoppingCartProduct>) => {
             if(res && res.body) {
               this.cartService.updateCartSize();
@@ -63,9 +67,9 @@ export class ProductInformationComponent implements OnInit {
 
     buyNow(): void {
       if(this.verifyLogin()) {
-        this.cartService.addProductToCart(this.buildUserToProduct()).subscribe(
-          (res: HttpResponse<IShoppingCartProduct>) => console.log(res.body)
-        );
+        // this.cartService.createShoppingCartProduct(this.buildUserToProduct()).subscribe(
+        //   (res: HttpResponse<IShoppingCartProduct>) => console.log(res.body)
+        // );
       } 
     }
 
@@ -77,9 +81,9 @@ export class ProductInformationComponent implements OnInit {
       return true;
     }
 
-    private buildUserToProduct(): IUserToProduct {
+    private buildShoppingCartProduct(): IShoppingCartProduct {
       const user: LoginUser = this.authService.getCurrentUser();
-      return new UserToProduct(user['userId'], this.product.id, this.quantity.value);
+      return new ShoppingCartProduct(null, user.cartId, this.product.id, this.quantity.value);
     }
 
     private calculateRatings(): void {

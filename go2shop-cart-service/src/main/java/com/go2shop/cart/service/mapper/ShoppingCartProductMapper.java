@@ -1,5 +1,7 @@
 package com.go2shop.cart.service.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -20,4 +22,6 @@ public interface ShoppingCartProductMapper {
 	@Mapping(target = "shoppingCartId", source = "shoppingCartDTO.id")
 	public ShoppingCartProduct toEntityFromUserToProductAndCart(
 			UserToProductDTO userToProductDTO, ShoppingCartDTO shoppingCartDTO);
+	
+	public List<ShoppingCartProductDTO> toDto(List<ShoppingCartProduct> shoppingCartProducts);
 }

@@ -26,4 +26,6 @@ public interface ShoppingCartProductRepository extends JpaRepository<ShoppingCar
 	@Query(value = "select count(distinct p.productId) "
 			+ "FROM ShoppingCartProduct p where p.shoppingCartId = :cartId")
 	Long countSizeByDistinctProductIds(@Param("cartId") Long cartId);
+
+	Optional<ShoppingCartProduct> findByProductIdAndShoppingCartId(Long productID, Long shoppingCartID);
 }

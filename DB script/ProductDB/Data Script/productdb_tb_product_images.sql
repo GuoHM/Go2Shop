@@ -21,7 +21,7 @@
 
 LOCK TABLES `tb_product_images` WRITE;
 /*!40000 ALTER TABLE `tb_product_images` DISABLE KEYS */;
-INSERT INTO `tb_product_images` VALUES (1,1,'assets/images/products/test_image.jpg'),(2,1,'assets/images/products/test_image_2.jpg'),(3,2,'assets/images/products/samsung_galaxy_s21.png');
+INSERT INTO `tb_product_images` VALUES (1,1,'test_image.jpg'),(2,1,'test_image_2.jpg'),(3,2,'samsung_galaxy_s21.png');
 /*!40000 ALTER TABLE `tb_product_images` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -3,6 +3,7 @@ package com.go2shop.catalogue.entity;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,13 +15,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/**
- * 
- * <Write a short description on the purpose of the class>
- * 
- * @author P1326154 Created Date Aug 10, 2021 3:20:15 PM
- * 
- */
 @Entity
 @Table(name = "TB_PRODUCT")
 public class Product {
@@ -48,14 +42,14 @@ public class Product {
 
 	@NotNull
 	@Column(name = "TB_USER_ID")
-	private Long userID;
+	private Long userId;
 
-	@OneToMany(mappedBy="product")
+	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
 	private List<ProductImage> productImages;
 	
 	@OneToMany(mappedBy="product", fetch = FetchType.LAZY)
 	private List<ProductReview> productReviews;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -96,12 +90,12 @@ public class Product {
 		this.stock = stock;
 	}
 
-	public Long getUserID() {
-		return userID;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public List<ProductImage> getProductImages() {

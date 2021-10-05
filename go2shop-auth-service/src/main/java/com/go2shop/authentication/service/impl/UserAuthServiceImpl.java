@@ -19,11 +19,13 @@ import com.go2shop.authentication.model.entity.SecurityUser;
 import com.go2shop.authentication.repository.AuthorityRepository;
 import com.go2shop.authentication.repository.SecurityUserRepository;
 import com.go2shop.authentication.service.UserAuthService;
+import com.go2shop.authentication.service.feign.ShoppingCartService;
 import com.go2shop.authentication.service.feign.UserService;
 import com.go2shop.authentication.service.mapper.UserRegisterMapper;
 import com.go2shop.common.exception.BusinessException;
 import com.go2shop.common.exception.EmBusinessError;
 import com.go2shop.common.model.ActiveStatus;
+import com.go2shop.model.cart.ShoppingCartDTO;
 import com.go2shop.model.user.UserDTO;
 
 @Service
@@ -32,6 +34,9 @@ public class UserAuthServiceImpl implements UserAuthService {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private ShoppingCartService shoppingCartService;
+	
 	@Autowired
 	private UserRegisterMapper userRegisterMapper;
 
@@ -56,6 +61,13 @@ public class UserAuthServiceImpl implements UserAuthService {
 			throw new BusinessException(EmBusinessError.USER_NOT_EXIST); 
 		}
 		oauth2TokenDTO.setUserId(securityUser.getUserId());
+		ResponseEntity<ShoppingCartDTO> response = shoppingCartService.getShoppingCartByUserId(securityUser.getUserId());
+		if (response.getStatusCode() == HttpStatus.BAD_REQUEST) {
+			throw new BusinessException(EmBusinessError.SERVICE_NOT_AVAILABLE);
+		} else if(!response.hasBody() || (response.hasBody() && response.getBody() == null)) {
+			throw new BusinessException(EmBusinessError.CART_NOT_EXIST);
+		}
+		oauth2TokenDTO.setCartId(response.getBody().getId());
 		return oauth2TokenDTO;
 	}
 
