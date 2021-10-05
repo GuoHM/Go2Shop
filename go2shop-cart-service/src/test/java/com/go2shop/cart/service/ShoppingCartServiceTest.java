@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,13 +70,13 @@ class ShoppingCartServiceTest {
 	
 	@Test
 	void getShoppingCartTest1() {
-		assertFalse(shoppingCartService.getShoppingCartByUserId(null).isPresent());
+		assertNull(shoppingCartService.getShoppingCartByUserId(null));
 	}
 	
 	@Test
 	void getShoppingCartTest2() {
 		Mockito.when(shoppingCartRepository.findByUserId(Mockito.anyLong())).thenReturn(Optional.empty());
-		assertFalse(shoppingCartService.getShoppingCartByUserId(null).isPresent());
+		assertNull(shoppingCartService.getShoppingCartByUserId(null));
 	}
 	
 	@Test

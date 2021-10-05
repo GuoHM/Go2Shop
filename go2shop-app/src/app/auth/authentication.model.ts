@@ -5,6 +5,7 @@ export interface ILoginUser {
   tokenHead?: string;
   token?: string;
   userId?: number;
+  cartId?: number;
 }
 
 export class LoginUser implements ILoginUser {
@@ -14,7 +15,8 @@ export class LoginUser implements ILoginUser {
     public token?: string,
     public tokenHead?: string,
     public expiresIn?: string,
-    public userId?: number
+    public userId?: number,
+    public cartId?: number
   ) { }
 }
 
@@ -25,6 +27,7 @@ export interface IUserToken {
   tokenHead?: string;
   expiresIn?: string;
   userId?: number;
+  cartId?: number;
 }
 
 export class UserToken implements IUserToken {
@@ -33,6 +36,7 @@ export class UserToken implements IUserToken {
     public refreshToken?: string,
     public tokenHead?: string,
     public expiresIn?: string,
-    public userId?: number
+    public userId?: number,
+    public cartId?: number
   ) { }
 }

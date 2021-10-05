@@ -49,29 +49,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		}
 		return null;
 	}
-
-	@Override
-	public ShoppingCartProductDTO createShoppingCartProduct(ShoppingCartProductDTO shoppingCartProductDTO) {
-		if (shoppingCartProductDTO != null && shoppingCartProductDTO.getProductId() != null) {
-			Optional<ShoppingCartProduct> existingShoppingCartProduct = 
-					shoppingCartProductRepository.findByProductIdAndShoppingCartId(
-							shoppingCartProductDTO.getProductId(), shoppingCartProductDTO.getShoppingCartId());
-			if (existingShoppingCartProduct.isPresent()) {
-				return updateQuantity(shoppingCartProductDTO.getProductId(), 
-						shoppingCartProductDTO.getQuantity(), shoppingCartProductDTO.getShoppingCartId());
-			} else {
-				ShoppingCartProduct shoppingCartProduct = shoppingCartProductRepository
-						.saveAndFlush(shoppingCartProductMapper.toEntity(shoppingCartProductDTO));
-				return shoppingCartProductMapper.toDto(shoppingCartProduct);
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public void deleteShoppingCartProduct(Long productID) {
-		shoppingCartProductRepository.deleteByProductId(productID);
-	}
 	
 	@Override
 	public void deleteAllProduct(Long shoppingCartID) {
@@ -79,32 +56,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 	
 	@Override
-	public ShoppingCartProductDTO updateQuantity(Long productID, int productQuantity, Long shoppingCartID) {
-		Optional<ShoppingCartProduct> retrievedCartProduct = shoppingCartProductRepository.findByProductIdAndShoppingCartId
-				(productID, shoppingCartID);
-		if (retrievedCartProduct.isPresent()) {
-			if (productQuantity == 0) {
-				deleteShoppingCartProduct(productID);
-				return null;
-			} else {
-				ShoppingCartProduct shoppingCartProduct = retrievedCartProduct.get();
-				shoppingCartProduct.setQuantity(productQuantity);
-				return shoppingCartProductMapper.toDto(shoppingCartProductRepository.save(shoppingCartProduct));
-			}
-		}
-		return null;
+	public void deleteShoppingCartProductByProductId(Long productID) {
+		shoppingCartProductRepository.deleteByProductId(productID);
 	}
 	
 	@Override
-	public Optional<ShoppingCartDTO> getShoppingCartByUserId(Long userID) {
-		if (userID != null) {
-			Optional<ShoppingCart> result = shoppingCartRepository.findByUserId(userID);
-			if (result.isPresent()) {
-				return Optional.of(shoppingCartMapper.toDto(result.get())); 
-			}
-			return Optional.empty();
-		}
-		return Optional.empty();
+	public void deleteShoppingCartProductByCartIdAndProductId(Long cartId, Long productID) {
+		shoppingCartProductRepository.deleteByShoppingCartIdAndProductId(cartId, productID);
 	}
 
 	@Override
@@ -127,5 +85,58 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		}
 		return new ArrayList<>();
 	}
-
+	
+	@Override
+	public ShoppingCartProductDTO createShoppingCartProduct(ShoppingCartProductDTO shoppingCartProductDTO) {
+		if (shoppingCartProductDTO != null && shoppingCartProductDTO.getProductId() != null) {
+			Optional<ShoppingCartProduct> existingShoppingCartProduct = 
+					shoppingCartProductRepository.findByShoppingCartIdAndProductId(
+							shoppingCartProductDTO.getShoppingCartId(), shoppingCartProductDTO.getProductId());
+			if (existingShoppingCartProduct.isPresent()) {
+				return updateQuantity(shoppingCartProductDTO.getShoppingCartId(), shoppingCartProductDTO.getProductId(), 
+						shoppingCartProductDTO.getQuantity());
+			} else {
+				ShoppingCartProduct shoppingCartProduct = shoppingCartProductRepository
+						.saveAndFlush(shoppingCartProductMapper.toEntity(shoppingCartProductDTO));
+				return shoppingCartProductMapper.toDto(shoppingCartProduct);
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public ShoppingCartDTO getShoppingCartByUserId(Long userId) {
+		if (userId != null) {
+			Optional<ShoppingCart> result = shoppingCartRepository.findByUserId(userId);
+			if (result.isPresent()) {
+				return shoppingCartMapper.toDto(result.get());
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public ShoppingCartProductDTO updateQuantity(Long cartId, Long productId, int productQuantity) {
+		Optional<ShoppingCartProduct> retrievedCartProduct = shoppingCartProductRepository.findByShoppingCartIdAndProductId(cartId, productId);
+		if (retrievedCartProduct.isPresent()) {
+			if (productQuantity == 0) {
+				deleteShoppingCartProductByCartIdAndProductId(cartId, productId);
+				return null;
+			} else {
+				ShoppingCartProduct shoppingCartProduct = retrievedCartProduct.get();
+				shoppingCartProduct.setQuantity(productQuantity);
+				return shoppingCartProductMapper.toDto(shoppingCartProductRepository.save(shoppingCartProduct));
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public Long countCartSizeByDistinctProductIds(Long userId) {
+		ShoppingCartDTO cartDTO = getShoppingCartByUserId(userId);
+		if(cartDTO != null) {
+			return shoppingCartProductRepository.countSizeByDistinctProductIds(cartDTO.getId());
+		}
+		return null;
+	}
 }

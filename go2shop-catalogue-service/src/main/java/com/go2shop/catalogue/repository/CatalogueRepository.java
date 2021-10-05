@@ -17,5 +17,4 @@ import com.go2shop.catalogue.entity.Product;
 */
 @Repository
 public interface CatalogueRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
-
 }

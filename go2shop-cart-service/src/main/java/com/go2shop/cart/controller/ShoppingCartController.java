@@ -3,10 +3,13 @@ package com.go2shop.cart.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +38,16 @@ public class ShoppingCartController extends BaseController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(result);
 	}
 	
+	@PostMapping("/cart/create")
+	public ResponseEntity<ShoppingCartDTO> createCartForUser(@RequestBody(required = true) ShoppingCartDTO cart) {
+		return ResponseEntity.ok().body(shoppingCartService.createShoppingCart(cart));
+	}
+	
+	@GetMapping("/cart/size/{userId}")
+	public ResponseEntity<Long> getCartWithCatalogue(@PathVariable("userId") @NotNull Long userId) {
+		return ResponseEntity.ok().body(shoppingCartService.countCartSizeByDistinctProductIds(userId));
+	}
+	
 	@PostMapping(value = "/shoppingCartProduct/create")
 	public ResponseEntity<ShoppingCartProductDTO> createShoppingCartProduct
 		(@RequestBody(required = true) ShoppingCartProductDTO shoppingCartProductDTO) {
@@ -43,10 +56,12 @@ public class ShoppingCartController extends BaseController {
 	}
 	
 	@GetMapping("/shoppingCart/{userID}")
-	public ResponseEntity<ShoppingCartDTO> getShoppingCartByUserId(Long userID) {
-		Optional<ShoppingCartDTO> result = this.shoppingCartService.getShoppingCartByUserId(userID);
-		return result.map(response -> ResponseEntity.ok().body(response))
-				.orElseGet(() -> ResponseEntity.notFound().build());
+	public ResponseEntity<ShoppingCartDTO> getShoppingCartByUserId(@PathVariable("userID") @NotNull Long userID) {
+		ShoppingCartDTO result = this.shoppingCartService.getShoppingCartByUserId(userID);
+		if(result != null) {
+			return ResponseEntity.ok().body(result);
+		}
+		return ResponseEntity.notFound().build();
 	}
 	
 	@GetMapping("/shoppingCartProduct/product/{shoppingCartProductID}")
@@ -61,19 +76,21 @@ public class ShoppingCartController extends BaseController {
 		return ResponseEntity.ok().body(this.shoppingCartService.getAllShoppingCartProduct(shoppingCartID));
 	}
 	
-	@PostMapping(value = "/shoppingCartProduct/delete")
-	public void deleteAllProduct(Long shoppingCartID) {
+	@DeleteMapping(value = "/shoppingCartProduct/delete/{shoppingCartID}")
+	public void deleteAllProduct(@PathVariable("shoppingCartID") @NotNull Long shoppingCartID) {
 		this.shoppingCartService.deleteAllProduct(shoppingCartID);
 	}
 	
-	@PostMapping(value = "/shoppingCartProduct/delete/{shoppingCartProductID}")
-	public void deleteShoppingCartProduct(Long shoppingCartProductID) {
-		this.shoppingCartService.deleteShoppingCartProduct(shoppingCartProductID);
+	@DeleteMapping(value = "/shoppingCartProduct/delete/{shoppingCartID}/{shoppingCartProductID}")
+	public void deleteShoppingCartProduct(
+			@PathVariable("shoppingCartID") @NotNull Long shoppingCartID, 
+			@PathVariable("shoppingCartProductID") @NotNull Long shoppingCartProductID) {
+		this.shoppingCartService.deleteShoppingCartProductByCartIdAndProductId(shoppingCartID, shoppingCartProductID);
 	}
 	
 	@PutMapping(value = "/shoppingCartProduct/update/{productID}/{shoppingCartID}/{productQuantity}")
 	public ResponseEntity<ShoppingCartProductDTO> updateQuantity(Long productID, int productQuantity, Long shoppingCartID) {
-		ShoppingCartProductDTO result = this.shoppingCartService.updateQuantity(productID, productQuantity, shoppingCartID);
+		ShoppingCartProductDTO result = this.shoppingCartService.updateQuantity(shoppingCartID, productID, productQuantity);
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 }

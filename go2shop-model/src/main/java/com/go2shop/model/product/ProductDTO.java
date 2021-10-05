@@ -31,6 +31,8 @@ public class ProductDTO {
 	private Long userId;
 
 	List<ProductImageDTO> productImages;
+	
+	List<ProductReviewDTO> productReviews;
 
 	public Long getId() {
 		return id;
@@ -86,6 +88,14 @@ public class ProductDTO {
 
 	public void setProductImages(List<ProductImageDTO> productImages) {
 		this.productImages = productImages;
+	}
+
+	public List<ProductReviewDTO> getProductReviews() {
+		return productReviews;
+	}
+
+	public void setProductReviews(List<ProductReviewDTO> productReviews) {
+		this.productReviews = productReviews;
 	}
 
 }

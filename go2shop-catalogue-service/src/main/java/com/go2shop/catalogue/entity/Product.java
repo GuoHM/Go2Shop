@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,13 +15,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/**
- * 
- * <Write a short description on the purpose of the class>
- * 
- * @author P1326154 Created Date Aug 10, 2021 3:20:15 PM
- * 
- */
 @Entity
 @Table(name = "TB_PRODUCT")
 public class Product {
@@ -52,6 +46,9 @@ public class Product {
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
 	private List<ProductImage> productImages;
+	
+	@OneToMany(mappedBy="product", fetch = FetchType.LAZY)
+	private List<ProductReview> productReviews;
 
 	public Long getId() {
 		return id;
@@ -107,6 +104,14 @@ public class Product {
 
 	public void setProductImages(List<ProductImage> productImages) {
 		this.productImages = productImages;
+	}
+
+	public List<ProductReview> getProductReviews() {
+		return productReviews;
+	}
+
+	public void setProductReviews(List<ProductReview> productReviews) {
+		this.productReviews = productReviews;
 	}
 
 }

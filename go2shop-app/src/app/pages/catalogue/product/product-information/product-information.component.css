@@ -1,0 +1,84 @@
+input.spinner:focus, input.spinner:active {
+    box-shadow: none;
+    outline: none;
+}
+
+input.spinner {
+    width: 50px;
+    border: 2px solid lightgrey;
+    border-right: 0;
+    border-left: 0;
+    text-align: center;
+    cursor: text;
+}
+
+button.spinner {
+    background-color: transparent; 
+    border: 2px solid lightgrey;
+}
+
+button.spinner > .reduce-thickness {
+    -webkit-text-stroke: 1px white;
+}
+
+.product-information-label {
+    display: flex; 
+    width: 110px; 
+    align-items: center;
+}
+
+.product-information-stock {
+    display: flex; 
+    align-items: center; 
+    margin-left: 10px; 
+    font-size: 16px;
+    color: #8e8a8a;
+}
+
+.product-information-description {
+    font-size: 20px; 
+    font-weight: 600; 
+    max-height: 3rem; 
+    word-wrap: break-word;
+}
+
+.product-information-container {
+    margin-top: 20px;
+    background-color: white;
+}
+
+.product-information-carousel-container {
+    display: flex; 
+    flex-wrap: nowrap;
+}
+
+.product-information-section {
+    display: flex; 
+    padding-top: 20px;
+}
+
+.btn-space-between {
+    margin-left: 10px;
+}
+
+.ratings-size {
+    font-size: 40px;
+}
+
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 3rem;
+    color: #d3d3d3;
+}
+
+.full {
+    color: red;
+}
+
+.half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: red;
+}

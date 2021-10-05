@@ -10,17 +10,21 @@ public interface ShoppingCartService {
 	
 	ShoppingCartDTO createShoppingCart(ShoppingCartDTO shoppingCartDTO);
 	
-	ShoppingCartProductDTO createShoppingCartProduct(ShoppingCartProductDTO shoppingCartProductDTO);
-	
-	Optional<ShoppingCartDTO> getShoppingCartByUserId(Long userID);
-	
 	Optional<ShoppingCartProductDTO> getShoppingCartProduct(Long shoppingCartProductID);
 	
 	List<ShoppingCartProductDTO> getAllShoppingCartProduct(Long shoppingCartID);
 	
 	void deleteAllProduct(Long shoppingCartID);
 	
-	void deleteShoppingCartProduct(Long shoppingCartProductID);
+	void deleteShoppingCartProductByProductId(Long productId);
 	
-	ShoppingCartProductDTO updateQuantity(Long productID, int productQuantity, Long shoppingCartID);
+	void deleteShoppingCartProductByCartIdAndProductId(Long cartId, Long productId);
+	
+	ShoppingCartDTO getShoppingCartByUserId(Long userID);
+	
+	ShoppingCartProductDTO createShoppingCartProduct(ShoppingCartProductDTO shoppingCartProductDTO);
+	
+	ShoppingCartProductDTO updateQuantity(Long cartId, Long productID, int productQuantity);
+	
+	Long countCartSizeByDistinctProductIds(Long userId);
 }

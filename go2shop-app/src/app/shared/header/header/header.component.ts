@@ -1,5 +1,7 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'app/auth/authentication.service';
+import { ShoppingCartService } from 'app/pages/cart/shopping-cart.service';
 import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
@@ -9,6 +11,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 })
 export class HeaderComponent implements OnInit {
 
+  cartSize: number;
   isLogin = false;
   avatarLabel;
   userMenu: MenuItem[] = [
@@ -21,13 +24,18 @@ export class HeaderComponent implements OnInit {
     }
   ];
 
-  constructor(private authenticationService: AuthenticationService,
-    private messageService: MessageService) { }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private messageService: MessageService,
+    private cartService: ShoppingCartService
+  ) { }
 
   ngOnInit(): void {
+    this.initCartSizeHandler();
     this.isLogin = this.authenticationService.isLoggedIn();
     if (this.isLogin) {
       this.avatarLabel = this.authenticationService.getCurrentUser().username.toUpperCase()[0];
+      this.cartService.updateCartSize();
     }
     this.authenticationService.loginChangedObserver.subscribe(
       (isLogin) => {
@@ -39,5 +47,21 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-
+  private initCartSizeHandler(): void {
+    this.cartService.updateCartSizeObs.subscribe(
+      () => {
+        if(this.authenticationService.isLoggedIn()) {
+          this.cartService.getCartSize(this.authenticationService.getCurrentUser().userId).subscribe(
+            (res: HttpResponse<number>) => {
+              if(res && res.body) {
+                this.cartSize = res.body;
+              }
+            }
+          );
+        } else {
+          this.cartSize = null;
+        }
+      }
+    );
+  }
 }

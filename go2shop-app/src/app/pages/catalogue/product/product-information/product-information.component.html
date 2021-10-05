@@ -1,17 +1,51 @@
-<div style="margin-top:20px;background-color:white;">
-    <div style="display:flex; width:450px;padding:20px;">
-        <p-carousel [style]="{ 'width':'450px' }" *ngIf="product" [value]="product.productImages" [showNavigators]="false" [autoplayInterval]="3000"
-            [numVisible]="1" [numScroll]="1" [circular]="false">
-            <ng-template let-image pTemplate="item">
-                <div class="product-item">
-                    <div class="product-item-content">
-                        <div>
-                            <img style="width:100%" [src]="image.url" onerror="this.src='/assets/images/no_image_available.jpg'" class="product-image" />
+<div class="product-information-container">
+    <div class="product-information-carousel-container">
+        <div style="display:flex; padding:20px;">
+            <p-carousel [style]="{ 'width':'450px' }" *ngIf="product" [value]="product.productImages" [showNavigators]="false" [autoplayInterval]="3000"
+                [numVisible]="1" [numScroll]="1" [circular]="false">
+                <ng-template let-image pTemplate="item">
+                    <div class="product-item">
+                        <div class="product-item-content">
+                            <div>
+                                <img style="width:100%" [src]="image.url" onerror="this.src='/assets/images/no_image_available.jpg'" class="product-image" />
+                            </div>
                         </div>
                     </div>
-                </div>
+                </ng-template>
+            </p-carousel>
+        </div>
+        <div class="flex-auto flex-column" style="display: flex; width: 100%; padding:20px">
+            <div class="product-information-description">
+                <span>{{ product.description }}</span>
+            </div>
+            <ngb-rating class="ratings-size" [starTemplate]="t" [max]="maxRatingSize" [readonly]="true" [rate]="rating"></ngb-rating>
+            <ng-template #t let-fill="fill">
+                <span class="star" [class.full]="fill === 100">
+                  <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                </span>
             </ng-template>
-        </p-carousel>
+            <div class="flex flex-column">
+                <div style="font-size: 20px; text-transform: capitalize;">
+                    <div class="product-information-section">
+                        <div class="product-information-label">Price</div>
+                        <div>${{ product.price }}</div>
+                    </div>
+                    <div class="product-information-section">
+                        <div class="product-information-label">Quantity</div>
+                        <div>
+                            <button class="spinner" (click)="deductQuantity()"><em class="fas fa-minus reduce-thickness"></em></button>
+                            <input class="spinner" [formControl]="quantity"/>
+                            <button class="spinner" (click)="addQuantity()"><em class="fas fa-plus reduce-thickness"></em></button>
+                        </div>
+                        <span class="product-information-stock">{{ product.stock }} available</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-information-section">
+                <button type="button" class="btn btn-primary" (click)="addToCart()">Add To Cart</button>
+                <button type="button"  class="btn btn-primary btn-space-between" (click)="buyNow()">Buy Now</button>
+            </div>
+        </div>
     </div>
 </div>
 

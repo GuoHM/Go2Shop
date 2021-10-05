@@ -1,7 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../user/user.model';
-import { UserService } from '../../user/user.service';
 import { IShoppingCartProduct } from '../shopping-cart-product.model';
 import { IShoppingCart } from '../shopping-cart.model';
 import { ShoppingCartService } from '../shopping-cart.service';
@@ -10,17 +8,17 @@ import { CatalogueService } from '../../catalogue/catalogue.service';
 import { IProduct } from '../../catalogue/product.model';
 
 @Component({
-    selector: 'go2shop-shopping-cart',
-    templateUrl: './shopping-cart.component.html',
-    styleUrls: ['./shopping-cart.component.css']
-  })
-  export class ShoppingCartComponent implements OnInit {
+  selector: 'go2shop-shopping-cart',
+  templateUrl: './shopping-cart.component.html',
+  styleUrls: ['./shopping-cart.component.css']
+})
+export class ShoppingCartComponent implements OnInit {
 
-    constructor(
+  constructor(
       private shoppingCartService: ShoppingCartService,
       private authenticationService: AuthenticationService,
       private catalogueService: CatalogueService
-    ) { }
+  ) { }
 
     public shoppingCartDTO: IShoppingCart;
     public shoppingCartProductDTO: IShoppingCartProduct[] = [];
@@ -29,7 +27,7 @@ import { IProduct } from '../../catalogue/product.model';
 
     public userID: any;
     public productCount: any;
-    public masterSelected: boolean = false;
+    public masterSelected = false;
   
     ngOnInit(): void {
       this.userID = this.authenticationService.getCurrentUser().userId;
@@ -37,7 +35,7 @@ import { IProduct } from '../../catalogue/product.model';
       /* Get Shopping Cart By User ID */
       this.shoppingCartService.getShoppingCart(this.userID).subscribe(
         (res: HttpResponse<IShoppingCart>) => {
-            this.shoppingCartDTO = res.body;
+          this.shoppingCartDTO = res.body;
         }
       );
 
@@ -63,15 +61,15 @@ import { IProduct } from '../../catalogue/product.model';
       //   );
       // }
 
-        this.catalogueService.getCatalogue().subscribe(
-          (res: HttpResponse<IProduct[]>) => {
-            this.productInformation = this.productInformation.concat(res.body)
-          }
-        );
+      this.catalogueService.getCatalogue().subscribe(
+        (res: HttpResponse<IProduct[]>) => {
+          this.productInformation = this.productInformation.concat(res.body);
+        }
+      );
 
-        this.productCount = this.productInformation.length;
+      this.productCount = this.productInformation.length;
 
-      for (var i = 0; i < this.shoppingCartProductDTO.length; i++)
+      for (let i = 0; i < this.shoppingCartProductDTO.length; i++)
       {
         this.checkProduct[i] = 
         {
@@ -80,39 +78,39 @@ import { IProduct } from '../../catalogue/product.model';
           productId: this.shoppingCartProductDTO[i].productId, 
           quantity: this.shoppingCartProductDTO[i].quantity, 
           isSelected: false
-        }
+        };
       }
     }
 
-  /* The master checkbox will check/ uncheck all items */
-  checkUncheckAll() {
-    for (var i = 0; i < this.checkProduct.length; i++) {
-      this.checkProduct[i].isSelected = this.masterSelected;
+    /* The master checkbox will check/ uncheck all items */
+    checkUncheckAll() {
+      for (let i = 0; i < this.checkProduct.length; i++) {
+        this.checkProduct[i].isSelected = this.masterSelected;
+      }
     }
-  }
 
-  /* Check All Checkbox Checked */
-  isAllSelected() {
-    this.masterSelected = this.checkProduct.every(function(item:any) {
+    /* Check All Checkbox Checked */
+    isAllSelected() {
+      this.masterSelected = this.checkProduct.every(function(item:any) {
         return item.isSelected == true;
-      })
-  }
-
-  updateQuantity(index: number, action: string) {
-    if (action == "add") {
-      this.shoppingCartProductDTO[index].quantity = this.shoppingCartProductDTO[index].quantity + 1;
-    } else {
-      this.shoppingCartProductDTO[index].quantity = this.shoppingCartProductDTO[index].quantity - 1;
+      });
     }
-    console.log("This is the quantity: " + this.shoppingCartProductDTO[index].quantity);
-    this.shoppingCartService.updateQuantity(
-      this.shoppingCartProductDTO[index].productId, 
-      this.shoppingCartProductDTO[index].quantity,
-      this.shoppingCartProductDTO[index].shoppingCartId).subscribe(
+
+    updateQuantity(index: number, action: string) {
+      if (action == 'add') {
+        this.shoppingCartProductDTO[index].quantity = this.shoppingCartProductDTO[index].quantity + 1;
+      } else {
+        this.shoppingCartProductDTO[index].quantity = this.shoppingCartProductDTO[index].quantity - 1;
+      }
+      console.log('This is the quantity: ' + this.shoppingCartProductDTO[index].quantity);
+      this.shoppingCartService.updateQuantity(
+        this.shoppingCartProductDTO[index].productId, 
+        this.shoppingCartProductDTO[index].quantity,
+        this.shoppingCartProductDTO[index].shoppingCartId).subscribe(
         (res: HttpResponse<IShoppingCartProduct>) => {
           this.shoppingCartProductDTO[index].quantity = res.body.quantity;
-      }
-    );
-  }
+        }
+      );
+    }
   
-  }
+}

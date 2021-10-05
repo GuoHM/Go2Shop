@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-
+  
   constructor(
     private router: Router
   ) {}
@@ -23,6 +23,7 @@ export class AuthenticationService {
     loginUser.expiresIn = usertoken.expiresIn;
     loginUser.tokenHead = usertoken.tokenHead;
     loginUser.userId = usertoken.userId;
+    loginUser.cartId = usertoken.cartId;
     localStorage.setItem('currentUser', JSON.stringify(loginUser));  
     this.loginChanged(true);
   }

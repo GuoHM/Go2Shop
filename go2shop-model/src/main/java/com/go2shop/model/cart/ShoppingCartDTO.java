@@ -15,7 +15,7 @@ public class ShoppingCartDTO {
 
 	@NotNull
 	private Long userId;
-
+	
 	public Long getId() {
 		return id;
 	}

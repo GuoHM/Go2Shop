@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AuthenticationService } from 'app/auth/authentication.service';
+import { ShoppingCartService } from 'app/pages/cart/shopping-cart.service';
 import { MessageService } from 'primeng/api';
 import { UserLogin } from '../user.model';
 import { UserService } from '../user.service';
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private authenticationService: AuthenticationService,
     private messageService: MessageService,
+    private cartService: ShoppingCartService,
     private location: Location
   ) { }
 
@@ -40,7 +42,8 @@ export class LoginComponent implements OnInit {
     this.userService.login(userlogin).subscribe(
       (res) => {
         this.authenticationService.handleLoginSuccess(res.body);
-        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'You have successful login!' });
+        this.messageService.add({key: 'tc', severity:'success', summary:'Success', detail: 'You have successful login!'});
+        this.cartService.updateCartSize();
         setTimeout(() => {
           this.location.back();
         }, 2000);

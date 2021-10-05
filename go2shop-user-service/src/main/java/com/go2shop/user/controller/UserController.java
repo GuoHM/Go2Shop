@@ -24,7 +24,7 @@ public class UserController extends BaseController {
 	private UserService userService;
 
 	@PostMapping("/create")
-	public ResponseEntity<UserDTO> getCatalogue(@RequestBody(required = true) UserDTO user) {
+	public ResponseEntity<UserDTO> getCatalogue(@RequestBody(required = true) UserDTO user) throws BusinessException {
 		return ResponseEntity.ok().body(userService.createUser(user));
 	}
 	
