@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,8 @@ import com.go2shop.catalogue.service.CatalogueService;
 import com.go2shop.common.controller.BaseController;
 import com.go2shop.common.exception.BusinessException;
 import com.go2shop.model.product.ProductDTO;
+import com.go2shop.model.product.ProductRatingsDTO;
+import com.go2shop.model.product.ProductReviewDTO;
 
 @RestController
 @RequestMapping(value = "/catalogue")
@@ -40,9 +44,22 @@ public class CatalogueController extends BaseController {
 	}
 
 	@GetMapping("/product/{id}")
-	public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id) {
+	public ResponseEntity<ProductDTO> getProduct(@PathVariable("id") @NotNull Long id) {
 		return this.catalogueService.getProductById(id).map(product -> ResponseEntity.ok().body(product))
 				.orElse(ResponseEntity.notFound().build());
+	}
+	
+	@GetMapping("/product/reviews/{id}")
+	public ResponseEntity<List<ProductReviewDTO>> getProductReviewsByProductId(@PathVariable("id") @NotNull Long id, Pageable page) {
+		Page<ProductReviewDTO> results = catalogueService.getProductReviews(id, page);
+		HttpHeaders headers = new HttpHeaders();
+        headers.add(TOTAL_COUNT, Long.toString(results.getTotalElements()));
+		return new ResponseEntity<>(results.getContent(), headers, HttpStatus.OK);
+	}
+	
+	@GetMapping("/product/ratings/{id}")
+	public ResponseEntity<ProductRatingsDTO> getProductRatingsByProductId(@PathVariable("id") @NotNull Long id) {
+		return ResponseEntity.ok().body(catalogueService.getProductRatings(id));
 	}
 	
 	@PostMapping("/catalogue/search")

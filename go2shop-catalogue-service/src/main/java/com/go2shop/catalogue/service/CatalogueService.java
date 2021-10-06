@@ -11,6 +11,8 @@ import com.go2shop.catalogue.entity.ProductSearchDTO;
 import org.springframework.web.multipart.MultipartFile;
 import com.go2shop.common.exception.BusinessException;
 import com.go2shop.model.product.ProductDTO;
+import com.go2shop.model.product.ProductRatingsDTO;
+import com.go2shop.model.product.ProductReviewDTO;
 
 public interface CatalogueService {
 
@@ -23,4 +25,8 @@ public interface CatalogueService {
 	String uploadImage(MultipartFile file) throws BusinessException, IOException;
 
 	ProductDTO createCatalogue(ProductDTO product);
+	
+	Page<ProductReviewDTO> getProductReviews(Long id, Pageable page);
+	
+	ProductRatingsDTO getProductRatings(Long id);
 }

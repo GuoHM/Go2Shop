@@ -6,7 +6,7 @@ import { LoginUser } from 'app/auth/authentication.model';
 import { AuthenticationService } from 'app/auth/authentication.service';
 import { IShoppingCartProduct, ShoppingCartProduct } from 'app/pages/cart/cart.model';
 import { ShoppingCartService } from 'app/pages/cart/shopping-cart.service';
-import { IProduct, IProductImage, IProductReview } from '../../product.model';
+import { IProduct, IProductImage } from '../../product.model';
 
 @Component({
   selector: 'go2shop-product-information',
@@ -34,8 +34,8 @@ export class ProductInformationComponent implements OnInit {
           if(this.product && this.product.productImages) {
             this.product.productImages.forEach((img: IProductImage) => img.url = 'assets/images/products/' + img.url);
           }
-          console.log(this.product);
           this.calculateRatings();
+          console.log(this.rating);
         }
       );
       this.quantity.setValue(1);
@@ -87,12 +87,8 @@ export class ProductInformationComponent implements OnInit {
     }
 
     private calculateRatings(): void {
-      if(this.product.productReviews && this.product.productReviews.length > 0) {
-        let count = 0;
-        this.product.productReviews.forEach(
-          (review: IProductReview) => count += review.rating
-        );
-        this.rating = count / this.product.productReviews.length;
+      if(this.product.productRatings && this.product.productRatings.noOfReviews > 0) {
+        this.rating = this.product.productRatings.totalRatings / this.product.productRatings.noOfReviews;
       } 
     }
 }

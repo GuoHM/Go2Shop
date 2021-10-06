@@ -2,6 +2,8 @@ package com.go2shop.model.cart;
 
 import javax.validation.constraints.NotNull;
 
+import com.go2shop.model.product.ProductDTO;
+
 public class ShoppingCartProductDTO {
 
 	private Long id;
@@ -15,6 +17,8 @@ public class ShoppingCartProductDTO {
 	@NotNull
 	private int quantity;
 
+	private ProductDTO product;
+	
 	public Long getId() {
 		return id;
 	}
@@ -45,6 +49,14 @@ public class ShoppingCartProductDTO {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public ProductDTO getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductDTO product) {
+		this.product = product;
 	}
 
 }

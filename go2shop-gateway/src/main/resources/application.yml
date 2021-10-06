@@ -67,6 +67,8 @@ secure:
       - "/api/catalogueService/catalogue/catalogue"
       - "/api/catalogueService/catalogue/product/**"
       - "/api/catalogueService/catalogue/catalogue/search"
+      - "/api/catalogueService/catalogue/product/reviews/**"
+      - "/api/catalogueService/catalogue/product/ratings/**"
       
   authroities:
     - 

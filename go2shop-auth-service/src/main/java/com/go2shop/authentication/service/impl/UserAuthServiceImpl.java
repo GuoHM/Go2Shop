@@ -66,8 +66,12 @@ public class UserAuthServiceImpl implements UserAuthService {
 			throw new BusinessException(EmBusinessError.SERVICE_NOT_AVAILABLE);
 		} else if(!response.hasBody() || (response.hasBody() && response.getBody() == null)) {
 			throw new BusinessException(EmBusinessError.CART_NOT_EXIST);
+		} else {
+			ShoppingCartDTO cart = response.getBody();
+			if(cart != null) {
+				oauth2TokenDTO.setCartId(cart.getId());
+			}
 		}
-		oauth2TokenDTO.setCartId(response.getBody().getId());
 		return oauth2TokenDTO;
 	}
 

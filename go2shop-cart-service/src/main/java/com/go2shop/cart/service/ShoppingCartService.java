@@ -3,6 +3,7 @@ package com.go2shop.cart.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.go2shop.common.exception.BusinessException;
 import com.go2shop.model.cart.ShoppingCartDTO;
 import com.go2shop.model.cart.ShoppingCartProductDTO;
 
@@ -12,7 +13,7 @@ public interface ShoppingCartService {
 	
 	Optional<ShoppingCartProductDTO> getShoppingCartProduct(Long shoppingCartProductID);
 	
-	List<ShoppingCartProductDTO> getAllShoppingCartProduct(Long shoppingCartID);
+	List<ShoppingCartProductDTO> getAllShoppingCartProduct(Long shoppingCartID) throws BusinessException;
 	
 	void deleteAllProduct(Long shoppingCartID);
 	

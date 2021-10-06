@@ -5,6 +5,7 @@ export interface IProduct {
     price?: number;
     stock?: number;
     userID?: number;
+    productRatings?: IProductRatings;
     productImages?: IProductImage[];
     productReviews?: IProductReview[];
 }
@@ -17,8 +18,21 @@ export class Product implements IProduct {
         public price?: number,
         public stock?: number,
         public userID?: number,
+        public productRatings?: ProductRatings,
         public productImages?: ProductImage[],
         public productReviews?: ProductReview[]
+  ) {}
+}
+
+export interface IProductRatings {
+  totalRatings?: number;
+  noOfReviews?: number;
+}
+
+export class ProductRatings implements IProductRatings {
+  constructor(
+    public totalRatings?: number,
+    public noOfReviews?: number
   ) {}
 }
 
