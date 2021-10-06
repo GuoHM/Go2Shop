@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createRequestOption } from 'app/shared/utils/request-util';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IProduct, IProductSearch } from './product.model';
+import { IProduct, IProductRatings, IProductReview, IProductSearch } from './product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +33,14 @@ export class CatalogueService {
   search(productSearch: IProductSearch, req?: any): Observable<HttpResponse<IProduct[]>> {
     const options = createRequestOption(req);
     return this.http.post<IProduct[]>(`${this.api}/catalogue/search`, productSearch, { params: options, observe: 'response' });
+  }
+
+  getProductRatings(id: number): Observable<HttpResponse<IProductRatings>> {
+    return this.http.get<IProductRatings>(`${this.api}/product/ratings/${id}`, { observe: 'response' });
+  }
+
+  getProductReviews(id: number, req?: any): Observable<HttpResponse<IProductReview[]>> {
+    const options = createRequestOption(req);
+    return this.http.get<IProductReview[]>(`${this.api}/product/reviews/${id}`, { params: options, observe: 'response' });
   }
 }

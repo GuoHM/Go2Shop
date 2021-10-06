@@ -19,7 +19,8 @@ public enum EmBusinessError implements ICommonError {
 	
 	// auth error start with C101
 	CATALOGUE_IMAGE_NOT_FOUND("C101", "Image not found", HttpStatus.BAD_REQUEST),
-	CART_NOT_EXIST("C102", "Cart not found", HttpStatus.BAD_REQUEST);
+	CART_NOT_EXIST("C102", "Cart not found", HttpStatus.NOT_FOUND),
+	PRODUCT_NOT_EXIST("C103", "Product not found", HttpStatus.NOT_FOUND);
 	
 	private String errCode;
 	private String errMsg;

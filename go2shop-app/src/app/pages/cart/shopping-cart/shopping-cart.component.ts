@@ -1,11 +1,11 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { IShoppingCartProduct } from '../shopping-cart-product.model';
+import { ShoppingCartProduct } from '../shopping-cart-product.model';
 import { IShoppingCart } from '../shopping-cart.model';
 import { ShoppingCartService } from '../shopping-cart.service';
 import { AuthenticationService } from 'app/auth/authentication.service';
-import { CatalogueService } from '../../catalogue/catalogue.service';
 import { IProduct } from '../../catalogue/product.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'go2shop-shopping-cart',
@@ -17,100 +17,74 @@ export class ShoppingCartComponent implements OnInit {
   constructor(
       private shoppingCartService: ShoppingCartService,
       private authenticationService: AuthenticationService,
-      private catalogueService: CatalogueService
+      private router: Router
   ) { }
 
     public shoppingCartDTO: IShoppingCart;
-    public shoppingCartProductDTO: IShoppingCartProduct[] = [];
+    public shoppingCartProducts: ShoppingCartProduct[] = [];
     public checkProduct: any[] = [];
     public productInformation: IProduct[] = [];
 
     public userID: any;
     public productCount: any;
     public masterSelected = false;
+    public totalPrice = 0;
   
     ngOnInit(): void {
-      this.userID = this.authenticationService.getCurrentUser().userId;
-
-      /* Get Shopping Cart By User ID */
-      this.shoppingCartService.getShoppingCart(this.userID).subscribe(
-        (res: HttpResponse<IShoppingCart>) => {
-          this.shoppingCartDTO = res.body;
-        }
-      );
-
-      /* Get All Shopping Cart Products By Shopping Cart ID */
-      // this.shoppingCartService.getAllShoppingCartProduct(this.shoppingCartDTO.id).subscribe(
-      //   (res: HttpResponse<IShoppingCartProduct[]>) => {
-      //     this.shoppingCartProductDTO = this.shoppingCartProductDTO.concat(res.body)
-      //   }
-      // );
-
-      this.shoppingCartProductDTO  = [
-        {id : 1, shoppingCartId :1, productId : 1, quantity : 101 },
-        {id : 2, shoppingCartId :1, productId : 2, quantity : 102 },
-        {id : 3, shoppingCartId :1, productId : 3, quantity : 103 }];
-      
-      /* Get All Products Information In Shopping Cart */
-      // for (var i = 0; i < this.shoppingCartProductDTO.length; i++)
-      // {
-      //   this.catalogueService.getProduct(this.shoppingCartProductDTO[i].productId).subscribe(
-      //     (res: HttpResponse<IProduct>) => {
-      //       this.productInformation = this.productInformation.concat(res.body)
-      //     }
-      //   );
-      // }
-
-      this.catalogueService.getCatalogue().subscribe(
-        (res: HttpResponse<IProduct[]>) => {
-          this.productInformation = this.productInformation.concat(res.body);
-        }
-      );
-
-      this.productCount = this.productInformation.length;
-
-      for (let i = 0; i < this.shoppingCartProductDTO.length; i++)
-      {
-        this.checkProduct[i] = 
-        {
-          id: this.shoppingCartProductDTO[i].id, 
-          shoppingCartId: this.shoppingCartProductDTO[i].shoppingCartId, 
-          productId: this.shoppingCartProductDTO[i].productId, 
-          quantity: this.shoppingCartProductDTO[i].quantity, 
-          isSelected: false
-        };
+      if(this.authenticationService.isLoggedIn()) {
+        this.shoppingCartService.getAllShoppingCartProduct(this.authenticationService.getCurrentUser().cartId).subscribe(
+          (res: HttpResponse<ShoppingCartProduct[]>) => {
+            this.shoppingCartProducts = res.body;
+            this.calculateTotalPrice();
+          }
+        );
+      } else {
+        this.router.navigate(['/user', 'login']);
       }
     }
 
     /* The master checkbox will check/ uncheck all items */
-    checkUncheckAll() {
-      for (let i = 0; i < this.checkProduct.length; i++) {
-        this.checkProduct[i].isSelected = this.masterSelected;
+    checkAll(): void {
+      if(this.shoppingCartProducts){
+        this.shoppingCartProducts.forEach((product: ShoppingCartProduct) => {
+          product.isSelected = this.masterSelected;
+        });
+        this.calculateTotalPrice();
       }
     }
 
     /* Check All Checkbox Checked */
-    isAllSelected() {
-      this.masterSelected = this.checkProduct.every(function(item:any) {
-        return item.isSelected == true;
-      });
+    isAllSelected(): void {
+      this.masterSelected = this.shoppingCartProducts.every((item:ShoppingCartProduct) => item.isSelected);
     }
 
-    updateQuantity(index: number, action: string) {
-      if (action == 'add') {
-        this.shoppingCartProductDTO[index].quantity = this.shoppingCartProductDTO[index].quantity + 1;
-      } else {
-        this.shoppingCartProductDTO[index].quantity = this.shoppingCartProductDTO[index].quantity - 1;
-      }
-      console.log('This is the quantity: ' + this.shoppingCartProductDTO[index].quantity);
-      this.shoppingCartService.updateQuantity(
-        this.shoppingCartProductDTO[index].productId, 
-        this.shoppingCartProductDTO[index].quantity,
-        this.shoppingCartProductDTO[index].shoppingCartId).subscribe(
-        (res: HttpResponse<IShoppingCartProduct>) => {
-          this.shoppingCartProductDTO[index].quantity = res.body.quantity;
-        }
-      );
+    hasSelected(): boolean {
+      return this.shoppingCartProducts.some((item:ShoppingCartProduct) => item.isSelected);
     }
-  
+
+    deductQuantity(index: number): void {
+      if(this.shoppingCartProducts && index > -1 && this.shoppingCartProducts.length > index) {
+        if(this.shoppingCartProducts[index].quantity - 1 > 0) {
+          this.shoppingCartProducts[index].quantity -= 1;
+        }
+      }
+    }
+
+    addQuantity(index: number): void {
+      if(this.shoppingCartProducts && index > -1 && this.shoppingCartProducts.length > index) {
+        if(this.shoppingCartProducts[index].product.stock >= this.shoppingCartProducts[index].quantity + 1) {
+          this.shoppingCartProducts[index].quantity += 1;
+        }
+      }
+    }
+
+    calculateTotalPrice(): void {
+      let sum = 0;
+      this.shoppingCartProducts.forEach((product: ShoppingCartProduct) => {
+        if(product.isSelected) {
+          sum += product.quantity * product.product.price;
+        }
+      });
+      this.totalPrice = sum;
+    }
 }

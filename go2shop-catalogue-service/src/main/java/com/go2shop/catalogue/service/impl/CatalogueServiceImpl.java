@@ -37,6 +37,8 @@ import com.go2shop.catalogue.service.mapper.ProductReviewMapper;
 import com.go2shop.common.exception.BusinessException;
 import com.go2shop.common.exception.EmBusinessError;
 import com.go2shop.model.product.ProductDTO;
+import com.go2shop.model.product.ProductRatingsDTO;
+import com.go2shop.model.product.ProductReviewDTO;
 
 @Service
 public class CatalogueServiceImpl implements CatalogueService {
@@ -63,12 +65,25 @@ public class CatalogueServiceImpl implements CatalogueService {
 
 	@Override
 	public Optional<ProductDTO> getProductById(Long id) {
-		Optional<ProductDTO> productOpt = this.catalogueRepository.findById(id).map(productMapper::toDto);
-		if(productOpt.isPresent()) {
-			List<ProductReview> reviews = productReviewRepository.findAllByProductId(productOpt.get().getId());
-			productOpt.get().setProductReviews(reviews.stream().map(productReviewMapper::toDto).collect(Collectors.toList()));
-		}
-		return productOpt;
+//		Optional<ProductDTO> productOpt = this.catalogueRepository.findById(id).map(productMapper::toDto);
+//		if(productOpt.isPresent()) {
+//			List<ProductReview> reviews = productReviewRepository.findAllByProductId(productOpt.get().getId());
+//			productOpt.get().setProductReviews(reviews.stream().map(productReviewMapper::toDto).collect(Collectors.toList()));
+//		}
+		return this.catalogueRepository.findById(id).map(productMapper::toDto);
+	}
+	
+	@Override
+	public Page<ProductReviewDTO> getProductReviews(Long id, Pageable page) {
+		Page<ProductReview> result = productReviewRepository.findAllByProductId(id, page);
+		return result.map(productReview -> {
+			return productReviewMapper.toDto(productReview);
+		});
+	}
+	
+	@Override
+	public ProductRatingsDTO getProductRatings(Long id) {
+		return productReviewRepository.findProductRatings(id);
 	}
 	
 	@Override

@@ -1,6 +1,5 @@
 package com.go2shop.model.product;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,7 +15,6 @@ public class ProductReviewDTO {
 	private String review;
 
 	@NotNull
-	@Column(name = "Rating")
 	private int rating;
 	
 	@NotNull

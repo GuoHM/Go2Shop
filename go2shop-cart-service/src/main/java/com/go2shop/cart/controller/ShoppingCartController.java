@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.go2shop.cart.service.ShoppingCartService;
 import com.go2shop.common.controller.BaseController;
+import com.go2shop.common.exception.BusinessException;
 import com.go2shop.model.cart.ShoppingCartDTO;
 import com.go2shop.model.cart.ShoppingCartProductDTO;
 
@@ -72,7 +73,7 @@ public class ShoppingCartController extends BaseController {
 	}
 	
 	@GetMapping("/shoppingCartProduct/shoppingCart/{shoppingCartID}")
-	public ResponseEntity<List<ShoppingCartProductDTO>> getAllShoppingCartProduct(Long shoppingCartID) {
+	public ResponseEntity<List<ShoppingCartProductDTO>> getAllShoppingCartProduct(@PathVariable("shoppingCartID") Long shoppingCartID) throws BusinessException {
 		return ResponseEntity.ok().body(this.shoppingCartService.getAllShoppingCartProduct(shoppingCartID));
 	}
 	

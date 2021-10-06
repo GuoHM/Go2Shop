@@ -2,43 +2,50 @@
 <div class="col-10 col-sm-10 col-md-8 col-lg-8 mx-auto">
     <div class="card .card-cart my-12">
         <div class="card-body"> 
-            <input type="checkbox" name="optiona" id="selectAll" [(ngModel)]="masterSelected" (change)="checkUncheckAll()"> 
-            <span class="checkboxtext">
-                Select All
-            </span>
-            <div *ngFor="let item of checkProduct; let i = index" class="card-body">
-                <div class="card-body">
+            <div class="card-body">
+                <input type="checkbox" name="optiona" id="selectAll" [(ngModel)]="masterSelected" (change)="checkAll()"> 
+                <span class="checkboxtext">Select All</span>
+            </div>
+            
+            <div *ngFor="let product of shoppingCartProducts; let i = index" class="card-body">
+                <div style="display: flex;">
                     <hr class="solid">
-                    <div class="col-2">
-                        <input type="checkbox" name="optiona" id="opta" [(ngModel)]="item.isSelected" (change)="isAllSelected()"> 
+                    <div class="cart-product-checkbox">
+                        <input type="checkbox" name="optiona" id="opta" [(ngModel)]="product.isSelected" (change)="isAllSelected();calculateTotalPrice()"> 
                     </div>
-                    <div>
-                        <a [routerLink]="['/catalogue/product/'+ item.productId]"><img [src]="image" 
-                            onerror="this.src='/assets/images/no_image_available.jpg'" alt="" class="product-image">
+                    <div class="cart-image-wrapper">
+                        <a [routerLink]="['/catalogue/product/'+ product.productId]">
+                        <img [src]="(product.product && product.product.productImages && product.product.productImages.length > 0) ? 'assets/images/products/' + product.product.productImages[0].url : 'assets/images/no_image_available.jpg'" 
+                            onerror="this.src='/assets/images/no_image_available.jpg'" alt="" class="image-width">
                         </a>
                     </div>
-                    <div>
-                        <span class="checkboxtext2">
-                            Item ID: {{ item.id }} |
-                            Shopping Cart ID: {{ item.shoppingCartId }} |
-                            Product ID: {{ item.productId }} |
-                            Quantity: {{ this.shoppingCartProductDTO[i].quantity }} |
-                            isSelected: {{ item.isSelected }} |
-                            User ID: {{ userID }} |
-                            Product Count: {{ productCount }}
-                        </span>
-                    </div>
-                    <div>
-                        <button class="_2sBbZC" (click)="updateQuantity(i, 'minus')">
-                            <h4>-</h4>
-                        </button>
-                        <input class="_2sBbZC" type="text" role="spinbutton" aria-valuenow="1" 
-                            value="{{ this.shoppingCartProductDTO[i].quantity }}" disabled>
-                        <button class="_2sBbZC" (click)="updateQuantity(i, 'add')">
-                            <h4>+</h4>
-                        </button>
+                    <div class="cart-product-information-wrapper">
+                        <div style="display: flex;">
+                            <div class="cart-product-information label">Item</div>
+                            <div class="cart-product-information">{{ product.product.name }}</div>
+                        </div>
+                        <div style="display: flex;">
+                            <div class="cart-product-information label">Price</div>
+                            <div class="cart-product-information">${{ product.product.price }}</div>
+                        </div>
+                        <div style="display: flex;">
+                            <div class="cart-product-information label">Quantity</div>
+                            <div class="cart-product-information">
+                                <button class="spinner" (click)="deductQuantity(i)"><em class="fas fa-minus reduce-thickness"></em></button>
+                                <input class="spinner" [(ngModel)]="product.quantity"/>
+                                <button class="spinner" (click)="addQuantity(i)"><em class="fas fa-plus reduce-thickness"></em></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="card-body total-price-wrapper">
+                <span class="label">Total Price: </span>
+                <span>${{ totalPrice }}</span>
+            </div>
+            <div *ngIf="hasSelected()" class="card-body checkout-btn-wrapper">
+                <button class="btn btn-primary">Check Out</button>
             </div>
         </div>
     </div>
