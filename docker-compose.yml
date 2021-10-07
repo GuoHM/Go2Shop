@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  go2shop-registry:
+    image: go2shop-registry-8761:0.0.1
+    build: ./go2shop-registry
+    ports:
+      - "8761:8761"
+    expose:
+      - 8761
+  go2shop-gateway:
+    image: go2shop-gateway-8770:0.0.1
+    build: ./go2shop-gateway
+    ports:
+      - "8770:8770"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka    
