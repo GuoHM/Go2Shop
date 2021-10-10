@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.26, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: productdb
+-- Host: localhost    Database: productdb
 -- ------------------------------------------------------
 -- Server version	8.0.26
 
@@ -16,18 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tb_product_review`
+-- Dumping data for table `tb_product`
 --
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tb_product_review`
---
-
-LOCK TABLES `tb_product_review` WRITE;
-/*!40000 ALTER TABLE `tb_product_review` DISABLE KEYS */;
-INSERT INTO `tb_product_review` VALUES (1,'Seller respond very quickly. Product looks good',5,1,1),(2,'Prompt replies from seller but not many product varieties. Delivery is quite slow. Take about 7 days to deliver.',4,1,2);
-/*!40000 ALTER TABLE `tb_product_review` ENABLE KEYS */;
+USE productdb;
+LOCK TABLES `tb_product` WRITE;
+/*!40000 ALTER TABLE `tb_product` DISABLE KEYS */;
+INSERT INTO `tb_product` VALUES (1,'Crystal','RESTOCKED! Assorted Crystal Tumbles Large Variety (ONE PIECE)',8,10,1),(2,'Samsung Galaxy S21','Samsung Galaxy S21 ǀ S21+ Plus 5G (2021) (Special price on violet )',1000,1,1);
+/*!40000 ALTER TABLE `tb_product` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -39,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-05  9:08:50
+-- Dump completed on 2021-09-15 22:27:08
