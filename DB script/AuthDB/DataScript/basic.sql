@@ -1,3 +1,5 @@
+USE authdb;
+
 SET SQL_SAFE_UPDATES = 0;
 DELETE FROM authdb.tb_user_authority;
 DELETE FROM authdb.tb_authority;

@@ -18,7 +18,7 @@
 --
 -- Dumping data for table `tb_shopping_cart_has_tb_product`
 --
-
+USE shoppingcartdb;
 LOCK TABLES `tb_shopping_cart_has_tb_product` WRITE;
 /*!40000 ALTER TABLE `tb_shopping_cart_has_tb_product` DISABLE KEYS */;
 INSERT INTO `tb_shopping_cart_has_tb_product` VALUES (1,2,1,6),(2,2,2,1),(3,4,2,1),(4,4,1,1);

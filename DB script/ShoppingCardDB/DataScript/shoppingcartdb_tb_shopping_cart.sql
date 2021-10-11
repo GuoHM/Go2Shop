@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.26, for Win64 (x86_64)
 --
--- Host: localhost    Database: productdb
+-- Host: 127.0.0.1    Database: shoppingcartdb
 -- ------------------------------------------------------
 -- Server version	8.0.26
 
@@ -12,17 +12,14 @@
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
 --
--- Dumping data for table `tb_product`
+-- Dumping data for table `tb_shopping_cart`
 --
-
-LOCK TABLES `tb_product` WRITE;
-/*!40000 ALTER TABLE `tb_product` DISABLE KEYS */;
-INSERT INTO `tb_product` VALUES (1,'Crystal','RESTOCKED! Assorted Crystal Tumbles Large Variety (ONE PIECE)',8,10,1),(2,'Samsung Galaxy S21','Samsung Galaxy S21 ǀ S21+ Plus 5G (2021) (Special price on violet )',1000,1,1);
-/*!40000 ALTER TABLE `tb_product` ENABLE KEYS */;
+USE shoppingcartdb;
+LOCK TABLES `tb_shopping_cart` WRITE;
+/*!40000 ALTER TABLE `tb_shopping_cart` DISABLE KEYS */;
+INSERT INTO `tb_shopping_cart` VALUES (2,NULL,NULL,8),(4,NULL,NULL,10);
+/*!40000 ALTER TABLE `tb_shopping_cart` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -34,4 +31,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-15 22:27:08
+-- Dump completed on 2021-10-05  9:13:07

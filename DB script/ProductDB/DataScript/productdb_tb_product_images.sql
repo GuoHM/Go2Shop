@@ -18,7 +18,7 @@
 --
 -- Dumping data for table `tb_product_images`
 --
-
+USE productdb;
 LOCK TABLES `tb_product_images` WRITE;
 /*!40000 ALTER TABLE `tb_product_images` DISABLE KEYS */;
 INSERT INTO `tb_product_images` VALUES (1,1,'test_image.jpg'),(2,1,'test_image_2.jpg'),(3,2,'samsung_galaxy_s21.png');
