@@ -1,4 +1,4 @@
-<p-card header="User profile" [style]="{'width': '50rem', 'margin-bottom': '2em'}">
+<p-card *ngIf="user" header="User profile" [style]="{'width': '50rem', 'margin-bottom': '2em'}">
     <h6>Name: {{user.name}}</h6>
     <h6>Contact Number: {{user.contactDetail}}</h6>
     <h6>Card Number: {{user.cardNumber}}</h6>

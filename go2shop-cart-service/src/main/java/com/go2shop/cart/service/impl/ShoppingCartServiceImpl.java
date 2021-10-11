@@ -3,6 +3,7 @@ package com.go2shop.cart.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -80,11 +81,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 
 	@Override
-	public Optional<ShoppingCartProductDTO> getShoppingCartProduct(Long shoppingCartProductID) {
+	public void deleteShoppingCartProductById(Long shoppingCartProductId) {
+		shoppingCartProductRepository.deleteById(shoppingCartProductId);
+	}
+	
+	@Override
+	public Optional<ShoppingCartProductDTO> getShoppingCartProduct(Long shoppingCartProductID) throws BusinessException {
 		if (shoppingCartProductID != null) {
 			Optional<ShoppingCartProduct> result =  shoppingCartProductRepository.findById(shoppingCartProductID);
 			if (result.isPresent()) {
-				return Optional.of(shoppingCartProductMapper.toDto(result.get()));
+				ShoppingCartProductDTO dto = shoppingCartProductMapper.toDto(result.get());
+				dto.setProduct(retrieveProduct(result.get().getProductId()));
+				return Optional.of(dto);
 			}
 			return Optional.empty();
 		}
@@ -95,16 +103,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	public List<ShoppingCartProductDTO> getAllShoppingCartProduct(Long shoppingCartID) throws BusinessException {
 		if (shoppingCartID != null) {
 			List<ShoppingCartProduct> result = shoppingCartProductRepository.findByShoppingCartId(shoppingCartID);
-			List<ShoppingCartProductDTO> dtos = shoppingCartProductMapper.toDto(result);
-			dtos.stream().forEach(cartItem -> {
+			return result.stream().map(cartItem -> {
 				try {
-					cartItem.setProduct(retrieveProduct(cartItem.getProductId()));
+					ShoppingCartProductDTO dto = shoppingCartProductMapper.toDto(cartItem);
+					dto.setProduct(retrieveProduct(cartItem.getProductId()));
+					return dto;
 				} catch (BusinessException e) {
 					throw Throwables.propagate(e);
 				}
-			});
-			
-			return dtos;
+			}).collect(Collectors.toList());
 		}
 		return new ArrayList<>();
 	}
@@ -126,12 +133,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	
 	@Override
 	public ShoppingCartProductDTO createShoppingCartProduct(ShoppingCartProductDTO shoppingCartProductDTO) {
-		if (shoppingCartProductDTO != null && shoppingCartProductDTO.getProductId() != null) {
+		if (shoppingCartProductDTO != null && shoppingCartProductDTO.getProduct().getId() != null) {
 			Optional<ShoppingCartProduct> existingShoppingCartProduct = 
 					shoppingCartProductRepository.findByShoppingCartIdAndProductId(
-							shoppingCartProductDTO.getShoppingCartId(), shoppingCartProductDTO.getProductId());
+							shoppingCartProductDTO.getShoppingCartId(), shoppingCartProductDTO.getProduct().getId());
 			if (existingShoppingCartProduct.isPresent()) {
-				return updateQuantity(shoppingCartProductDTO.getShoppingCartId(), shoppingCartProductDTO.getProductId(), 
+				return updateQuantity(shoppingCartProductDTO.getShoppingCartId(), shoppingCartProductDTO.getProduct().getId(), 
 						shoppingCartProductDTO.getQuantity());
 			} else {
 				ShoppingCartProduct shoppingCartProduct = shoppingCartProductRepository

@@ -4,13 +4,15 @@ import {Observable, of, throwError} from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
+import { ShoppingCartService } from 'app/pages/cart/shopping-cart.service';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private cartService: ShoppingCartService
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,6 +30,8 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
   private handleError(err: HttpErrorResponse): Observable<any> {
     if (err.status === 401 || err.status === 403) {
+      this.authenticationService.logout();
+      this.cartService.updateCartSize();
       this.router.navigateByUrl('/user/login');
       return of(err.message); 
     }

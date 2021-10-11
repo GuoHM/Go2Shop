@@ -14,6 +14,7 @@ public interface ShoppingCartProductMapper {
 	@Mapping(target = "product", ignore = true)
 	public ShoppingCartProductDTO toDto(ShoppingCartProduct shoppingCartProduct);
 	
+	@Mapping(target = "productId", source = "product.id")
 	public ShoppingCartProduct toEntity(ShoppingCartProductDTO shoppingCartProductDTO);
 	
 	public List<ShoppingCartProductDTO> toDto(List<ShoppingCartProduct> shoppingCartProducts);

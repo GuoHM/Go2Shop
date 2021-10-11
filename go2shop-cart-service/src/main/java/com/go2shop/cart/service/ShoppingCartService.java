@@ -11,11 +11,13 @@ public interface ShoppingCartService {
 	
 	ShoppingCartDTO createShoppingCart(ShoppingCartDTO shoppingCartDTO);
 	
-	Optional<ShoppingCartProductDTO> getShoppingCartProduct(Long shoppingCartProductID);
+	Optional<ShoppingCartProductDTO> getShoppingCartProduct(Long shoppingCartProductID) throws BusinessException;
 	
 	List<ShoppingCartProductDTO> getAllShoppingCartProduct(Long shoppingCartID) throws BusinessException;
 	
 	void deleteAllProduct(Long shoppingCartID);
+	
+	void deleteShoppingCartProductById(Long shoppingCartProductId);
 	
 	void deleteShoppingCartProductByProductId(Long productId);
 	

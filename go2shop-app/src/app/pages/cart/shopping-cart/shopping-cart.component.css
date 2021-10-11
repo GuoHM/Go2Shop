@@ -87,6 +87,14 @@ button.spinner > .reduce-thickness {
   text-transform: capitalize;
 }
 
+.cart-product-wrapper {
+  border: 1px solid black
+}
+
+.cart-product-wrapper.not-first-child {
+  border-top: none;
+}
+
 .image-width {
   width: 200px;
 }
@@ -102,7 +110,6 @@ button.spinner > .reduce-thickness {
 
 .total-price-wrapper {
   display: flex; 
-  justify-content: end; 
   font-size: 24px;
 }
 
@@ -111,6 +118,18 @@ button.spinner > .reduce-thickness {
 }
 
 .checkout-btn-wrapper {
-  display: flex; 
-  justify-content: end;
+  display: flex;
+}
+
+.order-details-label {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.order-details-label.not-first-child {
+  padding-top: 10px;
+}
+
+.input-fields:active, .input-fields:focus {
+  outline: none;
 }

@@ -3,32 +3,34 @@
     <div class="card .card-cart my-12">
         <div class="card-body"> 
             <div class="card-body">
-                <input type="checkbox" name="optiona" id="selectAll" [(ngModel)]="masterSelected" (change)="checkAll()"> 
-                <span class="checkboxtext">Select All</span>
+                <div *ngIf="!isCheckedOut">
+                    <input type="checkbox" name="optiona" id="selectAll" [(ngModel)]="masterSelected" (change)="checkAll()"> 
+                    <span class="checkboxtext">Select All</span>
+                </div>
             </div>
             
-            <div *ngFor="let product of shoppingCartProducts; let i = index" class="card-body">
-                <div style="display: flex;">
+            <div *ngFor="let product of displayedShoppingCartProducts; let i = index" class="card-body cart-product-wrapper" [ngClass]="{ 'not-first-child': i !== 0 }">
+                <div class="d-flex">
                     <hr class="solid">
-                    <div class="cart-product-checkbox">
+                    <div *ngIf="!isCheckedOut" class="cart-product-checkbox">
                         <input type="checkbox" name="optiona" id="opta" [(ngModel)]="product.isSelected" (change)="isAllSelected();calculateTotalPrice()"> 
                     </div>
                     <div class="cart-image-wrapper">
                         <a [routerLink]="['/catalogue/product/'+ product.productId]">
-                        <img [src]="(product.product && product.product.productImages && product.product.productImages.length > 0) ? 'assets/images/products/' + product.product.productImages[0].url : 'assets/images/no_image_available.jpg'" 
+                        <img [src]="(product.product && product.product.productImages && product.product.productImages.length > 0) ? product.product.productImages[0].url : 'assets/images/no_image_available.jpg'" 
                             onerror="this.src='/assets/images/no_image_available.jpg'" alt="" class="image-width">
                         </a>
                     </div>
                     <div class="cart-product-information-wrapper">
-                        <div style="display: flex;">
+                        <div class="d-flex">
                             <div class="cart-product-information label">Item</div>
                             <div class="cart-product-information">{{ product.product.name }}</div>
                         </div>
-                        <div style="display: flex;">
+                        <div class="d-flex">
                             <div class="cart-product-information label">Price</div>
                             <div class="cart-product-information">${{ product.product.price }}</div>
                         </div>
-                        <div style="display: flex;">
+                        <div *ngIf="!isCheckedOut" class="d-flex">
                             <div class="cart-product-information label">Quantity</div>
                             <div class="cart-product-information">
                                 <button class="spinner" (click)="deductQuantity(i)"><em class="fas fa-minus reduce-thickness"></em></button>
@@ -36,17 +38,49 @@
                                 <button class="spinner" (click)="addQuantity(i)"><em class="fas fa-plus reduce-thickness"></em></button>
                             </div>
                         </div>
+                        <div *ngIf="isCheckedOut" class="d-flex">
+                            <div class="cart-product-information label">Quantity</div>
+                            <div class="cart-product-information">{{ product.quantity }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="card-body total-price-wrapper">
+            <div *ngIf="isCheckedOut" class="card-body" style="border: 1px solid black; margin-top: 20px;">
+                <form [formGroup]="userDetailsForm">
+                    <div class="d-flex flex-column">
+                        <label for="address" class="order-details-label">Delivery Address: </label>
+                        <input id="address" class="input-fields" [formControl]="address"/>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <label for="cardNo" class="order-details-label not-first-child">Payment Option: </label>
+                         <div>
+                            <input id="payNow" type="radio" value="{{ paymentOptions.PAYNOW }}" name="payOption" formControlName="payOption">
+                            <label style="padding-left: 10px;" for="payNow">PayNow</label>
+                         </div>
+                         <div>
+                            <input #cardRadio id="card" type="radio" value="{{ paymentOptions.CARD }}" name="payOption" formControlName="payOption">
+                            <label style="padding-left: 10px;" for="card">Credit / Debit Card</label>
+                         </div>
+                         <div *ngIf="cardRadio.checked" style="padding-left: 22px;">
+                            <label style="padding-right: 10px;" for="card">Card Number: </label>
+                            <span>{{ cardNo.value }}</span>
+                         </div>
+                    </div>
+                </form>
+                
+            </div>
+            <div class="card-body total-price-wrapper justify-content-end">
                 <span class="label">Total Price: </span>
                 <span>${{ totalPrice }}</span>
             </div>
-            <div *ngIf="hasSelected()" class="card-body checkout-btn-wrapper">
-                <button class="btn btn-primary">Check Out</button>
+            <div *ngIf="hasSelected() && !isCheckedOut" class="card-body checkout-btn-wrapper justify-content-end">
+                <button class="btn btn-primary" (click)="checkOut()">Check Out</button>
+            </div>
+            <div *ngIf="isCheckedOut" class="card-body checkout-btn-wrapper justify-content-end">
+                <button class="btn btn-light" style="margin-right: 10px" (click)="cancelCheckOut()">Cancel</button>
+                <button class="btn btn-primary" (click)="placeOrder()">Place Order</button>
             </div>
         </div>
     </div>
 </div>
+<p-toast position="top-center" key="tc"></p-toast>

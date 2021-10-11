@@ -3,15 +3,10 @@ package com.go2shop.model.order;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 public class OrderDetailDTO {
 
-	@NotNull
 	private Long id;
 
-	@NotBlank
 	private LocalDateTime orderDate;
 
 	private LocalDateTime orderReceived;
@@ -20,10 +15,10 @@ public class OrderDetailDTO {
 
 	private BigDecimal payment;
 
-	@NotNull
-	private Long orderID;
+	private Integer deductQty;
+	
+	private OrderDTO order;
 
-	@NotNull
 	private Long productID;
 
 	public Long getId() {
@@ -66,12 +61,12 @@ public class OrderDetailDTO {
 		this.payment = payment;
 	}
 
-	public Long getOrderID() {
-		return orderID;
+	public Integer getDeductQty() {
+		return deductQty;
 	}
 
-	public void setOrderID(Long orderID) {
-		this.orderID = orderID;
+	public void setDeductQty(Integer deductQty) {
+		this.deductQty = deductQty;
 	}
 
 	public Long getProductID() {
@@ -80,6 +75,14 @@ public class OrderDetailDTO {
 
 	public void setProductID(Long productID) {
 		this.productID = productID;
+	}
+
+	public OrderDTO getOrder() {
+		return order;
+	}
+
+	public void setOrder(OrderDTO order) {
+		this.order = order;
 	}
 
 }

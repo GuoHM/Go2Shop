@@ -3,9 +3,10 @@ package com.go2shop.model.product;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.go2shop.model.user.UserDTO;
+
 public class ProductReviewDTO {
 
-	@NotNull
 	private Long id;
 
 	@NotNull
@@ -20,6 +21,8 @@ public class ProductReviewDTO {
 	@NotNull
 	private ProductDTO product;
 
+	private UserDTO user;
+	
 	public Long getId() {
 		return id;
 	}
@@ -58,5 +61,13 @@ public class ProductReviewDTO {
 
 	public void setProduct(ProductDTO product) {
 		this.product = product;
+	}
+
+	public UserDTO getUser() {
+		return user;
+	}
+
+	public void setUser(UserDTO user) {
+		this.user = user;
 	}
 }

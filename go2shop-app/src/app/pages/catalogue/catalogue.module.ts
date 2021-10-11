@@ -6,6 +6,8 @@ import { LibrariesModule } from 'app/shared/libraries/libraries.module';
 import { ProductComponent } from './product/product.component';
 import { ProductInformationComponent } from './product/product-information/product-information.component';
 import { CatalogueComponent } from './catalogue.component';
+import { ProductReviewComponent } from './product/product-review/product-review.component';
+import { AddProductReviewComponent } from './product/product-review/add-product-review/add-product-review.component';
 
 
 
@@ -14,7 +16,9 @@ import { CatalogueComponent } from './catalogue.component';
     CatalogueComponent,
     CatalogueListingComponent,
     ProductComponent,
-    ProductInformationComponent
+    ProductInformationComponent,
+    ProductReviewComponent,
+    AddProductReviewComponent
   ],
   imports: [
     CommonModule,

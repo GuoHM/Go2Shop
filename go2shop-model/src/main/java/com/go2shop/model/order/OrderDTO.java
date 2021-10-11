@@ -1,25 +1,23 @@
 package com.go2shop.model.order;
 
 import java.time.LocalDateTime;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.List;
 
 public class OrderDTO {
 
-	@NotNull
 	private Long id;
 
-	@NotBlank
-	@Size(max = 25)
 	private String status;
 
-	@NotNull
 	private LocalDateTime orderDate;
 
-	@NotNull
-	private Long userID;
+	private String paymentType;
+	
+	private Long buyerId;
+
+	private Long sellerId;
+	
+	private List<OrderDetailDTO> orderDetails;
 
 	public Long getId() {
 		return id;
@@ -45,12 +43,35 @@ public class OrderDTO {
 		this.orderDate = orderDate;
 	}
 
-	public Long getUserID() {
-		return userID;
+	public String getPaymentType() {
+		return paymentType;
 	}
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
 	}
 
+	public Long getBuyerId() {
+		return buyerId;
+	}
+
+	public void setBuyerId(Long buyerId) {
+		this.buyerId = buyerId;
+	}
+
+	public Long getSellerId() {
+		return sellerId;
+	}
+
+	public void setSellerId(Long sellerId) {
+		this.sellerId = sellerId;
+	}
+
+	public List<OrderDetailDTO> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<OrderDetailDTO> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
 }

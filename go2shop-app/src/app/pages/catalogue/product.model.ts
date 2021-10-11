@@ -1,3 +1,5 @@
+import { IUser, User } from '../user/user.model';
+
 export interface IProduct {
     id?: number;
     name?: string;
@@ -42,6 +44,7 @@ export interface IProductReview {
     review?: string;
     rating?: number;
     product?: IProduct;
+    user?: IUser;
 }
 
 export class ProductReview implements IProductReview {
@@ -50,7 +53,8 @@ export class ProductReview implements IProductReview {
         public userId?: number,
         public review?: string,
         public rating?: number,
-        public product?: Product
+        public product?: Product,
+        public user?: User
   ) {}
 }
 

@@ -1,0 +1,15 @@
+<div class="review-container-wrapper">
+    <div class="user-info-wrapper">
+        <p-avatar [label]="avatarLabel" styleClass="p-mr-2" size="large" shape="circle"></p-avatar>
+        <span *ngIf="user" class="username">{{ user.name }}</span>
+    </div>
+    <div class="review--wrapper">
+        <ngb-rating class="ratings-size" [starTemplate]="t" [max]="maxRatingSize" [readonly]="true" [rate]="review.rating"></ngb-rating>
+        <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+              <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+            </span>
+        </ng-template>
+        <span>{{ review.review }}</span>
+    </div>
+</div>

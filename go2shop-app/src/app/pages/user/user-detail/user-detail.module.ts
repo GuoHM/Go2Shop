@@ -6,13 +6,15 @@ import { UserDetailRoutingModule } from './user-detail-routing.module';
 import { UserDetailComponent } from './user-detail.component';
 import { LibrariesModule } from 'app/shared/libraries/libraries.module';
 import { CatalogueCreateComponent } from './catalogue-create/catalogue-create.component';
+import { SalesHistoryComponent } from './sales-history/sales-history.component';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     PurchaseHistoryComponent,
     UserDetailComponent,
-    CatalogueCreateComponent
+    CatalogueCreateComponent,
+    SalesHistoryComponent
   ],
   imports: [
     CommonModule,

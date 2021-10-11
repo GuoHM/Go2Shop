@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit {
 
       },
       (err) => {
-        console.log(err);
         if (err.error.errCode === 'B102') {
           this.messageService.add({ key: 'tc', severity: 'error', summary: 'Fail', detail: err.error.errMsg });
         }
