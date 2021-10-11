@@ -8,17 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/**
- * 
- * <Write a short description on the purpose of the class>
- * 
- * @author P1326154 Created Date Aug 10, 2021 3:06:50 PM
- * 
- */
 @Entity
 @Table(name = "TB_ORDER_DETAIL")
 public class OrderDetail {
@@ -28,7 +22,7 @@ public class OrderDetail {
 	@Column(name = "ID")
 	private Long id;
 
-	@NotBlank
+	@NotNull
 	@Column(name = "ORDER_DATE")
 	private LocalDateTime orderDate;
 
@@ -42,8 +36,12 @@ public class OrderDetail {
 	private BigDecimal payment;
 
 	@NotNull
-	@Column(name = "TB_ORDER_ID")
-	private Long orderID;
+	@Column(name = "PRODUCT_DEDUCT_QTY")
+	private Integer deductQty;
+	
+	@ManyToOne
+	@JoinColumn(name="TB_ORDER_ID", nullable = false)
+	private Order order;
 
 	@NotNull
 	@Column(name = "TB_PRODUCT_ID")
@@ -89,12 +87,12 @@ public class OrderDetail {
 		this.payment = payment;
 	}
 
-	public Long getOrderID() {
-		return orderID;
+	public Integer getDeductQty() {
+		return deductQty;
 	}
 
-	public void setOrderID(Long orderID) {
-		this.orderID = orderID;
+	public void setDeductQty(Integer deductQty) {
+		this.deductQty = deductQty;
 	}
 
 	public Long getProductID() {
@@ -103,6 +101,14 @@ public class OrderDetail {
 
 	public void setProductID(Long productID) {
 		this.productID = productID;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 }

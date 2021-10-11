@@ -1,0 +1,16 @@
+<div class="card-body">
+    <h5 class="card-title">Add Review</h5>
+    <div class="d-flex flex-column">
+        <ngb-rating class="ratings-size" [starTemplate]="t" [max]="maxRatingSize" [(rate)]="rating"></ngb-rating>
+        <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+                <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+            </span>
+        </ng-template>
+        <textarea rows="4" maxlength="255" placeholder="Add review here" [(ngModel)]="textReview"></textarea>
+        <div class="d-flex justify-content-end footer-btn-pad">
+            <button class="btn btn-light not-last-btn-pad" (click)="cancel()">Cancel</button>
+            <button class="btn btn-primary" (click)="save()">Save</button>
+        </div>
+    </div>
+  </div>

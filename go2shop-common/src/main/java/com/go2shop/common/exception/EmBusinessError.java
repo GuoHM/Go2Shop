@@ -17,10 +17,11 @@ public enum EmBusinessError implements ICommonError {
 	USER_NOT_LOGIN("B103", "User do not login", HttpStatus.UNAUTHORIZED),
 	USER_USERNAME_EXIST("B104", "Username already exist", HttpStatus.UNAUTHORIZED),
 	
-	// auth error start with C101
 	CATALOGUE_IMAGE_NOT_FOUND("C101", "Image not found", HttpStatus.BAD_REQUEST),
 	CART_NOT_EXIST("C102", "Cart not found", HttpStatus.NOT_FOUND),
-	PRODUCT_NOT_EXIST("C103", "Product not found", HttpStatus.NOT_FOUND);
+	PRODUCT_NOT_EXIST("C103", "Product not found", HttpStatus.NOT_FOUND),
+	NOT_ENOUGH_PRODUCT_STOCK("C104", "Product's stock is insufficient", HttpStatus.BAD_REQUEST),
+	PAYNOW_SERVICE_NOT_AVAILABLE("C105", "PayNow service not available", HttpStatus.SERVICE_UNAVAILABLE);
 	
 	private String errCode;
 	private String errMsg;

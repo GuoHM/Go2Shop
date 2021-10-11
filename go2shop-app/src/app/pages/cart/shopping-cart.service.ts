@@ -1,7 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { IShoppingCartProduct } from './shopping-cart-product.model';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { IShoppingCartProduct, ShoppingCartProduct } from './shopping-cart-product.model';
 import { IShoppingCart } from './shopping-cart.model';
 
 @Injectable({
@@ -11,10 +11,19 @@ export class ShoppingCartService {
     private updateCartSizeSubj = new Subject();
     updateCartSizeObs = this.updateCartSizeSubj.asObservable();
 
+    private buyNowSubj = new BehaviorSubject<boolean>(false);
+    buyNowObs = this.buyNowSubj.asObservable();
+    buyNowProduct: ShoppingCartProduct;
+    
     private api = 'api/cartService/shoppingCart';
 
     constructor(private http: HttpClient) {}
-    
+
+    updateShoppingCartState(isBuyNow: boolean, product?: ShoppingCartProduct): void {
+      this.buyNowSubj.next(isBuyNow);
+      this.buyNowProduct = product;
+    }
+
     updateCartSize(): void {
       this.updateCartSizeSubj.next();
     }

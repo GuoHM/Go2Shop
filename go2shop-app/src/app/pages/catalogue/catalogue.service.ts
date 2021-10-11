@@ -43,4 +43,13 @@ export class CatalogueService {
     const options = createRequestOption(req);
     return this.http.get<IProductReview[]>(`${this.api}/product/reviews/${id}`, { params: options, observe: 'response' });
   }
+
+  addProductReview(review: IProductReview): Observable<HttpResponse<IProductReview>> {
+    return this.http.post<IProductReview>(`${this.api}/addProductReview`, review, { observe: 'response' });
+  }
+
+  getRecommendedProducts(req?: any): Observable<HttpResponse<any[]>> {
+    const options = createRequestOption(req);
+    return this.http.get<any[]>(`${this.api}/product/getRecommendedProducts`, { params: options, observe: 'response' });
+  }
 }

@@ -66,7 +66,7 @@ public class ShoppingCartController extends BaseController {
 	}
 	
 	@GetMapping("/shoppingCartProduct/product/{shoppingCartProductID}")
-	public ResponseEntity<ShoppingCartProductDTO> getShoppingCartProduct(@PathVariable Long shoppingCartProductID) {
+	public ResponseEntity<ShoppingCartProductDTO> getShoppingCartProduct(@PathVariable Long shoppingCartProductID) throws BusinessException {
 		Optional<ShoppingCartProductDTO> result = this.shoppingCartService.getShoppingCartProduct(shoppingCartProductID);
 		return result.map(shoppingCartProduct -> ResponseEntity.ok().body(shoppingCartProduct))
 				.orElseGet(() -> ResponseEntity.notFound().build());
@@ -78,15 +78,24 @@ public class ShoppingCartController extends BaseController {
 	}
 	
 	@DeleteMapping(value = "/shoppingCartProduct/delete/{shoppingCartID}")
-	public void deleteAllProduct(@PathVariable("shoppingCartID") @NotNull Long shoppingCartID) {
+	public ResponseEntity<Void> deleteAllProduct(@PathVariable("shoppingCartID") @NotNull Long shoppingCartID) {
 		this.shoppingCartService.deleteAllProduct(shoppingCartID);
+		return ResponseEntity.ok().build();
 	}
 	
-	@DeleteMapping(value = "/shoppingCartProduct/delete/{shoppingCartID}/{shoppingCartProductID}")
-	public void deleteShoppingCartProduct(
+	@DeleteMapping(value = "/shoppingCartProduct/delete/{shoppingCartID}/{productID}")
+	public ResponseEntity<Void> deleteShoppingCartProduct(
 			@PathVariable("shoppingCartID") @NotNull Long shoppingCartID, 
+			@PathVariable("productID") @NotNull Long productID) {
+		this.shoppingCartService.deleteShoppingCartProductByCartIdAndProductId(shoppingCartID, productID);
+		return ResponseEntity.ok().build();
+	}
+	
+	@DeleteMapping(value = "/shoppingCartProduct/{shoppingCartProductID}")
+	public ResponseEntity<Void> deleteShoppingCartProductById(
 			@PathVariable("shoppingCartProductID") @NotNull Long shoppingCartProductID) {
-		this.shoppingCartService.deleteShoppingCartProductByCartIdAndProductId(shoppingCartID, shoppingCartProductID);
+		this.shoppingCartService.deleteShoppingCartProductById(shoppingCartProductID);
+		return ResponseEntity.ok().build();
 	}
 	
 	@PutMapping(value = "/shoppingCartProduct/update/{productID}/{shoppingCartID}/{productQuantity}")

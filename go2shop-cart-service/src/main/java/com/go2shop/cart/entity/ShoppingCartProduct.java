@@ -8,13 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/**
- * 
- * <Write a short description on the purpose of the class>
- * 
- * @author P1326154 Created Date Aug 10, 2021 3:00:27 PM
- * 
- */
 @Entity
 @Table(name = "TB_SHOPPING_CART_has_TB_PRODUCT")
 public class ShoppingCartProduct {

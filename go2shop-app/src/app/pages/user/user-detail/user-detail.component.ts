@@ -36,6 +36,15 @@ export class UserDetailComponent implements OnInit {
         }
       );
     }
+    if (this.authenticationService.hasRole('seller')) {
+      this.items.push(
+        {
+          label: 'Sales history',
+          icon: 'pi pi-money-bill',
+          routerLink: ['sales/history']
+        }
+      );
+    }
   }
 
 

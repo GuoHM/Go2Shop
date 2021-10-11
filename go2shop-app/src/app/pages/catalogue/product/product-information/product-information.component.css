@@ -35,6 +35,10 @@ button.spinner > .reduce-thickness {
     color: #8e8a8a;
 }
 
+.product-information-stock.no-stock {
+    margin-left: 0px; 
+}
+
 .product-information-description {
     font-size: 20px; 
     font-weight: 600; 
@@ -81,4 +85,14 @@ button.spinner > .reduce-thickness {
     display: inline-block;
     overflow: hidden;
     color: red;
+}
+
+.add-review-btn {
+    font-size: 20px; 
+    color: blue;
+}
+
+.review-header-container {
+    display: flex; 
+    justify-content: space-between;
 }

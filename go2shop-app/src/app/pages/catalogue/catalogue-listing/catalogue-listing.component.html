@@ -1,10 +1,28 @@
-<div class="display-items-container">
-    <div *ngFor="let product of productsToDisplay" class="displayed-product-container">
-        <go2shop-product class="displayed-product-padding" [product]="product"></go2shop-product>
+<div *ngIf="!isSearchBarSearching && !isSeeMoreClicked && recommendedProducts && recommendedProducts.length > 0" class="containers-padding">
+    <div class="d-flex justify-content-between">
+        <div class="recommended-items-container-title">Top Recommendations</div>
+        <button *ngIf="recommendedProductsTotalCount > recommendedProductsInitialSize" (click)="seeMore()"
+            class="btn btn-ghost see-more-btn" style="font-weight: 600;">See More >></button>
+    </div>
+    
+    <div class="display-recommended-items-container">
+        <div *ngFor="let product of recommendedProducts" class="displayed-product-container">
+            <go2shop-product class="displayed-product-padding" [product]="product"></go2shop-product>
+        </div>
+    </div>
+    
+</div>
+<div class="containers-padding">
+    <div class="recommended-items-container-title">Catalogue</div>
+    <div class="display-items-container">
+        <div *ngFor="let product of productsToDisplay" class="displayed-product-container">
+            <go2shop-product class="displayed-product-padding" [product]="product"></go2shop-product>
+        </div>
+    </div>
+    <div *ngIf="totalCount && productsToDisplay && productsToDisplay.length > 0 && totalCount > productsToDisplay.length"
+        class="d-flex justify-content-center">
+        <button class="btn btn-primary" (click)="loadMore()">Load More</button>
     </div>
 </div>
-<div *ngIf="totalCount && productsToDisplay && productsToDisplay.length > 0 && totalCount > productsToDisplay.length"
-    style="display: flex; justify-content: center;" >
-    <button class="btn btn-primary" (click)="loadMore()">Load More</button>
-</div>
+
 

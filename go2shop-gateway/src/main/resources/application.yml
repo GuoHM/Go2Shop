@@ -56,6 +56,18 @@ spring:
         - Path=/api/userService/**
         filters:
         - RewritePath=/api/userService/(?<segment>.*), /$\{segment} 
+      - id: order-service
+        uri: lb://order-service
+        predicates:
+        - Path=/api/orderService/**
+        filters:
+        - RewritePath=/api/orderService/(?<segment>.*), /$\{segment} 
+      - id: payment-service
+        uri: lb://payment-service
+        predicates:
+        - Path=/api/paymentService/**
+        filters:
+        - RewritePath=/api/paymentService/(?<segment>.*), /$\{segment} 
         
         
 secure:
@@ -69,11 +81,14 @@ secure:
       - "/api/catalogueService/catalogue/catalogue/search"
       - "/api/catalogueService/catalogue/product/reviews/**"
       - "/api/catalogueService/catalogue/product/ratings/**"
+      - "/api/userService/user/detail/**"
       
   authroities:
     - 
       urls:
         - "/api/userService/user/detail/**"
+        - "/api/cartService/shoppingCart/**"
+        - "/api/orderService/order/order/search"
       roles:
         - BUYER
         - SELLER
@@ -81,18 +96,17 @@ secure:
     - 
       urls:
         - "/api/catalogueService/catalogue/image"
+        - "/api/catalogueService/catalogue/**"
+        - "/api/orderService/order/confirmDelivery"
       roles:
-        - SELLER
-    - 
-      urls:
-        - "/api/cartService/shoppingCart/**"
-      roles:
-        - BUYER
         - SELLER
         
     - 
       urls:
-        - "/api/catalogueService/catalogue/**"
+        - "/api/orderService/order/**"
+        - "/api/orderService/order/orderReceived"
+        - "/api/catalogueService/catalogue/addProductReview"
+        - "api/paymentService/**"
       roles:
-        - SELLER
+        - BUYER
         

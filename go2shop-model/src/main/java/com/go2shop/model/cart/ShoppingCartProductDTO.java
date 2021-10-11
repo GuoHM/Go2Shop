@@ -12,11 +12,9 @@ public class ShoppingCartProductDTO {
 	private Long shoppingCartId;
 
 	@NotNull
-	private Long productId;
-
-	@NotNull
 	private int quantity;
 
+	@NotNull
 	private ProductDTO product;
 	
 	public Long getId() {
@@ -33,14 +31,6 @@ public class ShoppingCartProductDTO {
 
 	public void setShoppingCartId(Long shoppingCartId) {
 		this.shoppingCartId = shoppingCartId;
-	}
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
 	}
 
 	public int getQuantity() {

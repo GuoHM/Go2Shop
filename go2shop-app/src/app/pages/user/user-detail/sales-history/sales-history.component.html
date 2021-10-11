@@ -1,0 +1,36 @@
+<nav ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" (activeIdChange)="retrieveOrders(active)">
+	<ng-container [ngbNavItem]="i" *ngFor="let type of sellerOrderTypes; let i=index">
+		<a ngbNavLink>{{ type }}</a>
+		<ng-template ngbNavContent>
+            <table class="table table-striped" *ngIf="orders && orders.length > 0">
+                <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Order Date</th>
+                  <th scope="col">Next Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let order of orders">
+                  <td>{{ order.id }}</td>
+                  <td>{{ order.orderDate | date : dateFormat }}</td>
+                  <td>
+                      <span *ngIf="active === 0">Pending payment</span>
+                      <button class="btn btn-primary" *ngIf="active === 1" (click)="confirmDelivery(order)">Ready To Deliver</button>
+                      <span *ngIf="active === 2">Waiting for customer to receive order</span>
+                      <span *ngIf="active === 3">Order has been completed</span>
+                  </td>
+                </tr>
+                </tbody>
+            </table>
+            <div *ngIf="!orders || orders.length === 0">
+                <span>No available orders!</span>
+            </div>
+		</ng-template>
+	</ng-container>
+</nav>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
+<p-toast position="top-center" key="tc"></p-toast>
+
+

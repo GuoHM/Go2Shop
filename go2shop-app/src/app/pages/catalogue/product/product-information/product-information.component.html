@@ -1,6 +1,6 @@
 <div class="product-information-container">
     <div class="product-information-carousel-container">
-        <div style="display:flex; padding:20px;">
+        <div class="d-flex" style="padding:20px;">
             <p-carousel [style]="{ 'width':'450px' }" *ngIf="product" [value]="product.productImages" [showNavigators]="false" [autoplayInterval]="3000"
                 [numVisible]="1" [numScroll]="1" [circular]="false">
                 <ng-template let-image pTemplate="item">
@@ -14,7 +14,7 @@
                 </ng-template>
             </p-carousel>
         </div>
-        <div class="flex-auto flex-column" style="display: flex; width: 100%; padding:20px">
+        <div class="d-flex flex-auto flex-column" style="width: 100%; padding:20px">
             <div class="product-information-description">
                 <span>{{ product.description }}</span>
             </div>
@@ -31,22 +31,45 @@
                         <div>${{ product.price }}</div>
                     </div>
                     <div class="product-information-section">
-                        <div class="product-information-label">Quantity</div>
-                        <div>
+                        <div *ngIf="product.stock > 0" class="product-information-label">Quantity</div>
+                        <div *ngIf="product.stock > 0">
                             <button class="spinner" (click)="deductQuantity()"><em class="fas fa-minus reduce-thickness"></em></button>
                             <input class="spinner" [formControl]="quantity"/>
                             <button class="spinner" (click)="addQuantity()"><em class="fas fa-plus reduce-thickness"></em></button>
                         </div>
-                        <span class="product-information-stock">{{ product.stock }} available</span>
+                        <span class="product-information-stock" [ngClass]="{ 'no-stock': product.stock === 0 }">{{ product.stock }} available</span>
                     </div>
                 </div>
             </div>
-            <div class="product-information-section">
+            <div class="product-information-section" *ngIf="product.stock > 0">
                 <button type="button" class="btn btn-primary" (click)="addToCart()">Add To Cart</button>
                 <button type="button"  class="btn btn-primary btn-space-between" (click)="buyNow()">Buy Now</button>
             </div>
         </div>
     </div>
+</div>
+<div class="product-information-container">
+    <div style="padding: 20px;">
+        <div class="review-header-container">
+            <div style="font-size: 30px;">Reviews</div>
+            <div style="padding-top: 5px;" *ngIf="isLoggedIn">
+                <button class="btn btn-ghost add-review-btn" (click)="addReview()"><em class="fas fa-plus"></em>&nbsp;Add Review</button>
+            </div>
+            
+        </div>
+        <div *ngIf="product.productReviews && product.productReviews.length > 0">
+            <div *ngFor="let review of product.productReviews">
+                <go2shop-product-review [review]="review"></go2shop-product-review>
+            </div>
+        </div>
+        <div *ngIf="!product.productReviews || product.productReviews.length === 0">
+            <span>No reviews found!</span>
+        </div>
+    </div>
+    <div *ngIf="product.productReviews && product.productReviews.length > 0" class="d-flex justify-content-center">
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="6" [maxSize]="2" [boundaryLinks]="true" (pageChange)="getReviews(page)"></ngb-pagination>
+    </div>
+    
 </div>
 
 

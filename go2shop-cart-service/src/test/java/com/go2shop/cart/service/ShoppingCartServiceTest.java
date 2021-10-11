@@ -23,6 +23,7 @@ import com.go2shop.cart.repository.ShoppingCartRepository;
 import com.go2shop.cart.service.impl.ShoppingCartServiceImpl;
 import com.go2shop.cart.service.mapper.ShoppingCartMapper;
 import com.go2shop.cart.service.mapper.ShoppingCartProductMapper;
+import com.go2shop.common.exception.BusinessException;
 import com.go2shop.model.cart.ShoppingCartDTO;
 
 @SpringBootTest(classes = CartApplication.class)
@@ -87,18 +88,18 @@ class ShoppingCartServiceTest {
 	}
 	
 	@Test
-	void getShoppingCartProductTest1() {
+	void getShoppingCartProductTest1() throws BusinessException {
 		assertFalse(shoppingCartService.getShoppingCartProduct(null).isPresent());
 	}
 	
 	@Test
-	void getShoppingCartProductTest2() {
+	void getShoppingCartProductTest2() throws BusinessException {
 		Mockito.when(shoppingCartProductRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 		assertFalse(shoppingCartService.getShoppingCartProduct(123l).isPresent());
 	}
 	
 	@Test
-	void getShoppingCartProductTest3() {
+	void getShoppingCartProductTest3() throws BusinessException {
 		ShoppingCartProduct shoppingCartProduct = createShoppingCartProduct();
 		Mockito.when(shoppingCartProductRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(shoppingCartProduct));
 		assertNotNull(shoppingCartService.getShoppingCartProduct(123l));

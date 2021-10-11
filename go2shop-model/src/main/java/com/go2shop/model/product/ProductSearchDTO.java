@@ -1,4 +1,4 @@
-package com.go2shop.catalogue.entity;
+package com.go2shop.model.product;
 
 public class ProductSearchDTO {
 

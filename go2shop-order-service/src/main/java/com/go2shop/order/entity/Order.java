@@ -1,23 +1,19 @@
 package com.go2shop.order.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/**
- * 
- * <Write a short description on the purpose of the class>
- * 
- * @author P1326154 Created Date Aug 10, 2021 3:06:42 PM
- * 
- */
 @Entity
 @Table(name = "TB_ORDER")
 public class Order {
@@ -36,9 +32,20 @@ public class Order {
 	private LocalDateTime orderDate;
 
 	@NotNull
-	@Column(name = "TB_USER_ID")
-	private Long userID;
+	@Column(name = "PAYMENT_TYPE")
+	private String paymentType;
+	
+	@NotNull
+	@Column(name = "BUYER_ID")
+	private Long buyerId;
 
+	@NotNull
+	@Column(name = "SELLER_ID")
+	private Long sellerId;
+	
+	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+	private List<OrderDetail> orderDetails;
+	
 	public Long getId() {
 		return id;
 	}
@@ -63,12 +70,35 @@ public class Order {
 		this.orderDate = orderDate;
 	}
 
-	public Long getUserID() {
-		return userID;
+	public String getPaymentType() {
+		return paymentType;
 	}
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
 	}
 
+	public Long getBuyerId() {
+		return buyerId;
+	}
+
+	public void setBuyerId(Long buyerId) {
+		this.buyerId = buyerId;
+	}
+
+	public Long getSellerId() {
+		return sellerId;
+	}
+
+	public void setSellerId(Long sellerId) {
+		this.sellerId = sellerId;
+	}
+
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
 }

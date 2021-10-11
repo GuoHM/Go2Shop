@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
     {
       label: 'Logout', icon: 'pi pi-fw pi-sign-out', command: () => {
         this.authenticationService.logout();
+        this.cartSize = null;
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Logout success!' });
       }
     }
@@ -55,6 +56,8 @@ export class HeaderComponent implements OnInit {
             (res: HttpResponse<number>) => {
               if(res && res.body) {
                 this.cartSize = res.body;
+              } else if(res && res.body === 0) {
+                this.cartSize = null;
               }
             }
           );
@@ -63,5 +66,9 @@ export class HeaderComponent implements OnInit {
         }
       }
     );
+  }
+
+  updateCartState(): void {
+    this.cartService.updateShoppingCartState(false);
   }
 }

@@ -16,19 +16,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.go2shop.catalogue.entity.ProductSearchDTO;
 import com.go2shop.catalogue.service.CatalogueService;
 import com.go2shop.common.controller.BaseController;
 import com.go2shop.common.exception.BusinessException;
+import com.go2shop.model.cart.ShoppingCartProductDTO;
 import com.go2shop.model.product.ProductDTO;
 import com.go2shop.model.product.ProductRatingsDTO;
 import com.go2shop.model.product.ProductReviewDTO;
+import com.go2shop.model.product.ProductSearchDTO;
 
 @RestController
 @RequestMapping(value = "/catalogue")
@@ -82,5 +84,33 @@ public class CatalogueController extends BaseController {
 	@PostMapping("/catalogue")
 	public ResponseEntity<ProductDTO> createCatalogue(@RequestBody ProductDTO product) {
 		return ResponseEntity.ok().body(catalogueService.createCatalogue(product));
+	}
+	
+	@PostMapping("/addProductReview")
+	public ResponseEntity<ProductReviewDTO> addProductReview(@RequestBody(required = true) ProductReviewDTO review) {
+		return ResponseEntity.ok().body(catalogueService.addProductReview(review));
+	}
+	
+	@PutMapping("/deductProductStock/{id}")
+	public ResponseEntity<Void> deductProductStock(
+			@PathVariable("id") @NotNull Long id,
+			@RequestBody(required = true) @NotNull ShoppingCartProductDTO cartProduct) throws BusinessException {
+		catalogueService.deductProductStockById(id, cartProduct);
+		return ResponseEntity.ok().build();
+	}
+	
+	@PutMapping("/returnProductStock/{id}/{returnedQuantity}")
+	public ResponseEntity<Void> returnProductStock(
+			@PathVariable("id") @NotNull Long id, @PathVariable("returnedQuantity") @NotNull int quantity) throws BusinessException {
+		catalogueService.returnProductStockById(id, quantity);
+		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/product/getRecommendedProducts")
+	public ResponseEntity<List<ProductDTO>> getRecommendedProducts(Pageable page) {
+		Page<ProductDTO> results = catalogueService.getRecommendedProductsByRatings(page);
+		HttpHeaders headers = new HttpHeaders();
+        headers.add(TOTAL_COUNT, Long.toString(results.getTotalElements()));
+		return new ResponseEntity<>(results.getContent(), headers, HttpStatus.OK);
 	}
 }
