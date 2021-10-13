@@ -1,11 +1,13 @@
 package com.go2shop.catalogue.service.feign.fallback;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.go2shop.catalogue.service.feign.UserService;
 import com.go2shop.model.user.UserDTO;
 
+@Component
 public class UserServiceFallback implements UserService {
 
 	@Override
