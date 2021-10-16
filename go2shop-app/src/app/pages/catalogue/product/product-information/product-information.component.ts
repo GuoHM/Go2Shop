@@ -33,6 +33,7 @@ export class ProductInformationComponent implements OnInit {
     public quantity: AbstractControl = new FormControl(null);
     public maxRatingSize = 5;
     public rating = 0;
+    public page = 1;
 
     ngOnInit(): void {
       this.isLoggedIn = this.authService.isLoggedIn();
