@@ -67,7 +67,7 @@
         </div>
     </div>
     <div *ngIf="product.productReviews && product.productReviews.length > 0" class="d-flex justify-content-center">
-        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="6" [maxSize]="2" [boundaryLinks]="true" (pageChange)="getReviews(page)"></ngb-pagination>
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="6" [maxSize]="2" [boundaryLinks]="true" (pageChange)="getReviews()"></ngb-pagination>
     </div>
     
 </div>

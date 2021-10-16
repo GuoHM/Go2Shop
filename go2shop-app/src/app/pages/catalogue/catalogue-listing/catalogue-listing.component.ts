@@ -30,8 +30,8 @@ export class CatalogueListingComponent implements OnInit {
   public recommendedProductsTotalCount: number;
   public recommendedProducts: IProduct[];
   private recommendedProductsPage = 0;
-  private recommendedProductsInitialSize = 6;
-  private isSeeMoreClicked = false;
+  recommendedProductsInitialSize = 6;
+  isSeeMoreClicked = false;
   public isSearchBarSearching = false;
 
   ngOnInit(): void {
