@@ -1,10 +1,10 @@
-version: '3.7'
+version: "3.7"
 services:
 
   go2shop-db:
-    restart: always
     image: go2shop-db-3307:0.0.1
-    build: ./DB Script
+    build: ./dbscript
+    restart: always
     ports:
      - 3307:3306
     environment:
@@ -22,62 +22,90 @@ services:
   go2shop-gateway:
     image: go2shop-gateway-8770:0.0.1
     build: ./go2shop-gateway
+    depends_on:
+      - go2shop-db
+      - go2shop-registry
     ports:
       - "8770:8770"
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka 
       
-  go2shop-auth-service:
-    image: go2shop-auth-service-8780:0.0.1
-    build: ./go2shop-auth-service
-    ports:
-      - "8780:8780"
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka
-      SPRING_DATASOURCE_URL: jdbc:mysql://go2shop-db:3306/authdb
+#  go2shop-auth-service:
+#    image: go2shop-auth-service-8780:0.0.1
+#    build: ./go2shop-auth-service
+#    depends_on:
+#      - go2shop-db
+#      - go2shop-registry
+#    ports:
+#      - "8780:8780"
+#    environment:
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka
+#      SPRING_DATASOURCE_URL: jdbc:mysql://go2shop-db:3306/authdb
       
-  go2shop-cart-service:
-    image: go2shop-cart-service-8762:0.0.1
-    build: ./go2shop-cart-service
-    ports:
-      - "8762:8762"
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka
-      SPRING_DATASOURCE_URL: jdbc:mysql://go2shop-db:3306/shoppingcartdb 
+#  go2shop-cart-service:
+#    image: go2shop-cart-service-8762:0.0.1
+#    build: ./go2shop-cart-service
+#    depends_on:
+#      - go2shop-db
+#      - go2shop-registry
+#    ports:
+#      - "8762:8762"
+#    environment:
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka
+#      SPRING_DATASOURCE_URL: jdbc:mysql://go2shop-db:3306/shoppingcartdb 
       
   go2shop-catalogue-service:
     image: go2shop-catalogue-service-8763:0.0.1
     build: ./go2shop-catalogue-service
+    depends_on:
+      - go2shop-db
+      - go2shop-registry
     ports:
       - "8763:8763"
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka
       SPRING_DATASOURCE_URL: jdbc:mysql://go2shop-db:3306/productdb 
       
-  go2shop-order-service:
-    image: go2shop-order-service-8764:0.0.1
-    build: ./go2shop-order-service
-    ports:
-      - "8764:8764"
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka
-      SPRING_DATASOURCE_URL: jdbc:mysql://go2shop-db:3306/orderdb  
+#  go2shop-order-service:
+#    image: go2shop-order-service-8764:0.0.1
+#    build: ./go2shop-order-service
+#    depends_on:
+#      - go2shop-db
+#      - go2shop-registry
+#    ports:
+#      - "8764:8764"
+#    environment:
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka
+#      SPRING_DATASOURCE_URL: jdbc:mysql://go2shop-db:3306/orderdb  
       
-  go2shop-payment-service:
-    image: go2shop-payment-service-8765:0.0.1
-    build: ./go2shop-payment-service
-    ports:
-      - "8765:8765"
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka  
+#  go2shop-payment-service:
+#    image: go2shop-payment-service-8765:0.0.1
+#    build: ./go2shop-payment-service
+#    depends_on:
+#      - go2shop-db
+#      - go2shop-registry
+#    ports:
+#      - "8765:8765"
+#    environment:
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka  
       
-  go2shop-user-service:
-    image: go2shop-user-service-8766:0.0.1
-    build: ./go2shop-user-service
-    ports:
-      - "8766:8766"
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka
-      SPRING_DATASOURCE_URL: jdbc:mysql://go2shop-db:3306/userdb  
+#  go2shop-user-service:
+#    image: go2shop-user-service-8766:0.0.1
+#    build: ./go2shop-user-service
+#    depends_on:
+#      - go2shop-db
+#      - go2shop-registry
+#    ports:
+#      - "8766:8766"
+#    environment:
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka
+#      SPRING_DATASOURCE_URL: jdbc:mysql://go2shop-db:3306/userdb  
       
- 
+  go2shop-app:
+    restart: always
+    image: go2shop-app
+    build: ./go2shop-app
+    depends_on:
+      - go2shop-gateway
+    ports:
+      - 4200:80

@@ -20,16 +20,6 @@ spring:
 #    password: ${spring.rabbitmq.password}
 #    virtual-host: ${spring.rabbitmq.virtual-host}
   cloud:
-    bus:
-      enabled: true
-      trace:
-        enabled: true
-    config:
-      label: master
-      profile: dev
-      discovery:
-        enabled: true
-        service-id: config
     gateway:
       routes:
       - id: auth-service
