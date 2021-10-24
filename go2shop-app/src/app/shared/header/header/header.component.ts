@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
   private initCartSizeHandler(): void {
     this.cartService.updateCartSizeObs.subscribe(
       () => {
-        if(this.authenticationService.isLoggedIn()) {
+        if(this.authenticationService.isLoggedIn() && this.authenticationService.hasRole('BUYER')) {
           this.cartService.getCartSize(this.authenticationService.getCurrentUser().userId).subscribe(
             (res: HttpResponse<number>) => {
               if(res && res.body) {

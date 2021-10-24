@@ -23,7 +23,7 @@ USE `productdb` ;
 DROP TABLE IF EXISTS `productdb`.`tb_product_review` ;
 
 CREATE TABLE IF NOT EXISTS `productdb`.`tb_product_review` (
-  `ID` BIGINT NOT NULL,
+  `ID` BIGINT NOT NULL AUTO_INCREMENT,
   `Review` VARCHAR(255) NULL DEFAULT NULL,
   `Rating` INT NOT NULL,
   `TB_PRODUCT_ID` BIGINT NOT NULL,

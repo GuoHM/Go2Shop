@@ -77,10 +77,6 @@ export class CatalogueCreateComponent implements OnInit {
   }
 
   createCatalogue(): void {
-    if (this.productImage.length === 0) {
-      this.messageService.add({key: 'tc', severity: 'error', summary: 'Create Fail', detail: 'Please upload image'});
-      return;
-    }
     const catalogueCreate: CatalogueCreate = new CatalogueCreate();
     catalogueCreate.name = this.catalogueCreateForm.get('name').value;
     catalogueCreate.description = this.catalogueCreateForm.get('description').value;
