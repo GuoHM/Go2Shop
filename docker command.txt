@@ -8,3 +8,5 @@ docker-compose up
 delete all images:
 
 for /F %i in ('docker images -a -q') do docker rmi -f %i
+
+scp -i amazon.pem -r ec2-user@ec2-##-##-##:/source/dir /destination/dir
