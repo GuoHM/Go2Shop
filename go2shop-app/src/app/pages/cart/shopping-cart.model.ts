@@ -6,10 +6,10 @@ export interface IShoppingCart {
 }
 
 export class ShoppingCart implements IShoppingCart {
-    constructor(
+  constructor(
         public id?: number,
         public price?: number,
         public discount?: number,
         public userId?: number
-    ) {}
+  ) {}
 }
