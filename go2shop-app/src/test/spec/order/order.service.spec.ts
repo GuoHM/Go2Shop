@@ -1,9 +1,6 @@
 import { HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, getTestBed, async } from "@angular/core/testing";
-import { ShoppingCartService } from 'app/pages/cart/shopping-cart.service';
 import { Go2ShopTestModule } from '../test.module';
-import { ShoppingCart } from 'app/pages/cart/shopping-cart.model';
-import { ShoppingCartProduct } from 'app/pages/cart/shopping-cart-product.model';
 import { OrderService } from 'app/pages/order/order.service';
 import { Order, OrderSearchDTO } from 'app/pages/order/order.model';
 
