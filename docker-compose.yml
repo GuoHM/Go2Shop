@@ -29,7 +29,7 @@ services:
       - "8770:8770"
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://go2shop-registry:8761/eureka 
-      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWT-SET-URI: 'http://go2shop-auth-service:8780/rsa/publicKey'
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: 'http://go2shop-auth-service:8780/rsa/publicKey'
       
   go2shop-auth-service:
     image: go2shop-auth-service-8780:0.0.1

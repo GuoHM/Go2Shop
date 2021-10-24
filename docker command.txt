@@ -9,4 +9,5 @@ delete all images:
 
 for /F %i in ('docker images -a -q') do docker rmi -f %i
 
-scp -i amazon.pem -r ec2-user@ec2-##-##-##:/source/dir /destination/dir
+
+scp -i "GoToShopPairring.pem" -r /go2shop-app/dist ec2-user@ec2-18-216-32-73.us-east-2.compute.amazonaws.com:/go2shop/go2shop-deploy/go2shop-app 
