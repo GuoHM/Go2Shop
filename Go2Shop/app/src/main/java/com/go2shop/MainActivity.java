@@ -1,46 +1,28 @@
 package com.go2shop;
 
-import android.app.ProgressDialog;
-import android.os.Build;
 import android.os.Bundle;
-
-import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.HurlStack;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.go2shop.databinding.ActivityMainBinding;
-import com.google.gson.Gson;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.go2shop.databinding.ActivityMainBinding;
+import com.google.gson.Gson;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -106,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onError(VolleyError error) {
-                Log.i("Error on response: ",error.toString());
+                Log.i("Error on response: ", error.toString());
             }
         });
     }
@@ -145,8 +127,9 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    private interface VolleyResponseListener{
+    private interface VolleyResponseListener {
         void onResponse(String response);
+
         void onError(VolleyError error);
     }
 
@@ -176,35 +159,35 @@ public class MainActivity extends AppCompatActivity {
     private TrustManager[] getWrappedTrustManagers(TrustManager[] trustManagers) {
         final X509TrustManager originalTrustManager = (X509TrustManager) trustManagers[0];
         return new TrustManager[]{
-            new X509TrustManager() {
-                public X509Certificate[] getAcceptedIssuers() {
-                    return originalTrustManager.getAcceptedIssuers();
-                }
+                new X509TrustManager() {
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return originalTrustManager.getAcceptedIssuers();
+                    }
 
-                public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                    try {
-                        if (certs != null && certs.length > 0){
-                            certs[0].checkValidity();
-                        } else {
-                            originalTrustManager.checkClientTrusted(certs, authType);
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                        try {
+                            if (certs != null && certs.length > 0) {
+                                certs[0].checkValidity();
+                            } else {
+                                originalTrustManager.checkClientTrusted(certs, authType);
+                            }
+                        } catch (CertificateException e) {
+                            Log.w("checkClientTrusted", e.toString());
                         }
-                    } catch (CertificateException e) {
-                        Log.w("checkClientTrusted", e.toString());
+                    }
+
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                        try {
+                            if (certs != null && certs.length > 0) {
+                                certs[0].checkValidity();
+                            } else {
+                                originalTrustManager.checkServerTrusted(certs, authType);
+                            }
+                        } catch (CertificateException e) {
+                            Log.w("checkServerTrusted", e.toString());
+                        }
                     }
                 }
-
-                public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                    try {
-                        if (certs != null && certs.length > 0){
-                            certs[0].checkValidity();
-                        } else {
-                            originalTrustManager.checkServerTrusted(certs, authType);
-                        }
-                    } catch (CertificateException e) {
-                        Log.w("checkServerTrusted", e.toString());
-                    }
-                }
-            }
         };
     }
 
@@ -324,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            protected Map<String,String> getParams() {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("page", String.valueOf(0));
                 params.put("size", String.valueOf(1));
