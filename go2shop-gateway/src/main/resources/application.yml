@@ -5,6 +5,13 @@ eureka:
       
 server:
   port: 8770
+  ssl:
+    enabled: true
+    key-alias: skipper
+    key-store: "src/main/resources/skipper.keystore"
+    key-store-type: jks
+    key-store-password: skipper
+    key-password: skipper
   
 spring:
   application:
