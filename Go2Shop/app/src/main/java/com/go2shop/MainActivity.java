@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
         // Initial an API call
         queue = Volley.newRequestQueue(this, hurlStack);
         // API URL
-        String URL = "https://3.138.195.123:8770/api/catalogueService/catalogue/catalogue/search?page=0&size=100";
+        String URL = "https://192.168.0.159:8770/api/catalogueService/catalogue/catalogue/search?page=0&size=100";
         Map<String, String> params = new HashMap<String, String>();
         params.put("page", String.valueOf(0));
         params.put("size", String.valueOf(1));
