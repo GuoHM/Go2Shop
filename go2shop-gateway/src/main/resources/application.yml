@@ -12,7 +12,14 @@ server:
     key-store-type: jks
     key-store-password: skipper
     key-password: skipper
-  
+  tomcat:
+    basedir: C:/log/
+    accesslog:
+      enabled: true
+      file-date-format: .yyyyMMdd
+      prefix: access_log
+      pattern: common
+
 spring:
   application:
     name: gateway-springcloudgateway
