@@ -96,7 +96,8 @@
             "browserTarget": "go2shop-app:build",
             "proxyConfig": "./proxy.conf.json",
             "sslKey": "ssl/server.key",
-            "sslCert": "ssl/server.crt"
+            "sslCert": "ssl/server.crt",
+            "ssl": true
           },
           "configurations": {
             "production": {
