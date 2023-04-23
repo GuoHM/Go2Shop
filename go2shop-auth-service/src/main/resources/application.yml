@@ -15,7 +15,7 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver 
     url: jdbc:mysql://localhost:3306/authdb
     username: go2shop
-    password: go2shop
+    password: ENC(8givPV0fFqZeDjPGkijgozHyqY4y40Bi7U/SUfNqWXfLWNpr+6gr0rGvwyx34sA8)
   jpa:
     show-sql: true
 #  rabbitmq:
