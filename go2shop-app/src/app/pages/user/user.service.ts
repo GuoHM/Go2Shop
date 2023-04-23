@@ -21,6 +21,10 @@ export class UserService {
     return this.http.post<IUserToken>('/api/authenticationService/oauth/token', httpParams, { headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), observe: 'response' });
   }
 
+  logout(): Observable<HttpResponse<void>> {
+    return this.http.post<void>('/api/userService/user/logout', null, { observe: 'response' });
+  }
+
   register(register: IUserRegister): Observable<HttpResponse<IUser>> {
     return this.http.post<IUser>('/api/authenticationService/securityUser/register', register,
       { observe: 'response' });
@@ -29,5 +33,4 @@ export class UserService {
   getUserByUserId(userId: number): Observable<HttpResponse<IUser>> {
     return this.http.get<IUser>('/api/userService/user/detail/' + userId, { observe: 'response' });
   }
-
 }

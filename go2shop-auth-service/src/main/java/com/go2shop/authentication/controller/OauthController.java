@@ -5,7 +5,9 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,8 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,9 +34,9 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
 @RestController
-@RequestMapping("/oauth")
+@RequestMapping(value = "/oauth")
 public class OauthController extends BaseController {
-	
+
 	@Autowired
 	private UserAuthService userAuthService;
 
@@ -51,7 +55,7 @@ public class OauthController extends BaseController {
 	});
 
 	@PostMapping(value = "/token")
-	public ResponseEntity<UserTokenDTO> postAccessToken(Principal principal, @RequestParam Map<String, String> parameters) throws BusinessException, HttpRequestMethodNotSupportedException {
+	public ResponseEntity<UserTokenDTO> postAccessToken(Principal principal, @RequestParam Map<String, String> parameters, HttpServletResponse response) throws BusinessException, HttpRequestMethodNotSupportedException {
 		String requestIp = getClientIp();
 		isBlocked(requestIp);
 
@@ -62,7 +66,16 @@ public class OauthController extends BaseController {
 		} catch (InvalidGrantException ex) {
 			throw new BusinessException(EmBusinessError.USER_LOGIN_FAIL);
 		}
-		return ResponseEntity.ok().body(userAuthService.handleLoginSuccess(oAuth2AccessToken, parameters.get("username")));
+
+		UserTokenDTO userTokenDTO = userAuthService.handleLoginSuccess(oAuth2AccessToken, parameters.get("username"));
+		response.addCookie(setCookieAttr("cartId", userTokenDTO.getCartId().toString()));
+		response.addCookie(setCookieAttr("expiresIn", Integer.toString(userTokenDTO.getExpiresIn())));
+		response.addCookie(setCookieAttr("token", userTokenDTO.getToken()));
+//		response.addCookie(new Cookie("tokenHead", userTokenDTO.getTokenHead()));
+		response.addCookie(setCookieAttr("userId", userTokenDTO.getUserId().toString()));
+		response.addCookie(setCookieAttr("username", parameters.get("username")));
+
+		return ResponseEntity.ok().body(userTokenDTO);
 	}
 
 	private void isBlocked(String ip) throws BusinessException {
@@ -93,5 +106,16 @@ public class OauthController extends BaseController {
 			return request.getRemoteAddr();
 		}
 		return xfHeader.split(",")[0];
+	}
+
+	private Cookie setCookieAttr(String key, String value) {
+		Cookie cookie = new Cookie(key, value);
+		cookie.setMaxAge(3600);
+		cookie.setPath("/");
+		if (key == "token") {
+			cookie.setHttpOnly(true);
+			cookie.setSecure(true);
+		}
+		return cookie;
 	}
 }

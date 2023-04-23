@@ -86,6 +86,7 @@ secure:
       - "/api/catalogueService/catalogue/product/reviews/**"
       - "/api/catalogueService/catalogue/product/ratings/**"
       - "/api/userService/user/detail/**"
+      - "/api/userService/user/logout"
       
   authroities:
     - 
