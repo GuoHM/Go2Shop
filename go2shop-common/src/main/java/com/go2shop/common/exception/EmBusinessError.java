@@ -10,6 +10,7 @@ public enum EmBusinessError implements ICommonError {
 	TOKEN_EXPIRE("A103", "Token expire", HttpStatus.UNAUTHORIZED),
 	SERVICE_NOT_AVAILABLE("A104", "Service not available for now, please try later", HttpStatus.SERVICE_UNAVAILABLE),
 	IO_EXCEPTION("A105", "Upload fail", HttpStatus.BAD_REQUEST),
+	TOO_MANY_REQUESTS("A106", "Too many requests. Please try again later.", HttpStatus.TOO_MANY_REQUESTS),
 
 	// auth error start with B101
 	USER_NOT_EXIST("B101", "User do not exist", HttpStatus.UNAUTHORIZED),
