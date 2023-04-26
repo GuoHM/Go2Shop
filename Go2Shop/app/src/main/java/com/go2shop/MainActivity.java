@@ -1,5 +1,6 @@
 package com.go2shop;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.go2shop.databinding.ActivityMainBinding;
 import com.google.gson.Gson;
+import com.scottyab.rootbeer.RootBeer;
 
 import org.json.JSONObject;
 
@@ -64,6 +67,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        RootBeer rootBeer = new RootBeer(this);
+        if (rootBeer.isRooted()) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.alert)
+                    .setMessage(R.string.rooted_message)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finishAffinity();
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
