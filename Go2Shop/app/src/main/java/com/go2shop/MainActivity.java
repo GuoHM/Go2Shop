@@ -1,9 +1,11 @@
 package com.go2shop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -93,6 +95,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+    }
+
     private void createView(ArrayList<String> productList, ListView listView) {
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, productList);
         listView.setAdapter(arrayAdapter);
@@ -113,7 +121,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_payment) {
+            this.startActivity(new Intent(this, PaymentActivity.class));
+            return true;
+        } else if (id == R.id.action_settings) {
             return true;
         }
 
