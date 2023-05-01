@@ -121,8 +121,8 @@ public class CatalogueController extends BaseController {
 	public String getStringContent(@RequestBody String fileName) throws IOException {
 		String normalizedPath = Paths.get(fileName).normalize().toString();
 		File file = new File(BASE_PATH, normalizedPath);
-		
-		if (file.getCanonicalPath().startsWith(BASE_PATH)) {			
+
+		if (file.getCanonicalPath().startsWith(BASE_PATH)) {
 			String content = new String(Files.readAllBytes(file.toPath()));
 			return content;
 		} else {
