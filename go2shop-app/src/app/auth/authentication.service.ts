@@ -24,6 +24,7 @@ export class AuthenticationService {
     loginUser.tokenHead = usertoken.tokenHead;
     loginUser.userId = usertoken.userId;
     loginUser.cartId = usertoken.cartId;
+    loginUser.authEnabled = usertoken.authEnabled;
     localStorage.setItem('currentUser', JSON.stringify(loginUser));  
     this.loginChanged(true);
   }

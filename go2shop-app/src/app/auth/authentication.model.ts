@@ -6,6 +6,7 @@ export interface ILoginUser {
   token?: string;
   userId?: number;
   cartId?: number;
+  authEnabled?: boolean;
 }
 
 export class LoginUser implements ILoginUser {
@@ -16,7 +17,8 @@ export class LoginUser implements ILoginUser {
     public tokenHead?: string,
     public expiresIn?: string,
     public userId?: number,
-    public cartId?: number
+    public cartId?: number,
+    public authEnabled?: boolean
   ) { }
 }
 
@@ -28,6 +30,7 @@ export interface IUserToken {
   expiresIn?: string;
   userId?: number;
   cartId?: number;
+  authEnabled?: boolean;
 }
 
 export class UserToken implements IUserToken {
@@ -37,6 +40,7 @@ export class UserToken implements IUserToken {
     public tokenHead?: string,
     public expiresIn?: string,
     public userId?: number,
-    public cartId?: number
+    public cartId?: number,
+    public authEnabled?: boolean
   ) { }
 }

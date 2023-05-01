@@ -32,3 +32,12 @@ eureka:
 feign:
   hystrix:
     enabled: true
+    
+security:
+  jasypt:
+    algorithm: PBEWITHHMACSHA512ANDAES_256
+    salt: X3fhYsnV#R#tisFWXXe
+    iv-generator-classname: org.jasypt.iv.RandomIvGenerator
+    salt-generator-classname: org.jasypt.salt.RandomSaltGenerator
+    string-output-type: base64
+  secret-key: ENC(FLfiC/wiJ/eFh8DwLbcYjNeBVTM3e3/7L/XIh8LAegdSTMC45O1mYiWrGBfEdwX2gadprxe2aHDrueMTUlQwpw==)

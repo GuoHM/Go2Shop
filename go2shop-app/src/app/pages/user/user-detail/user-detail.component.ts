@@ -10,7 +10,12 @@ import { MenuItem } from 'primeng/api';
 export class UserDetailComponent implements OnInit {
 
   items: MenuItem[];
-  constructor(private authenticationService: AuthenticationService) { }
+  
+  constructor(
+    private authenticationService: AuthenticationService
+  ) { 
+    
+  }
 
   ngOnInit(): void {
     this.items = [{
@@ -46,6 +51,4 @@ export class UserDetailComponent implements OnInit {
       );
     }
   }
-
-
 }

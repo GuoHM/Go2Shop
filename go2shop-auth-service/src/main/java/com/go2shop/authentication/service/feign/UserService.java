@@ -13,5 +13,4 @@ public interface UserService {
 	
 	@PostMapping("/user/create")
 	ResponseEntity<UserDTO> register(@RequestBody(required = true) UserDTO user);
-
 }
