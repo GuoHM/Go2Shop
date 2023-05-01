@@ -3,6 +3,7 @@ package com.go2shop.catalogue.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class CatalogueController extends BaseController {
 	private CatalogueService catalogueService;
 	private static final String TOTAL_COUNT = "X-Total-Count";
 	private static final Logger logger = LoggerFactory.getLogger(CatalogueController.class);
+	private static final String BASE_PATH = "C:\\Users\\d1324868\\Downloads\\";
 
 	@GetMapping("/catalogue")
 	public ResponseEntity<List<ProductDTO>> getCatalogue() {
@@ -117,9 +119,14 @@ public class CatalogueController extends BaseController {
 
 	@PostMapping("/getStringContent")
 	public String getStringContent(@RequestBody String fileName) throws IOException {
-		String normalizedPath = fileName;
-		File file = new File("C:\\Users\\d1324868\\Downloads\\", normalizedPath);
-		String content = new String(Files.readAllBytes(file.toPath()));
-		return content;
+		String normalizedPath = Paths.get(fileName).normalize().toString();
+		File file = new File(BASE_PATH, normalizedPath);
+		
+		if (file.getCanonicalPath().startsWith(BASE_PATH)) {			
+			String content = new String(Files.readAllBytes(file.toPath()));
+			return content;
+		} else {
+			return "Access error";
+		}
 	}
 }
