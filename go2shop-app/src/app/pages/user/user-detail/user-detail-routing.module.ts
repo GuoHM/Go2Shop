@@ -47,6 +47,10 @@ const routes: Routes = [
     component: UserDetailComponent,
     children: [
       {
+        path: '',
+        component: ProfileComponent
+      },
+      {
         path: 'profile',
         component: ProfileComponent
       },

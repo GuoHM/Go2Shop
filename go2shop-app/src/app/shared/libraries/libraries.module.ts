@@ -13,6 +13,7 @@ import { MenuModule } from 'primeng/menu';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FileUploadModule } from 'primeng/fileupload';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     ReactiveFormsModule,
     CarouselModule,
     NgbModule,
-    FileUploadModule
+    FileUploadModule,
+    MatSlideToggleModule
   ],
   exports: [
     CardModule,
@@ -44,7 +46,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     ReactiveFormsModule,
     CarouselModule,
     NgbModule,
-    FileUploadModule
+    FileUploadModule,
+    MatSlideToggleModule
   ],
   declarations: [],
   providers: [MessageService],

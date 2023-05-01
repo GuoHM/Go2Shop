@@ -5,13 +5,17 @@ import { RegisterComponent } from './register/register.component';
 import { UserRoutingModule } from './user-routing.module';
 import { LibrariesModule } from 'app/shared/libraries/libraries.module';
 import { AuthenticationModule } from 'app/auth/authentication.module';
+import { Register2FAComponent } from './register/register-2fa/register-2fa.component';
+import { LoginOTPComponent } from './login/login-otp/login-otp.component';
 
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    LoginOTPComponent,
+    RegisterComponent,
+    Register2FAComponent
   ],
   imports: [
     CommonModule,
