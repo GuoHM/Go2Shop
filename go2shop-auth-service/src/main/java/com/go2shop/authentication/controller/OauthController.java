@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,7 @@ public class OauthController extends BaseController {
 		response.addCookie(setCookieAttr("token", userTokenDTO.getToken()));
 //		response.addCookie(new Cookie("tokenHead", userTokenDTO.getTokenHead()));
 		response.addCookie(setCookieAttr("userId", userTokenDTO.getUserId().toString()));
-		response.addCookie(setCookieAttr("username", parameters.get("username")));
+		response.addCookie(setCookieAttr("username", StringUtils.replaceEach(parameters.get("username"), new String[] { "\n", "\r" }, new String[] { "", "" })));
 
 		return ResponseEntity.ok().body(userTokenDTO);
 	}

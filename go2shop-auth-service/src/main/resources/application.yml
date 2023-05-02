@@ -39,3 +39,7 @@ eureka:
 feign:
   hystrix:
     enabled: true
+
+config:
+  secret-key: 123456
+  
