@@ -15,11 +15,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.jboss.aerogear.security.otp.api.Base32;
+
 import com.go2shop.common.model.ActiveStatus;
 
 @Entity
 @Table(name = "TB_SECURITY_USER")
 public class SecurityUser {
+	
+	public SecurityUser() {
+		this.secret = Base32.random();
+	}
+	
 	@Id
 	@Column(name = "ID", updatable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +47,12 @@ public class SecurityUser {
 	@NotNull
 	private ActiveStatus enabled;
 
+	@Column(name = "IS_2FA_ENABLED")
+	private boolean authEnabled;
+	
+	@Column(name = "SECRET")
+	private String secret;
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE })
 	@JoinTable(name = "TB_USER_AUTHORITY", joinColumns = {
 			@JoinColumn(name = "USER_ID", referencedColumnName = "ID", updatable = false) }, inverseJoinColumns = {
@@ -94,4 +107,19 @@ public class SecurityUser {
 		this.authorities = authorities;
 	}
 
+	public boolean getAuthEnabled() {
+		return this.authEnabled;
+	}
+
+	public void setAuthEnabled(boolean authEnabled) {
+		this.authEnabled = authEnabled;
+	}
+
+	public String getSecret() {
+		return secret;
+	}
+
+	public void setSecret(String secret) {
+		this.secret = secret;
+	}
 }

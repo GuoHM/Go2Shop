@@ -14,6 +14,8 @@ public class UserTokenDTO {
 
 	private Long cartId;
 	
+	private boolean authEnabled;
+	
 	public String getToken() {
 		return token;
 	}
@@ -60,6 +62,14 @@ public class UserTokenDTO {
 
 	public void setCartId(Long cartId) {
 		this.cartId = cartId;
+	}
+
+	public boolean isAuthEnabled() {
+		return authEnabled;
+	}
+
+	public void setAuthEnabled(boolean authEnabled) {
+		this.authEnabled = authEnabled;
 	}
 
 }

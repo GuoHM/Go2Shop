@@ -27,6 +27,8 @@ public class UserDTO {
 	@Size(max = 8)
 	private String contactDetail;
 
+	private String qrCode;
+	
 	public Long getId() {
 		return id;
 	}
@@ -75,4 +77,11 @@ public class UserDTO {
 		this.contactDetail = contactDetail;
 	}
 
+	public String getQrCode() {
+		return qrCode;
+	}
+
+	public void setQrCode(String qrCode) {
+		this.qrCode = qrCode;
+	}
 }

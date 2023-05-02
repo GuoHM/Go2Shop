@@ -1,7 +1,7 @@
 package com.go2shop.authentication.model;
 
 public class UserRegisterDTO {
-
+	
 	private String username;
 
 	private String password;
@@ -15,6 +15,8 @@ public class UserRegisterDTO {
 	private String contactDetail;
 
 	private String type;
+	
+	private boolean authEnabled;
 
 	public String getUsername() {
 		return username;
@@ -72,4 +74,11 @@ public class UserRegisterDTO {
 		this.type = type;
 	}
 
+	public boolean getAuthEnabled() {
+		return authEnabled;
+	}
+
+	public void setAuthEnabled(boolean authEnabled) {
+		this.authEnabled = authEnabled;
+	}
 }

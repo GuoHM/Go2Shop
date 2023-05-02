@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <div *ngIf="isIdle">
+        <p class="modal-title">Idle session warning</p>
+    </div>
+</div>
+<div class="modal-body">
+    <div *ngIf="isIdle">
+        <p>Your session has been idle and will expire in <strong>{{leftTime}}</strong></p>
+    </div>
+</div>
+<div class="modal-footer">
+    <div *ngIf="isIdle">
+        <button type="button" class="btn btn-outline-primary" (click)="close()">Continue Session</button>
+    </div>
+    <div *ngIf="!isIdle">
+        <button type="button" class="btn btn-outline-primary" (click)="close()">Close</button>
+    </div>
+    
+</div>

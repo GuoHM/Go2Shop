@@ -43,7 +43,7 @@ public class User {
 	@NotBlank
 	@Column(name = "CONTACT_DETAIL")
 	private String contactDetail;
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -91,5 +91,4 @@ public class User {
 	public void setContactDetail(String contactDetail) {
 		this.contactDetail = contactDetail;
 	}
-
 }
