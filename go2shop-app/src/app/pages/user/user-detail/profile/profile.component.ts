@@ -3,10 +3,11 @@ import { AuthenticationService } from 'app/auth/authentication.service';
 import { Subscription } from 'rxjs';
 import { User } from '../../user.model';
 import { UserService } from '../../user.service';
-import { ILoginUser, LoginUser } from 'app/auth/authentication.model';
+import { ILoginUser } from 'app/auth/authentication.model';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import * as crypto from 'crypto-js';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'go2shop-profile',
@@ -32,6 +33,7 @@ export class ProfileComponent implements OnInit {
     this.subscription.add(this.userService.getUserByUserId(userId).subscribe(
       res => {
         this.user = res.body;
+        this.decryptDetails(this.user);
       }
     ));
   }
@@ -51,6 +53,24 @@ export class ProfileComponent implements OnInit {
     const details = localStorage.getItem('currentUser');
     if(details) {
       this.loginUserDetails = JSON.parse(details);
+    }
+  }
+
+  private decryptDetails(user: User) {
+    if(user) {
+      const key = crypto.enc.Base64.parse(environment.secret);
+      user.cardNumber = crypto.AES.decrypt(user.cardNumber, key, {
+          mode: crypto.mode.ECB,
+          padding: crypto.pad.Pkcs7
+      }).toString(crypto.enc.Utf8);
+      user.contactDetail = crypto.AES.decrypt(user.contactDetail, key, {
+        mode: crypto.mode.ECB,
+        padding: crypto.pad.Pkcs7
+      }).toString(crypto.enc.Utf8);
+      user.address = crypto.AES.decrypt(user.address, key, {
+        mode: crypto.mode.ECB,
+        padding: crypto.pad.Pkcs7
+      }).toString(crypto.enc.Utf8);
     }
   }
 }
