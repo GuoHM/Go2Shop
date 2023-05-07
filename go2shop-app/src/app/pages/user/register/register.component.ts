@@ -6,6 +6,8 @@ import { MessageService } from 'primeng/api';
 import { IUser, UserRegister } from '../user.model';
 import { UserService } from '../user.service';
 import { HttpResponse } from '@angular/common/http';
+import * as crypto from 'crypto-js';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'go2shop-register',
@@ -75,6 +77,7 @@ export class RegisterComponent implements OnInit {
     user.cardNumber = this.registerForm.get('cardNumber').value;
     user.type = this.registerForm.get('type').value;
     user.authEnabled = this.registerForm.get('authEnabled').value;
+    this.encryptDetails(user);
     this.userService.register(user).subscribe(
       (user: HttpResponse<IUser>) => {
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Registration Completed!' });
@@ -93,4 +96,25 @@ export class RegisterComponent implements OnInit {
     );
   }
 
+  private encryptDetails(user: UserRegister) {
+    if(user) {
+      const key = crypto.enc.Base64.parse(environment.secret);
+      user.password = crypto.AES.encrypt(user.password, key, {
+          mode: crypto.mode.ECB,
+          padding: crypto.pad.Pkcs7
+      }).toString();
+      user.cardNumber = crypto.AES.encrypt(user.cardNumber, key, {
+        mode: crypto.mode.ECB,
+        padding: crypto.pad.Pkcs7
+      }).toString();
+      user.contactDetail = crypto.AES.encrypt(user.contactDetail, key, {
+        mode: crypto.mode.ECB,
+        padding: crypto.pad.Pkcs7
+      }).toString();
+      user.address = crypto.AES.encrypt(user.address, key, {
+        mode: crypto.mode.ECB,
+        padding: crypto.pad.Pkcs7
+      }).toString();
+    }
+  }
 }
