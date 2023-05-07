@@ -13,7 +13,7 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 public class CrosConfig implements WebFluxConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowCredentials(true).allowedOrigins("*").allowedHeaders("*").allowedMethods("*")
+		registry.addMapping("/**").allowCredentials(true).allowedOrigins("https://localhost:4200").allowedHeaders("*").allowedMethods("*")
 				.exposedHeaders(HttpHeaders.SET_COOKIE);
 	}
 
@@ -23,7 +23,7 @@ public class CrosConfig implements WebFluxConfigurer {
 		corsConfiguration.setAllowCredentials(true);
 		corsConfiguration.addAllowedHeader("*");
 		corsConfiguration.addAllowedMethod("*");
-		corsConfiguration.addAllowedOrigin("*");
+		corsConfiguration.addAllowedOrigin("https://localhost:4200");
 		corsConfiguration.addExposedHeader(HttpHeaders.SET_COOKIE);
 		UrlBasedCorsConfigurationSource corsConfigurationSource = new UrlBasedCorsConfigurationSource();
 		corsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
