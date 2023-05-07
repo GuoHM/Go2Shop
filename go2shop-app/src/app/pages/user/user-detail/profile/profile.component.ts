@@ -70,7 +70,7 @@ export class ProfileComponent implements OnInit {
       user.address = crypto.AES.decrypt(user.address, key, {
         mode: crypto.mode.ECB,
         padding: crypto.pad.Pkcs7
-      }).toString(crypto.enc.Utf8);
+      }).toString(crypto.enc.Utf8); 
     }
   }
 }

@@ -114,7 +114,7 @@ export class RegisterComponent implements OnInit {
       user.address = crypto.AES.encrypt(user.address, key, {
         mode: crypto.mode.ECB,
         padding: crypto.pad.Pkcs7
-      }).toString();
+      }).toString(); 
     }
   }
 }
