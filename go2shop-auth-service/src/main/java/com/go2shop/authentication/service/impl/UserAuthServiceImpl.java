@@ -143,7 +143,7 @@ public class UserAuthServiceImpl implements UserAuthService {
 			securityUser.setAuthorities(findAuthorityByAuthorityName(userRegister.getType()));
 			securityUser.setUserId(response.getBody().getId());
 			securityUser.setEnabled(ActiveStatus.ACTIVE);
-			securityUser.setPassword(passwordEncoder.encode(PasswordUtil.decrypt(securityUser.getPassword(), stringOutputType)));
+			securityUser.setPassword(passwordEncoder.encode(securityUser.getPassword()));
 			securityUser.setAuthEnabled(userRegister.getAuthEnabled());
 			securityUser.setSecret(stringEncryptor.encrypt(securityUser.getSecret()));
 			securityUser = securityUserRepository.saveAndFlush(securityUser);
