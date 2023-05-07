@@ -1,52 +1,61 @@
 package com.go2shop;
 
-import android.app.ProgressDialog;
-import android.os.Build;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Handler;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.go2shop.databinding.ActivityMainBinding;
 import com.google.gson.Gson;
+import com.scottyab.rootbeer.RootBeer;
 
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,6 +67,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        RootBeer rootBeer = new RootBeer(this);
+        if (rootBeer.isRooted()) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.alert)
+                    .setMessage(R.string.rooted_message)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finishAffinity();
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -84,9 +107,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onError(VolleyError error) {
-                Log.i("Error on response: ",error.toString());
+                Log.i("Error on response: ", error.toString());
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
     }
 
     private void createView(ArrayList<String> productList, ListView listView) {
@@ -109,7 +138,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_payment) {
+            this.startActivity(new Intent(this, PaymentActivity.class));
+            return true;
+        } else if (id == R.id.action_settings) {
             return true;
         }
 
@@ -123,16 +155,99 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    private interface VolleyResponseListener{
+    private interface VolleyResponseListener {
         void onResponse(String response);
+
         void onError(VolleyError error);
     }
 
+    private SSLSocketFactory getSSLSocketFactory() throws CertificateException, KeyStoreException, IOException, NoSuchAlgorithmException, KeyManagementException {
+        CertificateFactory cf = CertificateFactory.getInstance("X.509");
+        InputStream caInput = getResources().openRawResource(R.raw.server);
+
+        Certificate ca = cf.generateCertificate(caInput);
+        caInput.close();
+
+        KeyStore keyStore = KeyStore.getInstance("BKS");
+        keyStore.load(null, null);
+        keyStore.setCertificateEntry("ca", ca);
+
+        String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+        TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+        tmf.init(keyStore);
+
+        TrustManager[] wrappedTrustManagers = getWrappedTrustManagers(tmf.getTrustManagers());
+
+        SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+        sslContext.init(null, wrappedTrustManagers, null);
+
+        return sslContext.getSocketFactory();
+    }
+
+    private TrustManager[] getWrappedTrustManagers(TrustManager[] trustManagers) {
+        final X509TrustManager originalTrustManager = (X509TrustManager) trustManagers[0];
+        return new TrustManager[]{
+                new X509TrustManager() {
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return originalTrustManager.getAcceptedIssuers();
+                    }
+
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                        try {
+                            if (certs != null && certs.length > 0) {
+                                certs[0].checkValidity();
+                            } else {
+                                originalTrustManager.checkClientTrusted(certs, authType);
+                            }
+                        } catch (CertificateException e) {
+                            Log.w("checkClientTrusted", e.toString());
+                        }
+                    }
+
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                        try {
+                            if (certs != null && certs.length > 0) {
+                                certs[0].checkValidity();
+                            } else {
+                                originalTrustManager.checkServerTrusted(certs, authType);
+                            }
+                        } catch (CertificateException e) {
+                            Log.w("checkServerTrusted", e.toString());
+                        }
+                    }
+                }
+        };
+    }
+
+    private HostnameVerifier getHostnameVerifier() {
+        return new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                //return true; // verify always returns true, which could cause insecure network traffic due to trusting TLS/SSL server certificates for wrong hostnames
+                HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+                return hv.verify("192.168.0.159", session);
+            }
+        };
+    }
+
     private void getCatalogueBySearch(final VolleyResponseListener volleyResponseListener) {
+        HurlStack hurlStack = new HurlStack() {
+            @Override
+            protected HttpURLConnection createConnection(URL url) throws IOException {
+                HttpsURLConnection httpsURLConnection = (HttpsURLConnection) super.createConnection(url);
+                try {
+                    httpsURLConnection.setSSLSocketFactory(getSSLSocketFactory());
+                    httpsURLConnection.setHostnameVerifier(getHostnameVerifier());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return httpsURLConnection;
+            }
+        };
         // Initial an API call
-        queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this, hurlStack);
         // API URL
-        String URL = "http://3.138.195.123:8770/api/catalogueService/catalogue/catalogue/search?page=0&size=100";
+        String URL = "https://192.168.0.159:8770/api/catalogueService/catalogue/catalogue/search?page=0&size=100";
         Map<String, String> params = new HashMap<String, String>();
         params.put("page", String.valueOf(0));
         params.put("size", String.valueOf(1));
@@ -220,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            protected Map<String,String> getParams() {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("page", String.valueOf(0));
                 params.put("size", String.valueOf(1));
