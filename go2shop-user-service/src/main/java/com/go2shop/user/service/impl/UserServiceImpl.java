@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return userMapper.toDto(savedUser);
 	}
-
+	
 	@Override
 	public UserDTO getUserById(Long userId) throws BusinessException {
 		Optional<User> savedUser = userRepository.findById(userId);

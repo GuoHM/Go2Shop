@@ -11,14 +11,20 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  login(userlogin: IUserLogin): Observable<HttpResponse<IUserToken>> {
+  retrieveToken(userlogin: IUserLogin): Observable<HttpResponse<IUserToken>> {
     const httpParams = new HttpParams()
       .append('grant_type', 'password')
       .append('client_id', 'client-app')
       .append('client_secret', '123456')
       .append('username', userlogin.username)
-      .append('password', userlogin.password);
+      .append('password', userlogin.password)
+      .append('otp', `${userlogin.otp}`);
     return this.http.post<IUserToken>('/api/authenticationService/oauth/token', httpParams, { headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), observe: 'response' });
+  }
+  
+  login(userlogin: IUserLogin): Observable<HttpResponse<boolean>> {
+    return this.http.post<boolean>('/api/authenticationService/securityUser/login', userlogin,
+      { observe: 'response' });
   }
 
   logout(): Observable<HttpResponse<void>> {
@@ -32,5 +38,15 @@ export class UserService {
 
   getUserByUserId(userId: number): Observable<HttpResponse<IUser>> {
     return this.http.get<IUser>('/api/userService/user/detail/' + userId, { observe: 'response' });
+  }
+
+  verifyIf2faIsRequired(username: string): Observable<HttpResponse<boolean>> {
+    const httpParams = new HttpParams()
+    .append('username', username);
+    return this.http.get<boolean>('/api/authenticationService/securityUser/is2faRequired', { params: httpParams, observe: 'response' });
+  }
+
+  update2fa(user: IUserRegister): Observable<String> {
+    return this.http.post<String>('/api/authenticationService/securityUser/update2fa', user, { responseType: 'text' as 'json' });
   }
 }

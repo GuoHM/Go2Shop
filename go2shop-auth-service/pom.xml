@@ -58,9 +58,14 @@
 			<version>${mysql.jdbc.driver.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.github.ulisesbocchio</groupId>
-		    <artifactId>jasypt-spring-boot-starter</artifactId>
-		    <version>3.0.3</version>
+		    <groupId>org.jboss.aerogear</groupId>
+		    <artifactId>aerogear-otp-java</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
+    <dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>3.0.4</version>
 		</dependency>
 	</dependencies>
 	<build>

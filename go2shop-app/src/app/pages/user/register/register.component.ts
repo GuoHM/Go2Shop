@@ -3,8 +3,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { isControlValid, isControlInvalid } from 'app/shared/utils/form.utils';
 import { MessageService } from 'primeng/api';
-import { UserRegister } from '../user.model';
+import { IUser, UserRegister } from '../user.model';
 import { UserService } from '../user.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'go2shop-register',
@@ -40,7 +41,8 @@ export class RegisterComponent implements OnInit {
       address: new FormControl('', [Validators.required]),
       contactDetail: new FormControl('', [Validators.required]),
       cardNumber: new FormControl('', [Validators.required]),
-      type: new FormControl('', [Validators.required])
+      type: new FormControl('', [Validators.required]),
+      authEnabled: new FormControl(true, [Validators.required])
     }, { validator: this.checkIfMatchingPasswords('password', 'passwordRepeat') });
   }
 
@@ -72,10 +74,15 @@ export class RegisterComponent implements OnInit {
     user.contactDetail = this.registerForm.get('contactDetail').value;
     user.cardNumber = this.registerForm.get('cardNumber').value;
     user.type = this.registerForm.get('type').value;
+    user.authEnabled = this.registerForm.get('authEnabled').value;
     this.userService.register(user).subscribe(
-      () => {
-        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'You have successful login!' });
-        this.router.navigate(['/user', 'login']);
+      (user: HttpResponse<IUser>) => {
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Registration Completed!' });
+        if(user && user.body && user.body.qrCode) {
+          this.router.navigate(['/user', 'register2fa'], { queryParams: { qrCode: user.body.qrCode, isRouteToLogin: true } }); 
+        } else {
+          this.router.navigate(['/user', 'login']);
+        }
       },
       (err) => {
         console.log(err);

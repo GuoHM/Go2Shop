@@ -17,6 +17,8 @@ public enum EmBusinessError implements ICommonError {
 	USER_LOGIN_FAIL("B102", "User credentials not valid", HttpStatus.UNAUTHORIZED),
 	USER_NOT_LOGIN("B103", "User do not login", HttpStatus.UNAUTHORIZED),
 	USER_USERNAME_EXIST("B104", "Username already exist", HttpStatus.UNAUTHORIZED),
+	INVALID_OTP("B105", "Invalid OTP", HttpStatus.BAD_REQUEST),
+	CANNOT_UPDATE_USER("B106", "Cannot update user", HttpStatus.BAD_REQUEST),
 	
 	CATALOGUE_IMAGE_NOT_FOUND("C101", "Image not found", HttpStatus.BAD_REQUEST),
 	CART_NOT_EXIST("C102", "Cart not found", HttpStatus.NOT_FOUND),

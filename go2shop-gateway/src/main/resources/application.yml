@@ -80,6 +80,8 @@ secure:
       - "/actuator/**"
       - "/api/authenticationService/oauth/token"
       - "/api/authenticationService/securityUser/register"
+      - "/api/authenticationService/securityUser/login"
+      - "/api/authenticationService/securityUser/is2faRequired"
       - "/api/catalogueService/catalogue/catalogue"
       - "/api/catalogueService/catalogue/product/**"
       - "/api/catalogueService/catalogue/catalogue/search"
@@ -94,6 +96,7 @@ secure:
         - "/api/userService/user/detail/**"
         - "/api/cartService/shoppingCart/**"
         - "/api/orderService/order/order/search"
+        - "/api/authenticationService/securityUser/update2fa"
       roles:
         - BUYER
         - SELLER

@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.go2shop.authentication.model.UserTokenDTO;
 import com.go2shop.authentication.service.UserAuthService;
+import com.go2shop.authentication.util.PasswordUtil;
 import com.go2shop.common.controller.BaseController;
 import com.go2shop.common.exception.BusinessException;
 import com.go2shop.common.exception.EmBusinessError;
@@ -55,6 +57,9 @@ public class OauthController extends BaseController {
 		}
 	});
 
+	@Value("${security.secret-key}")
+	private String stringOutputType;
+	
 	@PostMapping(value = "/token")
 	public ResponseEntity<UserTokenDTO> postAccessToken(Principal principal, @RequestParam Map<String, String> parameters, HttpServletResponse response) throws BusinessException, HttpRequestMethodNotSupportedException {
 		String requestIp = getClientIp();
@@ -62,6 +67,7 @@ public class OauthController extends BaseController {
 
 		OAuth2AccessToken oAuth2AccessToken = null;
 		try {
+			parameters.put("password", PasswordUtil.decrypt(parameters.get("password"), stringOutputType));
 			oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
 			resetCache(requestIp);
 		} catch (InvalidGrantException ex) {

@@ -49,6 +49,9 @@
                         <input type="text" pInputText formControlName="cardNumber" class="form-control" id="cardNumber" [ngClass]="{ 'is-valid' : isValid(form.cardNumber), 'is-invalid' : isInvalid(form.cardNumber) }">
                         <small *ngIf="form.cardNumber.errors && isInvalid(form.cardNumber)" class="p-error">Card number is not valid.</small>
                     </div>
+                    <div>
+                        <mat-slide-toggle formControlName="authEnabled">2FA {{ form.authEnabled.value ? 'Enabled': 'Disabled' }}</mat-slide-toggle>
+                    </div>
                     <hr>
                     <div class="form-group">
                         <button pButton pRipple class="btn-login  p-button-rounded p-button-lg" label="REGISTER"

@@ -10,13 +10,13 @@
 	<modules>
 		<module>go2shop-registry</module>
 		<module>go2shop-gateway</module>
-		<module>go2shop-user-service</module>
 		<module>go2shop-order-service</module>
 		<module>go2shop-catalogue-service</module>
 		<module>go2shop-cart-service</module>
 		<module>go2shop-payment-service</module>
 		<module>go2shop-common</module>
 		<module>go2shop-model</module>
+		<module>go2shop-user-service</module>
 		<module>go2shop-auth-service</module>
 	</modules>
 
@@ -74,6 +74,21 @@
 			<artifactId>junit-jupiter-engine</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+	        <groupId>com.thoughtworks.xstream</groupId>
+	        <artifactId>xstream</artifactId>
+	        <version>1.4.13</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.sun.xml.bind</groupId>
+	        <artifactId>jaxb-impl</artifactId>
+	        <version>2.3.1</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.sun.xml.messaging.saaj</groupId>
+	        <artifactId>saaj-impl</artifactId>
+	        <version>1.5.1</version>
+	    </dependency>
 	</dependencies>
 
 	<dependencyManagement>
