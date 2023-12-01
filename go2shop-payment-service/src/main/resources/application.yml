@@ -1,5 +1,12 @@
 server:
   port: 8765
+  tomcat:
+    basedir: C:/log/
+    accesslog:
+      enabled: true
+      file-date-format: .yyyyMMdd
+      prefix: access_log
+      pattern: common
 
 spring:
   application:

@@ -2,6 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'app/auth/authentication.service';
 import { ShoppingCartService } from 'app/pages/cart/shopping-cart.service';
+import { UserService } from 'app/pages/user/user.service';
 import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
@@ -21,12 +22,14 @@ export class HeaderComponent implements OnInit {
         this.authenticationService.logout();
         this.cartSize = null;
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Logout success!' });
+        this.userService.logout().subscribe(() => { }, () => { });
       }
     }
   ];
 
   constructor(
     private authenticationService: AuthenticationService,
+    private userService: UserService,
     private messageService: MessageService,
     private cartService: ShoppingCartService
   ) { }
@@ -51,12 +54,12 @@ export class HeaderComponent implements OnInit {
   private initCartSizeHandler(): void {
     this.cartService.updateCartSizeObs.subscribe(
       () => {
-        if(this.authenticationService.isLoggedIn() && this.authenticationService.hasRole('BUYER')) {
+        if (this.authenticationService.isLoggedIn() && this.authenticationService.hasRole('BUYER')) {
           this.cartService.getCartSize(this.authenticationService.getCurrentUser().userId).subscribe(
             (res: HttpResponse<number>) => {
-              if(res && res.body) {
+              if (res && res.body) {
                 this.cartSize = res.body;
-              } else if(res && res.body === 0) {
+              } else if (res && res.body === 0) {
                 this.cartSize = null;
               }
             }

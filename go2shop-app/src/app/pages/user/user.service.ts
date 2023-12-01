@@ -21,10 +21,14 @@ export class UserService {
       .append('otp', `${userlogin.otp}`);
     return this.http.post<IUserToken>('/api/authenticationService/oauth/token', httpParams, { headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }), observe: 'response' });
   }
-
+  
   login(userlogin: IUserLogin): Observable<HttpResponse<boolean>> {
     return this.http.post<boolean>('/api/authenticationService/securityUser/login', userlogin,
       { observe: 'response' });
+  }
+
+  logout(): Observable<HttpResponse<void>> {
+    return this.http.post<void>('/api/userService/user/logout', null, { observe: 'response' });
   }
 
   register(register: IUserRegister): Observable<HttpResponse<IUser>> {

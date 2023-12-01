@@ -92,7 +92,7 @@ public class UserAuthServiceImpl implements UserAuthService {
 				throw new BusinessException(EmBusinessError.USER_NOT_EXIST); 
 			}
 			if (securityUser.getAuthEnabled() && StringUtils.isNotBlank(userDetails.getOtp())) {
-				final String verificationCode = PasswordUtil.decrypt(userDetails.getOtp(), stringOutputType);
+				final String verificationCode = PasswordUtil.decrypt(userDetails.getOtp(), stringOutputType); 
 				final Totp totp = new Totp(stringEncryptor.decrypt(securityUser.getSecret()));
 				if (!totp.verify(verificationCode)) {
 					throw new BusinessException(EmBusinessError.INVALID_OTP);
@@ -143,7 +143,7 @@ public class UserAuthServiceImpl implements UserAuthService {
 			securityUser.setAuthorities(findAuthorityByAuthorityName(userRegister.getType()));
 			securityUser.setUserId(response.getBody().getId());
 			securityUser.setEnabled(ActiveStatus.ACTIVE);
-			securityUser.setPassword(passwordEncoder.encode(securityUser.getPassword()));
+			securityUser.setPassword(passwordEncoder.encode(PasswordUtil.decrypt(securityUser.getPassword(), stringOutputType)));
 			securityUser.setAuthEnabled(userRegister.getAuthEnabled());
 			securityUser.setSecret(stringEncryptor.encrypt(securityUser.getSecret()));
 			securityUser = securityUserRepository.saveAndFlush(securityUser);

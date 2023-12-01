@@ -1,6 +1,7 @@
 package com.go2shop.authentication.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -33,12 +34,15 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 	
 	@Autowired
     private AuthenticationManager authenticationManager;
+	
+	@Value("${config.secret-key}")
+	private String SECRET_KEY;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("client-app")
-                .secret(passwordEncoder.encode("123456"))
+                .secret(passwordEncoder.encode(SECRET_KEY))
                 .scopes("all")
                 .authorizedGrantTypes("password", "refresh_token")
                 .accessTokenValiditySeconds(3600)
@@ -71,8 +75,8 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Bean
     public KeyPair keyPair() {
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "123456".toCharArray());
-        return keyStoreKeyFactory.getKeyPair("jwt", "123456".toCharArray());
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), SECRET_KEY.toCharArray());
+        return keyStoreKeyFactory.getKeyPair("jwt", SECRET_KEY.toCharArray());
     }
 
 }

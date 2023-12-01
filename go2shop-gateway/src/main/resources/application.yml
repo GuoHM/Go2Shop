@@ -5,7 +5,21 @@ eureka:
       
 server:
   port: 8770
-  
+  ssl:
+    enabled: true
+    key-alias: skipper
+    key-store: "src/main/resources/skipper.keystore"
+    key-store-type: jks
+    key-store-password: skipper
+    key-password: skipper
+  tomcat:
+    basedir: C:/log/
+    accesslog:
+      enabled: true
+      file-date-format: .yyyyMMdd
+      prefix: access_log
+      pattern: common
+
 spring:
   application:
     name: gateway-springcloudgateway
@@ -74,6 +88,7 @@ secure:
       - "/api/catalogueService/catalogue/product/reviews/**"
       - "/api/catalogueService/catalogue/product/ratings/**"
       - "/api/userService/user/detail/**"
+      - "/api/userService/user/logout"
       
   authroities:
     - 

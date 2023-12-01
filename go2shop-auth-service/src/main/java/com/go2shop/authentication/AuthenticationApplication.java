@@ -14,6 +14,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 @EnableFeignClients
 @EnableEncryptableProperties
 public class AuthenticationApplication {
+
 	public static void main(String[] args) {
 		SpringApplication.run(AuthenticationApplication.class, args);
 	}
